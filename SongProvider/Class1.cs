@@ -8,5 +8,6 @@ namespace SongProvider
 {
     class Class1
     {
+        TagLib.File tagFIle;
     }
 }

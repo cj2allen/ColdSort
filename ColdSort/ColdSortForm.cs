@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace ColdSort
 {
-    public partial class Form1 : Form
+    public partial class ColdSortForm : Form
     {
-        public Form1()
+        public ColdSortForm()
         {
             InitializeComponent();
         }

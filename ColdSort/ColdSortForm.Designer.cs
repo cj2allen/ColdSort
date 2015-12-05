@@ -1,6 +1,6 @@
 ﻿namespace ColdSort
 {
-    partial class Form1
+    partial class ColdSortForm
     {
         /// <summary>
         /// Required designer variable.
