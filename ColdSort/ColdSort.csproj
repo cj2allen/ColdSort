@@ -54,6 +54,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SongFile.cs" />
+    <Compile Include="SortationNode.cs" />
+    <Compile Include="SortationNodeResult.cs" />
+    <Compile Include="SortationSchema.cs" />
+    <Compile Include="SortErrorCode.cs" />
+    <Compile Include="SortSongProperty.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
