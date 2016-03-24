@@ -52,6 +52,24 @@
     <Compile Include="ColdSortForm.Designer.cs">
       <DependentUpon>ColdSortForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SortationNodeCreation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SortationNodeCreation.Designer.cs">
+      <DependentUpon>SortationNodeCreation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\SortationSchemaCreation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\SortationSchemaCreation.Designer.cs">
+      <DependentUpon>SortationSchemaCreation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SongFile.cs" />
@@ -60,6 +78,15 @@
     <Compile Include="SortationSchema.cs" />
     <Compile Include="SortErrorCode.cs" />
     <Compile Include="SortSongProperty.cs" />
+    <EmbeddedResource Include="GUI\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SortationNodeCreation.resx">
+      <DependentUpon>SortationNodeCreation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\SortationSchemaCreation.resx">
+      <DependentUpon>SortationSchemaCreation.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
