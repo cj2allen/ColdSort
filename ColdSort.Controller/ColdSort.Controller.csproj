@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4813B55E-4BA3-41FD-B4A3-5EB6534D794A}</ProjectGuid>
+    <ProjectGuid>{31738A78-D7A8-4FB3-A07D-D29C44524EED}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SongProvider</RootNamespace>
-    <AssemblyName>SongProvider</AssemblyName>
+    <RootNamespace>ColdSort.Controller</RootNamespace>
+    <AssemblyName>ColdSort.Controller</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,21 +32,35 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.0.4.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>ThirdPartyLibraries\taglib-sharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\SortationNodeController.cs" />
+    <Compile Include="Controllers\SortationSchemaController.cs" />
+    <Compile Include="Controllers\SortationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ColdSort.Model\ColdSort.Model.csproj">
+      <Project>{f494a65a-2c5a-413d-9c35-ccd8770f2aa5}</Project>
+      <Name>ColdSort.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ColdSort.UI\ColdSort.UI.csproj">
+      <Project>{148ee48e-ba2c-4b6d-aefd-e48ee5eb4fb4}</Project>
+      <Name>ColdSort.UI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ColdSort\ColdSort.Core.csproj">
+      <Project>{8a3da389-5676-488f-979f-38240ae2dcb5}</Project>
+      <Name>ColdSort.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

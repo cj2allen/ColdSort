@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4813B55E-4BA3-41FD-B4A3-5EB6534D794A}</ProjectGuid>
+    <ProjectGuid>{F494A65A-2C5A-413D-9C35-CCD8770F2AA5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SongProvider</RootNamespace>
-    <AssemblyName>SongProvider</AssemblyName>
+    <RootNamespace>ColdSort.Model</RootNamespace>
+    <AssemblyName>ColdSort.Model</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,13 +40,28 @@
     <Reference Include="System.Xml" />
     <Reference Include="taglib-sharp, Version=2.0.4.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>ThirdPartyLibraries\taglib-sharp.dll</HintPath>
+      <HintPath>..\3rdPartyLibraries\taglib-sharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ModelBuilders\SchemaLoader.cs" />
+    <Compile Include="Models\FailedSortation.cs" />
+    <Compile Include="Models\MP3File.cs" />
+    <Compile Include="Models\SortationNode.cs" />
+    <Compile Include="Models\SortationResult.cs" />
+    <Compile Include="Models\SuccessfulSortation.cs" />
+    <Compile Include="Models\SortationSchema.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="ThirdPartyLibraries\taglib-sharp.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ColdSort\ColdSort.Core.csproj">
+      <Project>{8a3da389-5676-488f-979f-38240ae2dcb5}</Project>
+      <Name>ColdSort.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
