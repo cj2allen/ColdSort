@@ -41,6 +41,8 @@
             this.txtFailedDefaultLocation = new System.Windows.Forms.TextBox();
             this.rdoFailedDefaultLocation = new System.Windows.Forms.RadioButton();
             this.rdoKeepLocation = new System.Windows.Forms.RadioButton();
+            this.btnCancelSchema = new System.Windows.Forms.Button();
+            this.btnSaveSchema = new System.Windows.Forms.Button();
             this.grpNodeOptions.SuspendLayout();
             this.grpUnsortableOptions.SuspendLayout();
             this.SuspendLayout();
@@ -177,12 +179,34 @@
             this.rdoKeepLocation.Text = "Keep Files At Original Location";
             this.rdoKeepLocation.UseVisualStyleBackColor = true;
             // 
+            // btnCancelSchema
+            // 
+            this.btnCancelSchema.Location = new System.Drawing.Point(389, 152);
+            this.btnCancelSchema.Name = "btnCancelSchema";
+            this.btnCancelSchema.Size = new System.Drawing.Size(78, 31);
+            this.btnCancelSchema.TabIndex = 15;
+            this.btnCancelSchema.Text = "Cancel";
+            this.btnCancelSchema.UseVisualStyleBackColor = true;
+            this.btnCancelSchema.Click += new System.EventHandler(this.btnCancelSchema_Click);
+            // 
+            // btnSaveSchema
+            // 
+            this.btnSaveSchema.Location = new System.Drawing.Point(305, 152);
+            this.btnSaveSchema.Name = "btnSaveSchema";
+            this.btnSaveSchema.Size = new System.Drawing.Size(78, 31);
+            this.btnSaveSchema.TabIndex = 14;
+            this.btnSaveSchema.Text = "Save";
+            this.btnSaveSchema.UseVisualStyleBackColor = true;
+            this.btnSaveSchema.Click += new System.EventHandler(this.btnSaveSchema_Click);
+            // 
             // SortationSchemaView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 159);
+            this.ClientSize = new System.Drawing.Size(489, 187);
+            this.Controls.Add(this.btnCancelSchema);
             this.Controls.Add(this.grpUnsortableOptions);
+            this.Controls.Add(this.btnSaveSchema);
             this.Controls.Add(this.grpNodeOptions);
             this.Controls.Add(this.txtSortationSchemaName);
             this.Controls.Add(this.lblSortationSchemaTitle);
@@ -190,6 +214,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SortationSchemaView";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Sortation Schema";
             this.grpNodeOptions.ResumeLayout(false);
             this.grpUnsortableOptions.ResumeLayout(false);
@@ -213,5 +238,7 @@
         private System.Windows.Forms.TextBox txtFailedDefaultLocation;
         private System.Windows.Forms.RadioButton rdoFailedDefaultLocation;
         private System.Windows.Forms.RadioButton rdoKeepLocation;
+        private System.Windows.Forms.Button btnCancelSchema;
+        private System.Windows.Forms.Button btnSaveSchema;
     }
 }

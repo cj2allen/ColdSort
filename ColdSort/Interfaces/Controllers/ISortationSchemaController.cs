@@ -1,4 +1,5 @@
 ﻿using ColdSort.Core.Interfaces.Models;
+using System;
 using System.Collections.Generic;
 
 namespace ColdSort.Core.Interfaces.Controllers
@@ -18,5 +19,8 @@ namespace ColdSort.Core.Interfaces.Controllers
         List<ISortationNode> EditSortationNode(int index);
 
         ISortationSchema GetSortationSchema();
+
+        void SaveSchema();
+        void CancelSchema();
     }
 }

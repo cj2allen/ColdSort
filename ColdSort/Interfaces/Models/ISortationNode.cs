@@ -9,7 +9,6 @@ namespace ColdSort.Core.Interfaces.Models
         bool AllowSortEnd { get; set; }
         bool UseAbbreviation { get; set; }
         string GetSortationNodeProperty();
-        SortationNodeResult Evaluate(ISongFile songFile, ref string newDirectory);
         string ToString();
     }
 }

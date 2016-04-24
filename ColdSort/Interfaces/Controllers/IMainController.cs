@@ -1,4 +1,7 @@
-﻿namespace ColdSort.Core.Interfaces.Controllers
+﻿using ColdSort.Core.Interfaces.Models;
+using System;
+
+namespace ColdSort.Core.Interfaces.Controllers
 {
     public interface IMainController
     {
@@ -7,5 +10,8 @@
         void LoadDefaults();
 
         string SelectFolder(string originalPath);
+        void CreateSchema();
+        void EditSchema(ISortationSchema sortationSchema);
+        void EditSchema();
     }
 }
