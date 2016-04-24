@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.grpOutput = new System.Windows.Forms.GroupBox();
             this.grpLocations = new System.Windows.Forms.GroupBox();
             this.btnDestinationLocationBrowse = new System.Windows.Forms.Button();
             this.txtDestinationLocation = new System.Windows.Forms.TextBox();
@@ -36,15 +37,22 @@
             this.txtOriginalLocation = new System.Windows.Forms.TextBox();
             this.lblSourceLocation = new System.Windows.Forms.Label();
             this.grpSchema = new System.Windows.Forms.GroupBox();
-            this.btnEditSchema = new System.Windows.Forms.Button();
-            this.btnCreateSchema = new System.Windows.Forms.Button();
-            this.LoadSchema = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.btnCancelSort = new System.Windows.Forms.Button();
-            this.btnStartSort = new System.Windows.Forms.Button();
             this.grpLocations.SuspendLayout();
             this.grpSchema.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // grpOutput
+            // 
+            this.grpOutput.Location = new System.Drawing.Point(10, 147);
+            this.grpOutput.Name = "grpOutput";
+            this.grpOutput.Size = new System.Drawing.Size(572, 306);
+            this.grpOutput.TabIndex = 12;
+            this.grpOutput.TabStop = false;
+            this.grpOutput.Text = "Output";
             // 
             // grpLocations
             // 
@@ -115,45 +123,43 @@
             // 
             // grpSchema
             // 
-            this.grpSchema.Controls.Add(this.btnEditSchema);
-            this.grpSchema.Controls.Add(this.btnCreateSchema);
-            this.grpSchema.Controls.Add(this.LoadSchema);
+            this.grpSchema.Controls.Add(this.button5);
+            this.grpSchema.Controls.Add(this.button4);
+            this.grpSchema.Controls.Add(this.button3);
             this.grpSchema.Controls.Add(this.label3);
-            this.grpSchema.Location = new System.Drawing.Point(12, 142);
+            this.grpSchema.Location = new System.Drawing.Point(368, 6);
             this.grpSchema.Name = "grpSchema";
-            this.grpSchema.Size = new System.Drawing.Size(350, 86);
+            this.grpSchema.Size = new System.Drawing.Size(214, 130);
             this.grpSchema.TabIndex = 10;
             this.grpSchema.TabStop = false;
             this.grpSchema.Text = "Sortation Schema";
             // 
-            // btnEditSchema
+            // button5
             // 
-            this.btnEditSchema.Location = new System.Drawing.Point(145, 57);
-            this.btnEditSchema.Name = "btnEditSchema";
-            this.btnEditSchema.Size = new System.Drawing.Size(62, 20);
-            this.btnEditSchema.TabIndex = 9;
-            this.btnEditSchema.Text = "Edit";
-            this.btnEditSchema.UseVisualStyleBackColor = true;
-            this.btnEditSchema.Click += new System.EventHandler(this.btnEditSchema_Click);
+            this.button5.Location = new System.Drawing.Point(145, 57);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(62, 20);
+            this.button5.TabIndex = 9;
+            this.button5.Text = "Edit";
+            this.button5.UseVisualStyleBackColor = true;
             // 
-            // btnCreateSchema
+            // button4
             // 
-            this.btnCreateSchema.Location = new System.Drawing.Point(77, 57);
-            this.btnCreateSchema.Name = "btnCreateSchema";
-            this.btnCreateSchema.Size = new System.Drawing.Size(62, 20);
-            this.btnCreateSchema.TabIndex = 8;
-            this.btnCreateSchema.Text = "Create";
-            this.btnCreateSchema.UseVisualStyleBackColor = true;
-            this.btnCreateSchema.Click += new System.EventHandler(this.btnCreateSchema_Click);
+            this.button4.Location = new System.Drawing.Point(77, 57);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(62, 20);
+            this.button4.TabIndex = 8;
+            this.button4.Text = "Create";
+            this.button4.UseVisualStyleBackColor = true;
             // 
-            // LoadSchema
+            // button3
             // 
-            this.LoadSchema.Location = new System.Drawing.Point(9, 57);
-            this.LoadSchema.Name = "LoadSchema";
-            this.LoadSchema.Size = new System.Drawing.Size(62, 20);
-            this.LoadSchema.TabIndex = 7;
-            this.LoadSchema.Text = "Load";
-            this.LoadSchema.UseVisualStyleBackColor = true;
+            this.button3.Location = new System.Drawing.Point(9, 57);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(62, 20);
+            this.button3.TabIndex = 7;
+            this.button3.Text = "Load";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -164,37 +170,16 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "Title:";
             // 
-            // btnCancelSort
-            // 
-            this.btnCancelSort.Enabled = false;
-            this.btnCancelSort.Location = new System.Drawing.Point(251, 234);
-            this.btnCancelSort.Name = "btnCancelSort";
-            this.btnCancelSort.Size = new System.Drawing.Size(111, 23);
-            this.btnCancelSort.TabIndex = 11;
-            this.btnCancelSort.Text = "Sort W/ Diagnostics";
-            this.btnCancelSort.UseVisualStyleBackColor = true;
-            // 
-            // btnStartSort
-            // 
-            this.btnStartSort.Location = new System.Drawing.Point(183, 234);
-            this.btnStartSort.Name = "btnStartSort";
-            this.btnStartSort.Size = new System.Drawing.Size(62, 23);
-            this.btnStartSort.TabIndex = 10;
-            this.btnStartSort.Text = "Sort";
-            this.btnStartSort.UseVisualStyleBackColor = true;
-            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 264);
-            this.Controls.Add(this.btnCancelSort);
-            this.Controls.Add(this.btnStartSort);
+            this.ClientSize = new System.Drawing.Size(594, 472);
+            this.Controls.Add(this.grpOutput);
             this.Controls.Add(this.grpLocations);
             this.Controls.Add(this.grpSchema);
             this.Name = "MainView";
             this.Text = "MainView";
-            this.Load += new System.EventHandler(this.MainView_Load);
             this.grpLocations.ResumeLayout(false);
             this.grpLocations.PerformLayout();
             this.grpSchema.ResumeLayout(false);
@@ -204,6 +189,8 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.GroupBox grpOutput;
         private System.Windows.Forms.GroupBox grpLocations;
         private System.Windows.Forms.Button btnDestinationLocationBrowse;
         private System.Windows.Forms.TextBox txtDestinationLocation;
@@ -212,11 +199,9 @@
         private System.Windows.Forms.TextBox txtOriginalLocation;
         private System.Windows.Forms.Label lblSourceLocation;
         private System.Windows.Forms.GroupBox grpSchema;
-        private System.Windows.Forms.Button btnEditSchema;
-        private System.Windows.Forms.Button btnCreateSchema;
-        private System.Windows.Forms.Button LoadSchema;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button btnCancelSort;
-        private System.Windows.Forms.Button btnStartSort;
     }
 }

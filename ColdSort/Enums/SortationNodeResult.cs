@@ -1,6 +1,6 @@
 ﻿namespace ColdSort.Core.Enums
 {
-    public enum SortNodeResult
+    public enum SortationNodeResult
     {
         NotSorted,
         Sorted,

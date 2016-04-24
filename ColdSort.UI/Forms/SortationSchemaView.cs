@@ -1,12 +1,13 @@
 ﻿using ColdSort.Core.Interfaces.Controllers;
 using ColdSort.Core.Interfaces.Models;
+using ColdSort.Core.Interfaces.Views;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace ColdSort.UI.Forms
 {
-    public partial class SortationSchemaView : Form
+    public partial class SortationSchemaView : Form, ISortationSchemaView
     {
         private ISortationSchemaController _sortationSchemaController;
 
@@ -101,7 +102,6 @@ namespace ColdSort.UI.Forms
             {
                 List<ISortationNode> sortationNodes = _sortationSchemaController.RaiseNode(index);
                 SortationNodes = sortationNodes;
-                lstSortationNodes.SelectedIndex = index - 1;
             }
             else if (index < 0)
             {
@@ -113,11 +113,10 @@ namespace ColdSort.UI.Forms
         {
             int index = lstSortationNodes.SelectedIndex;
 
-            if (index < (lstSortationNodes.Items.Count - 1))
+            if (index > 0 && index > lstSortationNodes.Items.Count)
             {
-                List<ISortationNode> sortationNodes = _sortationSchemaController.LowerNode(index);
+                List<ISortationNode> sortationNodes = _sortationSchemaController.RemoveNode(index);
                 SortationNodes = sortationNodes;
-                lstSortationNodes.SelectedIndex = index + 1;
             }
             else if (index < 0)
             {
@@ -150,7 +149,7 @@ namespace ColdSort.UI.Forms
         {
             int index = lstSortationNodes.SelectedIndex;
 
-            if ((index >= 0) && index < SortationNodes.Count)
+            if (index > 0)
             {
                 List<ISortationNode> sortationNodes = _sortationSchemaController.EditSortationNode(index);
                 SortationNodes = sortationNodes;
@@ -159,21 +158,6 @@ namespace ColdSort.UI.Forms
             {
                 ErrorBox("No Sortation Node Selected.");
             }
-        }
-
-        private void SortationSchemaView_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            _sortationSchemaController.CancelSchema();
-        }
-
-        private void btnSaveSchema_Click(object sender, EventArgs e)
-        {
-            _sortationSchemaController.SaveSchema();
-        }
-
-        private void btnCancelSchema_Click(object sender, EventArgs e)
-        {
-            _sortationSchemaController.CancelSchema();
         }
     }
 }

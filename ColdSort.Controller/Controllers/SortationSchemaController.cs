@@ -1,19 +1,19 @@
 ﻿using ColdSort.Core.Interfaces.Controllers;
 using ColdSort.Core.Interfaces.Models;
+using ColdSort.Core.Interfaces.Views;
 using ColdSort.Model.Models;
 using ColdSort.UI.Forms;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 namespace ColdSort.Controller.Controllers
 {
     public class SortationSchemaController : ISortationSchemaController
     {
-        private SortationSchemaView _sortationSchemaView;
+        private ISortationSchemaView _sortationSchemaView;
         private ISortationSchema _sortationSchema;
 
-        public SortationSchemaController(SortationSchemaView sortationSchemaController)
+        public SortationSchemaController(ISortationSchemaView sortationSchemaController)
         {
             _sortationSchemaView = sortationSchemaController;
             _sortationSchemaView.SetController(this);
@@ -26,8 +26,7 @@ namespace ColdSort.Controller.Controllers
             _sortationSchemaView.FailedDefaultLocation = _sortationSchema.FailedSortationDefault;
             _sortationSchemaView.KeepFilesAtOriginalLocation = _sortationSchema.KeepFilesAtOriginalLocation;
             _sortationSchemaView.UseFailedDefaultLocation = !_sortationSchema.KeepFilesAtOriginalLocation;
-            _sortationSchemaView.SortationNodes = _sortationSchema.SortationNodes;
-            _sortationSchemaView.ShowDialog();
+
         }
 
         public List<ISortationNode> RaiseNode(int index)
@@ -61,44 +60,24 @@ namespace ColdSort.Controller.Controllers
         
         public List<ISortationNode> EditSortationNode(int index)
         {
-            using (SortationNodeView sortationNodeView = new SortationNodeView())
+            ISortationNodeView sortationNodeView = new SortationNodeView();
+            sortationNodeView.Visible = false;
+            //TODO lock sortation schema window
+
+            ISortationNodeController sortationNodeController = new SortationNodeController(sortationNodeView, _sortationSchema.SortationNodes[index]);
+            sortationNodeController.LoadView();
+            ISortationNode node = sortationNodeController.GetSortationNode();
+
+            if (node != null)
             {
-                ISortationNodeController sortationNodeController = new SortationNodeController(sortationNodeView, _sortationSchema.SortationNodes[index]);                
-                sortationNodeView.Visible = false;
-                sortationNodeController.LoadView();
-                sortationNodeView.ShowDialog();
-                ISortationNode node = sortationNodeController.GetSortationNode();
                 _sortationSchema.SortationNodes[index] = node;
+            }
+            else
+            {
+                _sortationSchema.SortationNodes.RemoveAt(index);
             }
 
             return _sortationSchema.SortationNodes;
-        }
-
-        public ISortationSchema SortationSchema
-        {
-            get
-            {
-                return _sortationSchema;
-            }
-        }
-
-        public void SaveSchema()
-        {
-            _sortationSchema.SortationSchemaTitle = _sortationSchemaView.SchemaName;
-            _sortationSchema.FailedSortationDefault = _sortationSchemaView.FailedDefaultLocation;
-            _sortationSchema.KeepFilesAtOriginalLocation = _sortationSchemaView.KeepFilesAtOriginalLocation;
-            _sortationSchema.SortationNodes = _sortationSchemaView.SortationNodes;
-            UnloadView();
-        }
-
-        public void CancelSchema()
-        {
-            UnloadView();
-        }
-
-        public void UnloadView()
-        {
-            _sortationSchemaView.Hide();
         }
 
         public ISortationSchema GetSortationSchema()

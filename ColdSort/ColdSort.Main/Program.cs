@@ -1,5 +1,6 @@
 ﻿using ColdSort.Controller.Controllers;
 using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Core.Interfaces.Views;
 using ColdSort.UI.Forms;
 using System;
 using System.Windows.Forms;
@@ -17,13 +18,11 @@ namespace ColdSort
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            using (MainView mainView = new MainView())
-            {
-                mainView.Visible = false;
-                IMainController mainController = new MainController(mainView);
-                mainController.LoadView();
-                Application.Run();
-            }
+            IMainView mainView = new MainView();
+            mainView.Visible = false;
+
+            IMainController mainController = new MainController(mainView);
+            mainController.LoadView();
         }
     }
 }
