@@ -2,9 +2,9 @@
 {
     public enum SongProperty
     {
-        Title,
-        Artist,
-        Album,
-        Year
+        Title = 0,
+        Artist = 1,
+        Album = 2,
+        Year = 3
     }
 }

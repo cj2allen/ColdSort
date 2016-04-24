@@ -24,29 +24,6 @@ namespace ColdSort.Model.Models
             return SongProperty.ToString();
         }
 
-        public SortationNodeResult Evaluate(ISongFile songFile, ref string newDirectory)
-        {
-            string newPathValue = songFile.GetType().GetProperty(SongProperty.ToString()).GetValue(songFile, null).ToString();
-
-            if (String.IsNullOrEmpty(newPathValue) && (newPathValue.Trim().Length != 0))
-            {
-                if (UseAbbreviation)
-                {
-                    newPathValue = newPathValue.Substring(0, 1);
-                }
-
-                String.Format(@"%s\%s", newDirectory, newPathValue);
-
-                return SortationNodeResult.NotSorted;
-            }
-            else if(AllowSortEnd)
-            {
-                return SortationNodeResult.Sorted;
-            }
-
-            return SortationNodeResult.Error;
-        }
-
         public override String ToString()
         {
             return Name;

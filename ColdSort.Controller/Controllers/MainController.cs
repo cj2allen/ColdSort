@@ -5,16 +5,16 @@ using ColdSort.Core.Enums;
 using System.Windows.Forms;
 using ColdSort.Core.Interfaces.Models;
 using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Views;
+using ColdSort.UI.Forms;
 
 namespace ColdSort.Controller.Controllers
 {
     public class MainController : IMainController
     {
-        private IMainView _mainView;
+        private MainView _mainView;
         private ISortationSchema _sortationSchema;
 
-        public MainController(IMainView mainView)
+        public MainController(MainView mainView)
         {
             _mainView = mainView;
             _mainView.SetController(this);
@@ -23,6 +23,7 @@ namespace ColdSort.Controller.Controllers
         public void LoadView()
         {
             LoadDefaults();
+            _mainView.Visible = true;
         }
 
         public void LoadDefaults()
@@ -30,6 +31,9 @@ namespace ColdSort.Controller.Controllers
             _mainView.OriginalLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             _mainView.DestinationLocation = _mainView.OriginalLocation;
             _sortationSchema = new SortationSchema();
+            _sortationSchema.SortationSchemaTitle = "Default Sort";
+            _sortationSchema.KeepFilesAtOriginalLocation = false;
+            _sortationSchema.FailedSortationDefault = "!Unsorted";
             _sortationSchema.SortationNodes = new List<ISortationNode>
             {
                 new SortationNode
@@ -69,6 +73,27 @@ namespace ColdSort.Controller.Controllers
             _mainView.ErrorBox("Folder path is invalid. Path unchanged.");
 
             return originalPath;
+        }
+
+        public void CreateSchema()
+        {
+            _sortationSchema = new SortationSchema();
+            EditSchema(_sortationSchema);
+        }
+
+        public void EditSchema()
+        {
+            EditSchema(_sortationSchema);
+        }
+
+        public void EditSchema(ISortationSchema sortationSchema)
+        {
+            using ( SortationSchemaView sortationSchemaView = new SortationSchemaView())
+            {
+                ISortationSchemaController sortationSchemaController = new SortationSchemaController(sortationSchemaView);
+                sortationSchemaController.LoadSchemaData(_sortationSchema);
+                _sortationSchema = sortationSchemaController.GetSortationSchema();
+            } 
         }
     }
 }

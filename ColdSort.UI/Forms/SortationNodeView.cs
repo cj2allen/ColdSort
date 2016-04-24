@@ -1,11 +1,11 @@
-﻿using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Views;
+﻿using ColdSort.Core.Enums;
+using ColdSort.Core.Interfaces.Controllers;
 using System;
 using System.Windows.Forms;
 
 namespace ColdSort.UI.Forms
 {
-    public partial class SortationNodeView : Form, ISortationNodeView
+    public partial class SortationNodeView : Form
     {
         private ISortationNodeController _sortationNodeController;
 
@@ -21,7 +21,7 @@ namespace ColdSort.UI.Forms
             }
         }
         
-        public int Property
+        public int SongProperties
         {
             get
             {
@@ -59,6 +59,7 @@ namespace ColdSort.UI.Forms
         public SortationNodeView()
         {
             InitializeComponent();
+            cbxSelectProperty.DataSource = Enum.GetNames(typeof(SongProperty));
         }
 
         public void SetController(ISortationNodeController sortationNodeController)
@@ -72,6 +73,11 @@ namespace ColdSort.UI.Forms
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
+        {
+            _sortationNodeController.Cancel();
+        }
+
+        private void SortationNodeView_FormClosing(object sender, FormClosingEventArgs e)
         {
             _sortationNodeController.Cancel();
         }

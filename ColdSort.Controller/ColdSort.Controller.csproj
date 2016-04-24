@@ -44,7 +44,7 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\SortationNodeController.cs" />
     <Compile Include="Controllers\SortationSchemaController.cs" />
-    <Compile Include="Controllers\SortationService.cs" />
+    <Compile Include="Services\SortationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +61,7 @@
       <Name>ColdSort.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,11 +1,10 @@
 ﻿using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Views;
 using System;
 using System.Windows.Forms;
 
 namespace ColdSort.UI.Forms
 {
-    public partial class MainView : Form, IMainView
+    public partial class MainView : Form
     {
         private IMainController _mainController;
 
@@ -58,6 +57,22 @@ namespace ColdSort.UI.Forms
         {
             string path = _mainController.SelectFolder(DestinationLocation);
             txtOriginalLocation.Text = path;
+        }
+
+        private void btnCreateSchema_Click(object sender, EventArgs e)
+        {
+            _mainController.CreateSchema();
+        }
+
+        private void btnEditSchema_Click(object sender, EventArgs e)
+        {
+            _mainController.EditSchema();
+
+        }
+
+        private void MainView_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

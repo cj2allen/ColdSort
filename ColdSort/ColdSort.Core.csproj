@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\SongProperty.cs" />
-    <Compile Include="Enums\SortationNodeResult.cs" />
+    <Compile Include="Enums\SortNodeResult.cs" />
     <Compile Include="Interfaces\Controllers\IMainController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationNodeController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationSchemaController.cs" />
@@ -59,9 +59,6 @@
     <Compile Include="Interfaces\Models\ISortationSchema.cs" />
     <Compile Include="Interfaces\Models\ISortationSchemaResult.cs" />
     <Compile Include="Interfaces\Models\ISortationResult.cs" />
-    <Compile Include="Interfaces\Views\IMainView.cs" />
-    <Compile Include="Interfaces\Views\ISortationNodeView.cs" />
-    <Compile Include="Interfaces\Views\ISortationSchemaView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
