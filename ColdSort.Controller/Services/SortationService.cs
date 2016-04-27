@@ -1,6 +1,7 @@
 ﻿using ColdSort.Core.Enums;
 using ColdSort.Core.Interfaces.Models;
 using ColdSort.Model.Models;
+using ColdSort.UI.Forms;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,47 +13,112 @@ namespace ColdSort.Controller.Controllers
     {
         public const string MP3_EXTENSION = "mp3";
 
+        public static void SortWithNoDiagnostics(string oldRootpath, string newRootPath, ISortationSchema sortationSchema)
+        {
+            int fileCount = System.IO.Directory.GetFiles(oldRootpath).Length;
+
+            using (ProgressView progressView = new ProgressView(fileCount))
+            {
+                foreach (string subDirectory in Directory.GetDirectories(oldRootpath))
+                {
+                    foreach (string file in Directory.GetFiles(subDirectory))
+                    {
+                        progressView.Update(file);
+
+                        ISongFile songFile = ConvertPathToISongFile(file);
+
+                        if (songFile != null)
+                        {
+                            CreateSortationPath(sortationSchema, songFile, newRootPath);
+                            MoveSongFile(songFile);
+                        }
+
+                    }
+                }
+            }
+        }
+
+
         #region Scanning For Music
+
+        private static ISongFile ConvertPathToISongFile (string songFilePath)
+        {
+            string extension = songFilePath.Split('.').LastOrDefault().ToLower();
+
+            if (extension != null)
+            {
+                ISongFile songFile;
+
+                switch (extension)
+                {
+                    case MP3_EXTENSION:
+                        songFile = new MP3File();
+                        break;
+                    default:
+                        songFile = null;
+                        break;
+                }
+
+                if (songFile.LoadSongInformation(songFilePath))
+                {
+                    return songFile;
+                }
+            }
+
+            return null;
+        }
 
         public static List<ISongFile> GetSongFiles(string path)
         {
             List<ISongFile> songFiles = new List<ISongFile>();
 
-            try
+            foreach (string subDirectory in Directory.GetDirectories(path))
             {
-                foreach (string subDirectory in Directory.GetDirectories(path))
+                foreach(string file in Directory.GetFiles(subDirectory))
                 {
-                    foreach(string file in Directory.GetFiles(subDirectory))
-                    {
-                        string extension = file.Split('.').Last().ToLower();
-                        ISongFile songFile = null;
-
-                        switch (extension)
-                        {
-                            case MP3_EXTENSION:
-                                songFile = new MP3File();
-                                songFile.LoadSongInformation(file);
-                                break;
-                            default:
-                                break;
-                        }
-
-                        songFiles.Add(songFile);
-                    }
+                    ISongFile songFile = ConvertPathToISongFile(file);
+                    songFiles.Add(songFile);
                 }
+            }
 
-                return songFiles;
-            }
-            catch
-            {
-                //TODO throw something
-                return null;
-            }
+            return songFiles;
         }
 
         #endregion
 
         #region Get Sortation Paths
+
+        private static ISortationSchemaResult CreateSortationPath (ISortationSchema sortationSchema, ISongFile songFile, string newRootPath)
+        {
+            SortNodeResult result = SortNodeResult.NotSorted;
+
+            foreach (SortationNode sortationNode in sortationSchema.SortationNodes)
+            {   
+                result = GenerateNodeValue(sortationNode, ref songFile);
+
+                if (result != SortNodeResult.NotSorted)
+                {
+                    break;
+                }
+            }
+
+            if (result == SortNodeResult.Error)
+            {
+                return (ISortationSchemaResult) new FailedSortation
+                {
+                    OriginalPath = songFile.OriginalPath,
+                    ErrorMessage = result.ToString()
+                };
+            }
+            else
+            {
+                return (ISortationSchemaResult) new SuccessfulSortation
+                {
+                    OriginalPath = songFile.OriginalPath,
+                    SortedPath = songFile.SortedPath
+                };
+            }
+        }
 
         public static List<ISortationSchemaResult> GenerateSortationPaths(ISortationSchema sortationSchema, List<ISongFile> songFiles, string newRootPath)
         {
@@ -60,38 +126,13 @@ namespace ColdSort.Controller.Controllers
 
             foreach (ISongFile songFile in songFiles)
             {
-                SortNodeResult result = SortNodeResult.NotSorted;
-                string builtPath = newRootPath;
-                int sortationNodePosition = 0;
-
-                while ((result == SortNodeResult.NotSorted) && (sortationNodePosition < sortationSchema.SortationNodes.Count()))
-                {
-                    string newDirectory = "";
-                    result = GenerateNodeValue (sortationSchema.SortationNodes[sortationNodePosition], songFile, ref newDirectory);
-
-                    if ((result == SortNodeResult.Sorted) || (result == SortNodeResult.Error))
-                    {
-                        sortationSchemaResults.Add((ISortationSchemaResult)new SuccessfulSortation
-                        {
-                            OriginalPath = songFile.OriginalPath,
-                            SortedPath = songFile.SortedPath
-                        });
-                    }
-                    else
-                    {
-                        sortationSchemaResults.Add((ISortationSchemaResult)new FailedSortation
-                        {
-                            OriginalPath = songFile.OriginalPath,
-                            ErrorMessage = result.ToString()
-                        });
-                    }
-                }
+                sortationSchemaResults.Add(CreateSortationPath(sortationSchema, songFile, newRootPath));
             }
 
             return sortationSchemaResults;
         }
 
-        private static SortNodeResult GenerateNodeValue (ISortationNode sortationNode, ISongFile songFile, ref string newDirectory)
+        private static SortNodeResult GenerateNodeValue (ISortationNode sortationNode, ref ISongFile songFile)
         {
             string newPathValue;
             switch (sortationNode.SongProperty)
@@ -117,7 +158,7 @@ namespace ColdSort.Controller.Controllers
                     newPathValue = newPathValue.Substring(0, 1); 
                 }
 
-                String.Format(@"%s\%s", newDirectory, newPathValue);
+                String.Format(@"%s\%s", songFile.SortedPath, newPathValue);
 
                 return SortNodeResult.NotSorted;
             }
@@ -131,32 +172,37 @@ namespace ColdSort.Controller.Controllers
 
         #endregion
 
-        public static void MoveMusic (List<ISongFile> songFiles)
+        private static ISortationResult MoveSongFile(ISongFile songFile)
         {
+            string errorMessage = "";
+            bool isSorted = false;
+
+            try
+            {
+                File.Move(songFile.OriginalPath, songFile.SortedPath);
+                isSorted = true;
+            }
+            catch (Exception e)
+            {
+                errorMessage = e.ToString();
+            }
+
+            return new SortationResult
+            { 
+                OriginalPath = songFile.OriginalPath,
+                SortedPath = songFile.SortedPath,
+                IsSorted = isSorted,
+                ErrorMessage = errorMessage
+            };
+        }
+
+        public static void MoveSongFiles (List<ISongFile> songFiles)
+        {
+            List<ISortationResult> sortationResults = new List<ISortationResult>();
+
             foreach (ISongFile songFile in songFiles)
             {
-                List<ISortationResult> sortationResults = new List<ISortationResult>();
-                string errorMessage = "";
-                bool isSorted = false;
-
-                try
-                {
-                    File.Move(songFile.OriginalPath, songFile.SortedPath);
-                    isSorted = true;
-                }
-                catch (Exception e)
-                {
-                    errorMessage = e.ToString();
-                }
-
-                sortationResults.Add(new SortationResult
-                {
-                    OriginalPath = songFile.OriginalPath,
-                    SortedPath = songFile.SortedPath,
-                    IsSorted = isSorted,
-                    ErrorMessage = errorMessage
-                });
-
+                sortationResults.Add(MoveSongFile(songFile));
             }
         }
     }

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.pbSortProgress = new System.Windows.Forms.ProgressBar();
-            this.lblPercentage = new System.Windows.Forms.Label();
+            this.lblProgressCount = new System.Windows.Forms.Label();
             this.lblAction = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
@@ -43,11 +43,11 @@
             // 
             // lblPercentage
             // 
-            this.lblPercentage.AutoSize = true;
-            this.lblPercentage.Location = new System.Drawing.Point(323, 18);
-            this.lblPercentage.Name = "lblPercentage";
-            this.lblPercentage.Size = new System.Drawing.Size(0, 13);
-            this.lblPercentage.TabIndex = 1;
+            this.lblProgressCount.AutoSize = true;
+            this.lblProgressCount.Location = new System.Drawing.Point(323, 18);
+            this.lblProgressCount.Name = "lblPercentage";
+            this.lblProgressCount.Size = new System.Drawing.Size(0, 13);
+            this.lblProgressCount.TabIndex = 1;
             // 
             // lblAction
             // 
@@ -76,7 +76,7 @@
             this.ClientSize = new System.Drawing.Size(426, 70);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.lblAction);
-            this.Controls.Add(this.lblPercentage);
+            this.Controls.Add(this.lblProgressCount);
             this.Controls.Add(this.pbSortProgress);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -90,7 +90,7 @@
         #endregion
 
         private System.Windows.Forms.ProgressBar pbSortProgress;
-        private System.Windows.Forms.Label lblPercentage;
+        private System.Windows.Forms.Label lblProgressCount;
         private System.Windows.Forms.Label lblAction;
         private System.Windows.Forms.Button btnCancel;
     }

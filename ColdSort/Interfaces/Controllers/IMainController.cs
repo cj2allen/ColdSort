@@ -13,5 +13,6 @@ namespace ColdSort.Core.Interfaces.Controllers
         void CreateSchema();
         void EditSchema(ISortationSchema sortationSchema);
         void EditSchema();
+        void CancelSort();
     }
 }
