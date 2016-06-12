@@ -1,5 +1,6 @@
 ﻿using ColdSort.Core.Interfaces.Models;
 using System;
+using System.IO;
 using System.Linq;
 
 namespace ColdSort.Models
@@ -53,6 +54,10 @@ namespace ColdSort.Models
             {
                 return _sortedPath;
             }
+            set
+            {
+                _sortedPath = value;
+            }
         }
 
         public string OriginalFilename
@@ -61,7 +66,7 @@ namespace ColdSort.Models
             {
                 if (_originalPath != null)
                 {
-                    return _originalPath.Split('\\').Last();
+                    return Path.GetFileName(_originalPath);
                 }
 
                 return "";
@@ -74,10 +79,14 @@ namespace ColdSort.Models
             {
                 if(_sortedPath != null)
                 {
-                    return _sortedPath.Split('\\').Last();
+                    return Path.GetFileName(_sortedPath);
                 }
                 
                 return "";
+            }
+            set
+            {
+                _sortedPath = value;
             }
         }
         #endregion

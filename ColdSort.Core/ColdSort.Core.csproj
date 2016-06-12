@@ -54,6 +54,7 @@
     <Compile Include="Interfaces\Controllers\IMainController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationNodeController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationSchemaController.cs" />
+    <Compile Include="Interfaces\Controllers\ISortationController.cs" />
     <Compile Include="Interfaces\Models\ISongFile.cs" />
     <Compile Include="Interfaces\Models\ISortationNode.cs" />
     <Compile Include="Interfaces\Models\ISortationSchema.cs" />

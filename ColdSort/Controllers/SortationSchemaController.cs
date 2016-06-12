@@ -12,9 +12,9 @@ namespace ColdSort.Controllers
         private SortationSchemaView _sortationSchemaView;
         private ISortationSchema _sortationSchema;
 
-        public SortationSchemaController(SortationSchemaView sortationSchemaController)
+        public SortationSchemaController(SortationSchemaView sortationSchemaView)
         {
-            _sortationSchemaView = sortationSchemaController;
+            _sortationSchemaView = sortationSchemaView;
             _sortationSchemaView.SetController(this);
         }
 

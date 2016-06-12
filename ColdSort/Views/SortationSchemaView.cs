@@ -163,6 +163,7 @@ namespace ColdSort.Views
 
         private void SortationSchemaView_FormClosing(object sender, FormClosingEventArgs e)
         {
+            MessageBox.Show("Saving not implemented. Created schema can still be used.");
             _sortationSchemaController.CancelSchema();
         }
 

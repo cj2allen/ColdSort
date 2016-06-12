@@ -24,12 +24,13 @@ namespace ColdSort.Controllers
         {
             LoadDefaults();
             _mainView.Visible = true;
+            UpdateSchemaName();
         }
 
         public void LoadDefaults()
         {
             _mainView.OriginalLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
-            _mainView.DestinationLocation = _mainView.OriginalLocation;
+            _mainView.DestinationLocation = @"D:\TestOutput";
             _sortationSchema = new SortationSchema();
             _sortationSchema.SortationSchemaTitle = "Default Sort";
             _sortationSchema.KeepFilesAtOriginalLocation = false;
@@ -60,6 +61,14 @@ namespace ColdSort.Controllers
             };
         }
 
+        public void UpdateSchemaName()
+        {
+            if(_sortationSchema != null)
+            {
+                _mainView.SchemaTitle = _sortationSchema.SortationSchemaTitle;
+            }
+        }
+
         public string SelectFolder(string originalPath)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
@@ -84,6 +93,7 @@ namespace ColdSort.Controllers
         public void EditSchema()
         {
             EditSchema(_sortationSchema);
+            UpdateSchemaName();
         }
 
         public void EditSchema(ISortationSchema sortationSchema)
@@ -96,14 +106,13 @@ namespace ColdSort.Controllers
             } 
         }
 
-        public void CancelSort()
-        {
-            throw new NotImplementedException();
-        }
-
         public void SortWithoutDiagnostics()
         {
-            SortationService.SortWithNoDiagnostics(_mainView.OriginalLocation, _mainView.DestinationLocation, _sortationSchema);
+            using (ProgressView progressView = new ProgressView())
+            {
+                ISortationController sortationController = new SortationController(progressView);
+                sortationController.SortWithoutDiagnostics(_mainView.OriginalLocation, _mainView.DestinationLocation, _sortationSchema);
+            }
         }
     }
 }

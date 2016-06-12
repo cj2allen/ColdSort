@@ -8,7 +8,7 @@
         string Album { get; }
         string Year { get; }        
         string OriginalPath { get; }
-        string SortedPath { get; }
+        string SortedPath { get; set; }
         string OriginalFilename { get; }
         string SortedFilename { get; }
         #endregion

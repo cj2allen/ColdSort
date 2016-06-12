@@ -7,50 +7,111 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.ComponentModel;
+using System.Windows.Forms;
+using ColdSort.Core.Interfaces.Controllers;
 
 namespace ColdSort.Controllers
 {
-    public static class SortationService
+    public class SortationController : ISortationController
     {
         public const string MP3_EXTENSION = "mp3";
         public static readonly char[] INVALID_CHARACTERS = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+        public static readonly int MAX_PATH_LENGTH = 260;
 
-        public static string CombineExtensions()
+        private string _oldRootPath;
+        private string _newRootPath;
+        private ISortationSchema _sortationSchema;
+        private ProgressView _progressView;
+        private BackgroundWorker _backgroundWorker;
+
+        public SortationController(ProgressView progressView)
+        {
+            _progressView = progressView;
+            _progressView.SetController(this);
+        }
+
+        public void SortWithoutDiagnostics(string oldRootpath, string newRootPath, ISortationSchema sortationSchema)
+        {
+            _oldRootPath = oldRootpath;
+            _newRootPath = newRootPath;
+            _sortationSchema = sortationSchema;
+            
+            _backgroundWorker = new BackgroundWorker();
+            _backgroundWorker.WorkerReportsProgress = true;
+            _backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
+            _backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+            _backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+            _backgroundWorker.RunWorkerAsync();
+            _progressView.ShowDialog();
+        }
+
+        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage > 0)
+            {
+                _progressView.UpdateProgress(e.ProgressPercentage);
+            }
+        }
+
+        public string CombineExtensions()
         {
             return String.Format("*.{0}", MP3_EXTENSION);
         }
 
-        public static void SortWithNoDiagnostics(string oldRootpath, string newRootPath, ISortationSchema sortationSchema)
+        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (ProgressView progressView = new ProgressView())
+            double currentFileCount = default(double);
+            double totalFileCount = default(double);
+
+            string[] files = Directory.GetFiles(_oldRootPath, CombineExtensions(), SearchOption.AllDirectories);
+            totalFileCount = files.Length;
+
+            foreach (string file in files)
             {
-                string[] files = Directory.GetFiles(oldRootpath, CombineExtensions(), SearchOption.AllDirectories);
+                currentFileCount++;
 
-                progressView.SetFileCount(files.Length);
+                int percentage = (int) Math.Ceiling(currentFileCount / totalFileCount*100);
+                _backgroundWorker.ReportProgress(percentage);
 
-                foreach (string file in files)
+                ISongFile songFile = ConvertPathToISongFile(file);
+
+                if (songFile != null)
                 {
-                    progressView.UpdateInfo(file);
-
-                    ISongFile songFile = ConvertPathToISongFile(file);
-
-                    if (songFile != null)
-                    {
-                        ISortationSchemaResult sortationSchemaResult = CreateSortationPath(sortationSchema, songFile, newRootPath);
-                        if (sortationSchemaResult is SuccessfulSortation)
-                        {
-                            Thread.Sleep(50);
-                            //MoveSongFile(songFile);
-                        }
-                    }
+                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(_sortationSchema, songFile, _newRootPath);
+                    MoveSongFile(songFile);                    
                 }
             }
+        }
+
+        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                MessageBox.Show("Canceled!");
+            }
+            else if (e.Error != null)
+            {
+                MessageBox.Show("Error!");
+            }
+            else
+            {
+                MessageBox.Show("Done!");
+            }
+
+            _progressView.Close();
+        }
+
+        public void CancelSort()
+        {
+            _backgroundWorker.CancelAsync();
+            _progressView.Close();
         }
 
 
         #region Scanning For Music
 
-        private static ISongFile ConvertPathToISongFile (string songFilePath)
+        private ISongFile ConvertPathToISongFile (string songFilePath)
         {
             string extension = songFilePath.Split('.').LastOrDefault().ToLower();
 
@@ -77,7 +138,7 @@ namespace ColdSort.Controllers
             return null;
         }
 
-        public static List<ISongFile> GetSongFiles(string path)
+        public List<ISongFile> GetSongFiles(string path)
         {
             List<ISongFile> songFiles = new List<ISongFile>();
 
@@ -97,9 +158,10 @@ namespace ColdSort.Controllers
 
         #region Get Sortation Paths
 
-        private static ISortationSchemaResult CreateSortationPath (ISortationSchema sortationSchema, ISongFile songFile, string newRootPath)
+        private ISortationSchemaResult CreateSortationPath (ISortationSchema sortationSchema, ISongFile songFile, string newRootPath)
         {
             SortNodeResult result = SortNodeResult.NotSorted;
+            songFile.SortedPath = _newRootPath;
 
             foreach (SortationNode sortationNode in sortationSchema.SortationNodes)
             {   
@@ -121,6 +183,7 @@ namespace ColdSort.Controllers
             }
             else
             {
+                songFile.SortedPath = String.Format(@"{0}\{1}", songFile.SortedPath, songFile.OriginalFilename);
                 return (ISortationSchemaResult) new SuccessfulSortation
                 {
                     OriginalPath = songFile.OriginalPath,
@@ -129,7 +192,7 @@ namespace ColdSort.Controllers
             }
         }
 
-        public static List<ISortationSchemaResult> GenerateSortationPaths(ISortationSchema sortationSchema, List<ISongFile> songFiles, string newRootPath)
+        public List<ISortationSchemaResult> GenerateSortationPaths(ISortationSchema sortationSchema, List<ISongFile> songFiles, string newRootPath)
         {
             List<ISortationSchemaResult> sortationSchemaResults = new List<ISortationSchemaResult>();
 
@@ -141,7 +204,7 @@ namespace ColdSort.Controllers
             return sortationSchemaResults;
         }
 
-        private static SortNodeResult GenerateNodeValue (ISortationNode sortationNode, ref ISongFile songFile)
+        private SortNodeResult GenerateNodeValue (ISortationNode sortationNode, ref ISongFile songFile)
         {
             string newPathValue;
 
@@ -163,14 +226,15 @@ namespace ColdSort.Controllers
 
             if (!String.IsNullOrEmpty(newPathValue)
                 && (newPathValue.Trim().Length > 0)
-                && (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1))
+                && (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1)
+                && (Path.GetDirectoryName(songFile.SortedPath).Length <= MAX_PATH_LENGTH))
             {
                 if (sortationNode.UseAbbreviation)
                 {
                     newPathValue = newPathValue.Substring(0, 1); 
                 }
 
-                String.Format(@"%s\%s", songFile.SortedPath, newPathValue);
+               songFile.SortedPath = String.Format(@"{0}\{1}", songFile.SortedPath, newPathValue);
 
                 return SortNodeResult.NotSorted;
             }
@@ -179,18 +243,26 @@ namespace ColdSort.Controllers
                 return SortNodeResult.Sorted;
             }
 
+            songFile.SortedPath = String.Format(@"{0}\{1}\{2}", _newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
             return SortNodeResult.Error;
         }
 
         #endregion
 
-        private static ISortationResult MoveSongFile(ISongFile songFile)
+        private ISortationResult MoveSongFile(ISongFile songFile)
         {
             string errorMessage = "";
             bool isSorted = false;
 
             try
             {
+                if (File.Exists(songFile.SortedPath))
+                {
+                    File.Delete(songFile.SortedPath);
+                }
+
+                //System.Diagnostics.Debug.WriteLine(songFile.SortedPath);
+                Directory.CreateDirectory(Path.GetDirectoryName(songFile.SortedPath));
                 File.Move(songFile.OriginalPath, songFile.SortedPath);
                 isSorted = true;
             }
@@ -208,7 +280,7 @@ namespace ColdSort.Controllers
             };
         }
 
-        public static void MoveSongFiles (List<ISongFile> songFiles)
+        public void MoveSongFiles (List<ISongFile> songFiles)
         {
             List<ISortationResult> sortationResults = new List<ISortationResult>();
 
@@ -216,6 +288,6 @@ namespace ColdSort.Controllers
             {
                 sortationResults.Add(MoveSongFile(songFile));
             }
-        }
+        }     
     }
 }

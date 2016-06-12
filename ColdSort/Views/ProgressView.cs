@@ -1,152 +1,80 @@
 ﻿using ColdSort.Core.Interfaces.Controllers;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ColdSort.Controllers;
 
 namespace ColdSort.Views
 {
     public partial class ProgressView : Form
     {
-        private delegate void SetActionInvoke();
-        private delegate void SetProgressCountInvoke();
-        private delegate void SetProgressInvoke();
-        private delegate void SetProgressBarInvoke(int setFileCount);
+        #region Internal variables
 
-        private int _numberOfFiles;
-        private int _currentFileCount;
-        private string _songFile = "";
-        
+        SortationController _sortationController;
+        private delegate void SetProgressCountInvoke(int currentFileCount);
+        private delegate void SetFileCountInvoke(int setFileCount);
+
+        #endregion
+
+        #region Methods
+
+        public void SetController(SortationController sortationController)
+        {
+            _sortationController = sortationController;
+        }
+
         public ProgressView()
         {
             InitializeComponent();
         }
-
-        public void UpdateInfo(string songFile)
-        {
-            _songFile = songFile;
-            _currentFileCount++;            
-        }
-
+        
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            backgroundWorker.CancelAsync();
-            this.Hide();
+            _sortationController.CancelSort();
         }
 
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        public void UpdateProgress(int percentage)
         {
-            this.TopMost = true;
-            this.Show();
+            SetProgressBar(percentage);
+            SetFileCount(percentage);
+        }
 
-            while(_currentFileCount < _numberOfFiles)
+        #endregion
+
+        #region Invoke Methods
+
+        private void SetProgressBar(int percentage)
+        {
+            if (percentage > 0)
             {
-                if (backgroundWorker.CancellationPending)
+                if (this.lblProgressCount.InvokeRequired)
                 {
-                    throw new CancelSortException();
-                }
-
-                UpdateProgress();
-                Thread.Sleep(10);
-            }
-
-            this.Hide();
-        }
-
-        private void UpdateProgress()
-        {
-            SetAction();
-            SetProgressCount();
-            SetProgress();
-        }
-
-        public void SetFileCount(int numberOfFiles)
-        {
-            if (this.pbSortProgress.InvokeRequired)
-            {
-                SetProgressBarInvoke inv = new SetProgressBarInvoke(SetFileCount);
-                this.BeginInvoke(inv, new object[] { numberOfFiles });
-            }
-            else
-            {
-                _numberOfFiles = numberOfFiles;
-                pbSortProgress.Maximum = _numberOfFiles;
-                pbSortProgress.Value = 0;
-                pbSortProgress.Step = 1;
-                backgroundWorker.RunWorkerAsync();
-            }
-        }
-
-        private void SetAction()
-        {
-            if (this.lblAction.InvokeRequired)
-            {
-                SetActionInvoke inv = new SetActionInvoke(SetAction);
-                this.BeginInvoke(inv, new object[] { });
-            }
-            else
-            {
-                if (_currentFileCount > 0)
-                {
-                    lblAction.Text = _songFile;
+                    SetProgressCountInvoke inv = new SetProgressCountInvoke(SetProgressBar);
+                    this.BeginInvoke(inv, new object[] { percentage });
                 }
                 else
                 {
-                    lblAction.Text = "Gather song files...";
+                    pbSortProgress.Value = percentage;
+                    this.Refresh();
                 }
+            }
+        }
 
+        public void SetFileCount(int percentage)
+        {
+            if (this.pbSortProgress.InvokeRequired)
+            {
+                SetFileCountInvoke inv = new SetFileCountInvoke(SetFileCount);
+                this.BeginInvoke(inv, new object[] { percentage });
+            }
+            else
+            {
+                lblAction.Text = String.Format("{0}%", percentage);
                 this.Refresh();
             }
         }
 
-        private void SetProgressCount()
-        {
-            if (_currentFileCount > 0)
-            {
-                if (this.lblProgressCount.InvokeRequired)
-                {
-                    SetProgressCountInvoke inv = new SetProgressCountInvoke(SetProgressCount);
-                    this.BeginInvoke(inv);
-                }
-                else
-                {
-                    lblProgressCount.Text = String.Format("{0}/{1}", _currentFileCount, _numberOfFiles);
-                    this.Refresh();
-                }
-            }
-        }
-
-        private void SetProgress()
-        {
-            if (_currentFileCount > 0)
-            {
-                if (this.lblProgressCount.InvokeRequired)
-                {
-                    SetProgressCountInvoke inv = new SetProgressCountInvoke(SetProgress);
-                    this.BeginInvoke(inv);
-                }
-                else
-                {
-                    pbSortProgress.Value = _currentFileCount;
-                    this.Refresh();
-                }
-            }
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            this.Hide();
-            MessageBox.Show("here");
-        }
-    }
-
-    public class CancelSortException : Exception
-    {
+        #endregion
     }
 }

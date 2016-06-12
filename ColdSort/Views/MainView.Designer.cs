@@ -39,9 +39,10 @@
             this.btnEditSchema = new System.Windows.Forms.Button();
             this.btnCreateSchema = new System.Windows.Forms.Button();
             this.LoadSchema = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.lblTitle = new System.Windows.Forms.Label();
             this.btnCancelSort = new System.Windows.Forms.Button();
             this.btnStartSort = new System.Windows.Forms.Button();
+            this.lblSchemaTitle = new System.Windows.Forms.Label();
             this.grpLocations.SuspendLayout();
             this.grpSchema.SuspendLayout();
             this.SuspendLayout();
@@ -115,10 +116,11 @@
             // 
             // grpSchema
             // 
+            this.grpSchema.Controls.Add(this.lblSchemaTitle);
             this.grpSchema.Controls.Add(this.btnEditSchema);
             this.grpSchema.Controls.Add(this.btnCreateSchema);
             this.grpSchema.Controls.Add(this.LoadSchema);
-            this.grpSchema.Controls.Add(this.label3);
+            this.grpSchema.Controls.Add(this.lblTitle);
             this.grpSchema.Location = new System.Drawing.Point(12, 142);
             this.grpSchema.Name = "grpSchema";
             this.grpSchema.Size = new System.Drawing.Size(350, 86);
@@ -148,21 +150,23 @@
             // 
             // LoadSchema
             // 
+            this.LoadSchema.Enabled = false;
             this.LoadSchema.Location = new System.Drawing.Point(9, 57);
             this.LoadSchema.Name = "LoadSchema";
             this.LoadSchema.Size = new System.Drawing.Size(62, 20);
             this.LoadSchema.TabIndex = 7;
             this.LoadSchema.Text = "Load";
             this.LoadSchema.UseVisualStyleBackColor = true;
+            this.LoadSchema.Click += new System.EventHandler(this.LoadSchema_Click);
             // 
-            // label3
+            // lblTitle
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 28);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Title:";
+            this.lblTitle.AutoSize = true;
+            this.lblTitle.Location = new System.Drawing.Point(6, 28);
+            this.lblTitle.Name = "lblTitle";
+            this.lblTitle.Size = new System.Drawing.Size(30, 13);
+            this.lblTitle.TabIndex = 0;
+            this.lblTitle.Text = "Title:";
             // 
             // btnCancelSort
             // 
@@ -183,6 +187,14 @@
             this.btnStartSort.Text = "Sort";
             this.btnStartSort.UseVisualStyleBackColor = true;
             this.btnStartSort.Click += new System.EventHandler(this.btnStartSort_Click);
+            // 
+            // lblSchemaTitle
+            // 
+            this.lblSchemaTitle.AutoSize = true;
+            this.lblSchemaTitle.Location = new System.Drawing.Point(41, 28);
+            this.lblSchemaTitle.Name = "lblSchemaTitle";
+            this.lblSchemaTitle.Size = new System.Drawing.Size(0, 13);
+            this.lblSchemaTitle.TabIndex = 10;
             // 
             // MainView
             // 
@@ -216,8 +228,9 @@
         private System.Windows.Forms.Button btnEditSchema;
         private System.Windows.Forms.Button btnCreateSchema;
         private System.Windows.Forms.Button LoadSchema;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lblTitle;
         private System.Windows.Forms.Button btnCancelSort;
         private System.Windows.Forms.Button btnStartSort;
+        private System.Windows.Forms.Label lblSchemaTitle;
     }
 }

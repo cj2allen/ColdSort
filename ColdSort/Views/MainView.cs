@@ -32,6 +32,18 @@ namespace ColdSort.Views
             }
         }
 
+        public string SchemaTitle
+        {
+            get
+            {
+                return this.lblSchemaTitle.Text;
+            }
+            set
+            {
+                this.lblSchemaTitle.Text = value;
+            }
+        }
+
         public MainView()
         {
             InitializeComponent();
@@ -78,6 +90,11 @@ namespace ColdSort.Views
         private void btnStartSort_Click(object sender, EventArgs e)
         {
             _mainController.SortWithoutDiagnostics();
+        }
+
+        private void LoadSchema_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Feature not implemented");
         }
     }
 }

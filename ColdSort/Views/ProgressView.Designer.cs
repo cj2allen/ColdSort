@@ -32,7 +32,6 @@
             this.lblProgressCount = new System.Windows.Forms.Label();
             this.lblAction = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.SuspendLayout();
             // 
             // pbSortProgress
@@ -41,6 +40,9 @@
             this.pbSortProgress.Name = "pbSortProgress";
             this.pbSortProgress.Size = new System.Drawing.Size(362, 23);
             this.pbSortProgress.TabIndex = 0;
+            this.pbSortProgress.Maximum = 100;
+            this.pbSortProgress.Value = 0;
+            this.pbSortProgress.Step = 1;
             // 
             // lblProgressCount
             // 
@@ -62,18 +64,13 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(403, 47);
+            this.btnCancel.Location = new System.Drawing.Point(403, 43);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // backgroundWorker
-            // 
-            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // ProgressView
             // 
@@ -101,6 +98,5 @@
         private System.Windows.Forms.Label lblProgressCount;
         private System.Windows.Forms.Label lblAction;
         private System.Windows.Forms.Button btnCancel;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
     }
 }
