@@ -90,7 +90,7 @@ namespace ColdSort.Views
 
         public void ErrorBox(string message)
         {
-            MessageBox.Show("Error", message);
+            MessageBox.Show(message, "Error");
         }
 
         private void btnRaiseNode_Click(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace ColdSort.Views
             _sortationSchemaController.CancelSchema();
         }
 
-        private void btnSaveSchema_Click(object sender, EventArgs e)
+        private void btnConfirmSchema_Click(object sender, EventArgs e)
         {
             _sortationSchemaController.SaveSchema();
         }
@@ -175,6 +175,24 @@ namespace ColdSort.Views
         private void btnCancelSchema_Click(object sender, EventArgs e)
         {
             _sortationSchemaController.CancelSchema();
+        }
+
+        private void rdoKeepLocation_CheckedChanged(Object sender, EventArgs e)
+        {
+            if(rdoKeepLocation.Checked)
+            {
+                txtFailedDefaultLocation.Enabled = false;
+                txtFailedDefaultLocation.ReadOnly = true;
+            }
+        }
+
+        private void rdoFailedDefaultLocation_CheckedChanged(Object sender, EventArgs e)
+        {
+            if (rdoFailedDefaultLocation.Checked)
+            {
+                txtFailedDefaultLocation.Enabled = true;
+                txtFailedDefaultLocation.ReadOnly = false;
+            }
         }
     }
 }

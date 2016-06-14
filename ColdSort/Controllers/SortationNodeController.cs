@@ -19,7 +19,6 @@ namespace ColdSort.Controllers
 
         public void LoadView()
         {
-            _sortationNodeView.NodeName = _sortationNode.Name;
             _sortationNodeView.SongProperties = (int)_sortationNode.SongProperty;
             _sortationNodeView.AllowSortEnd = _sortationNode.AllowSortEnd;
             _sortationNodeView.UseAbbreviation = _sortationNode.UseAbbreviation;
@@ -27,7 +26,6 @@ namespace ColdSort.Controllers
 
         public void Save()
         {
-            _sortationNode.Name = _sortationNodeView.NodeName;
             _sortationNode.SongProperty = (SongProperty) _sortationNodeView.SongProperties;
             _sortationNode.AllowSortEnd = _sortationNodeView.AllowSortEnd;
             _sortationNode.UseAbbreviation = _sortationNodeView.UseAbbreviation;

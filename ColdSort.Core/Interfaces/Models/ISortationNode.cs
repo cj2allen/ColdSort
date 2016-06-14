@@ -4,7 +4,7 @@ namespace ColdSort.Core.Interfaces.Models
 {
     public interface ISortationNode
     {
-        string Name { get; set; }
+        string Name { get; }
         SongProperty SongProperty { get; set; }
         bool AllowSortEnd { get; set; }
         bool UseAbbreviation { get; set; }

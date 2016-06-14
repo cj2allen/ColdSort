@@ -83,11 +83,32 @@ namespace ColdSort.Controllers
 
         public void SaveSchema()
         {
-            _sortationSchema.SortationSchemaTitle = _sortationSchemaView.SchemaName;
-            _sortationSchema.FailedSortationDefault = _sortationSchemaView.FailedDefaultLocation;
-            _sortationSchema.KeepFilesAtOriginalLocation = _sortationSchemaView.KeepFilesAtOriginalLocation;
-            _sortationSchema.SortationNodes = _sortationSchemaView.SortationNodes;
-            UnloadView();
+            if (string.IsNullOrEmpty(_sortationSchemaView.SchemaName))
+            {
+                _sortationSchemaView.ErrorBox("Your Sortation Schema needs to have a name.");
+            }
+            else if (_sortationSchema.SortationNodes.Count <= 0)
+            {
+                _sortationSchemaView.ErrorBox("Your Sortation Schema needs to have at least one Sortation Node");
+            }
+            else if (_sortationSchemaView.UseFailedDefaultLocation && string.IsNullOrEmpty(_sortationSchemaView.FailedDefaultLocation))
+            {
+                _sortationSchemaView.ErrorBox("Your default directory for unsortable songs cannot be empty.");
+            }
+            else
+            {
+                _sortationSchema.SortationSchemaTitle = _sortationSchemaView.SchemaName;
+                _sortationSchema.UseFailedDefaultLocation = _sortationSchemaView.UseFailedDefaultLocation;
+                _sortationSchema.KeepFilesAtOriginalLocation = _sortationSchemaView.KeepFilesAtOriginalLocation;
+                _sortationSchema.SortationNodes = _sortationSchemaView.SortationNodes;
+
+                if (_sortationSchemaView.UseFailedDefaultLocation)
+                {
+                    _sortationSchema.FailedSortationDefault = _sortationSchemaView.FailedDefaultLocation;
+                }
+
+                UnloadView();
+            }
         }
 
         public void CancelSchema()

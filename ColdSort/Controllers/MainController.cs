@@ -39,21 +39,18 @@ namespace ColdSort.Controllers
             {
                 new SortationNode
                 {
-                    Name = "Artist Abbrv",
                     SongProperty = SongProperty.Artist,
                     AllowSortEnd = false,
                     UseAbbreviation = true
                 },
                 new SortationNode
                 {
-                    Name = "Artist Full",
                     SongProperty = SongProperty.Artist,
                     AllowSortEnd = false,
                     UseAbbreviation = false
                 },
                 new SortationNode
                 {
-                    Name = "Album Name",
                     SongProperty = SongProperty.Album,
                     AllowSortEnd = true,
                     UseAbbreviation = false

@@ -8,6 +8,7 @@ namespace ColdSort.Core.Interfaces.Models
         string FailedSortationDefault { get; set; }
         List<ISortationNode> SortationNodes { get; set; }
         bool KeepFilesAtOriginalLocation { get; set; }
+        bool UseFailedDefaultLocation { get; set; }
         string ToString();
     }
 }

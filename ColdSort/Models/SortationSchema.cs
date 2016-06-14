@@ -10,11 +10,12 @@ namespace ColdSort.Models
         public string FailedSortationDefault { get; set; }
         public List<ISortationNode> SortationNodes { get; set; }
         public bool KeepFilesAtOriginalLocation { get; set; }
+        public bool UseFailedDefaultLocation { get; set; }
 
         public SortationSchema ()
         {
             SortationNodes = new List<ISortationNode>();
-
+            FailedSortationDefault = "!Unsorted";
         }
 
         public override String ToString()

@@ -9,18 +9,6 @@ namespace ColdSort.Views
     {
         private ISortationNodeController _sortationNodeController;
 
-        public string NodeName
-        {
-            get
-            {
-                return txtNodeName.Text;
-            }
-            set
-            {
-                txtNodeName.Text = value;
-            }
-        }
-        
         public int SongProperties
         {
             get

@@ -42,7 +42,7 @@
             this.rdoFailedDefaultLocation = new System.Windows.Forms.RadioButton();
             this.rdoKeepLocation = new System.Windows.Forms.RadioButton();
             this.btnCancelSchema = new System.Windows.Forms.Button();
-            this.btnSaveSchema = new System.Windows.Forms.Button();
+            this.btnConfirmSchema = new System.Windows.Forms.Button();
             this.grpNodeOptions.SuspendLayout();
             this.grpUnsortableOptions.SuspendLayout();
             this.SuspendLayout();
@@ -154,6 +154,7 @@
             this.txtFailedDefaultLocation.Enabled = false;
             this.txtFailedDefaultLocation.Location = new System.Drawing.Point(6, 65);
             this.txtFailedDefaultLocation.Name = "txtFailedDefaultLocation";
+            this.txtFailedDefaultLocation.ReadOnly = true;
             this.txtFailedDefaultLocation.Size = new System.Drawing.Size(178, 20);
             this.txtFailedDefaultLocation.TabIndex = 2;
             // 
@@ -166,6 +167,7 @@
             this.rdoFailedDefaultLocation.TabIndex = 1;
             this.rdoFailedDefaultLocation.Text = "Move To New Folder:";
             this.rdoFailedDefaultLocation.UseVisualStyleBackColor = true;
+            this.rdoFailedDefaultLocation.CheckedChanged += rdoFailedDefaultLocation_CheckedChanged;
             // 
             // rdoKeepLocation
             // 
@@ -178,6 +180,7 @@
             this.rdoKeepLocation.TabStop = true;
             this.rdoKeepLocation.Text = "Keep Files At Original Location";
             this.rdoKeepLocation.UseVisualStyleBackColor = true;
+            this.rdoKeepLocation.CheckedChanged += rdoKeepLocation_CheckedChanged;
             // 
             // btnCancelSchema
             // 
@@ -189,15 +192,15 @@
             this.btnCancelSchema.UseVisualStyleBackColor = true;
             this.btnCancelSchema.Click += new System.EventHandler(this.btnCancelSchema_Click);
             // 
-            // btnSaveSchema
+            // btnConfirmSchema
             // 
-            this.btnSaveSchema.Location = new System.Drawing.Point(305, 152);
-            this.btnSaveSchema.Name = "btnSaveSchema";
-            this.btnSaveSchema.Size = new System.Drawing.Size(78, 31);
-            this.btnSaveSchema.TabIndex = 14;
-            this.btnSaveSchema.Text = "Save";
-            this.btnSaveSchema.UseVisualStyleBackColor = true;
-            this.btnSaveSchema.Click += new System.EventHandler(this.btnSaveSchema_Click);
+            this.btnConfirmSchema.Location = new System.Drawing.Point(305, 152);
+            this.btnConfirmSchema.Name = "btnConfirmSchema";
+            this.btnConfirmSchema.Size = new System.Drawing.Size(78, 31);
+            this.btnConfirmSchema.TabIndex = 14;
+            this.btnConfirmSchema.Text = "OK";
+            this.btnConfirmSchema.UseVisualStyleBackColor = true;
+            this.btnConfirmSchema.Click += new System.EventHandler(this.btnConfirmSchema_Click);
             // 
             // SortationSchemaView
             // 
@@ -206,7 +209,7 @@
             this.ClientSize = new System.Drawing.Size(489, 187);
             this.Controls.Add(this.btnCancelSchema);
             this.Controls.Add(this.grpUnsortableOptions);
-            this.Controls.Add(this.btnSaveSchema);
+            this.Controls.Add(this.btnConfirmSchema);
             this.Controls.Add(this.grpNodeOptions);
             this.Controls.Add(this.txtSortationSchemaName);
             this.Controls.Add(this.lblSortationSchemaTitle);
@@ -239,6 +242,6 @@
         private System.Windows.Forms.RadioButton rdoFailedDefaultLocation;
         private System.Windows.Forms.RadioButton rdoKeepLocation;
         private System.Windows.Forms.Button btnCancelSchema;
-        private System.Windows.Forms.Button btnSaveSchema;
+        private System.Windows.Forms.Button btnConfirmSchema;
     }
 }
