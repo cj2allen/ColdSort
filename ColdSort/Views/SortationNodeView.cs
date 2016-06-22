@@ -1,73 +1,137 @@
-﻿using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Controllers;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SortationNodeView.cs" company="None">
+//     Copyright (c) 2016 Christopher James Allen
+// </copyright>
+// <author>Christopher James Allen</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Windows.Forms;
+using ColdSort.Core.Enums;
+using ColdSort.Core.Interfaces.Controllers;
 
 namespace ColdSort.Views
 {
+    /// <summary>
+    /// The sortation node view form
+    /// </summary>
     public partial class SortationNodeView : Form
     {
+        #region Fields
+
+        /// <summary>
+        /// The sortation node controller
+        /// </summary>
         private ISortationNodeController _sortationNodeController;
 
-        public int SongProperties
-        {
-            get
-            {
-                return cbxSelectProperty.SelectedIndex;
-            }
-            set
-            {
-                cbxSelectProperty.SelectedIndex = value;
-            }
-        }
+        #endregion
 
-        public bool AllowSortEnd
-        {
-            get
-            {
-                return chkAllowSortEnd.Checked;
-            }
-            set
-            {
-                chkAllowSortEnd.Checked = value;
-            }
-        }
+        #region Constructor
 
-        public bool UseAbbreviation
-        {
-            get
-            {
-                return chkAbbreviateProperty.Checked;
-            }
-            set
-            {
-                chkAbbreviateProperty.Checked = value;
-            }
-        }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SortationNodeView"/> class
+        /// </summary>
         public SortationNodeView()
         {
             InitializeComponent();
             cbxSelectProperty.DataSource = Enum.GetNames(typeof(SongProperty));
         }
 
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the property the sortation node sorts on
+        /// </summary>
+        public int SongProperties
+        {
+            get
+            {
+                return cbxSelectProperty.SelectedIndex;
+            }
+
+            set
+            {
+                cbxSelectProperty.SelectedIndex = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether sortation ends at this sortation node
+        /// </summary>
+        public bool AllowSortEnd
+        {
+            get
+            {
+                return chkAllowSortEnd.Checked;
+            }
+
+            set
+            {
+                chkAllowSortEnd.Checked = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether sortation node abbreviates the folder it creates
+        /// </summary>
+        public bool UseAbbreviation
+        {
+            get
+            {
+                return chkAbbreviateProperty.Checked;
+            }
+
+            set
+            {
+                chkAbbreviateProperty.Checked = value;
+            }
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Set the sortation node controller for the view
+        /// </summary>
+        /// <param name="sortationNodeController"> The main controller </param>
         public void SetController(ISortationNodeController sortationNodeController)
         {
             _sortationNodeController = sortationNodeController;
         }
 
-        private void btnSaveNode_Click(object sender, EventArgs e)
+        /// <summary>
+        /// The button for updating the sortation node
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
+        private void BtnConfirmNode_Click(object sender, EventArgs e)
         {
-            _sortationNodeController.Save();
+            _sortationNodeController.Confirm();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        /// <summary>
+        /// The button for canceling the sortation node update
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             _sortationNodeController.Cancel();
         }
 
+        /// <summary>
+        /// The close action
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
         private void SortationNodeView_FormClosing(object sender, FormClosingEventArgs e)
         {
             _sortationNodeController.Cancel();
         }
+
+        #endregion
     }
 }

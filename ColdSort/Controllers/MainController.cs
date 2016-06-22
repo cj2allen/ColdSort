@@ -1,36 +1,78 @@
-﻿using System;
+﻿//-----------------------------------------------------------------------
+// <copyright file="MainController.cs" company="None">
+//     Copyright (c) 2016 Christopher James Allen
+// </copyright>
+// <author>Christopher James Allen</author>
+//-----------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
-using ColdSort.Models;
-using ColdSort.Core.Enums;
 using System.Windows.Forms;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Core.Enums;
 using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
 using ColdSort.Views;
 
 namespace ColdSort.Controllers
 {
+    /// <summary>
+    /// Manage main view functionality
+    /// </summary>
     public class MainController : IMainController
     {
+        #region Fields
+
+        /// <summary>
+        /// The main view form
+        /// </summary>
         private MainView _mainView;
+
+        /// <summary>
+        /// The current sortation schema being used
+        /// </summary>
         private ISortationSchema _sortationSchema;
 
+        #endregion
+
+        #region Contructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainController"/> class
+        /// </summary>
+        /// <param name="mainView"> The main view form </param>
         public MainController(MainView mainView)
         {
             _mainView = mainView;
             _mainView.SetController(this);
         }
 
-        public void LoadView()
-        {
-            LoadDefaults();
-            _mainView.Visible = true;
-            UpdateSchemaName();
-        }
+        #endregion
 
-        public void LoadDefaults()
+        #region Methods
+
+        /// <summary>
+        /// Load the main view with data
+        /// </summary>
+        /// <param name="loadDefaults"> Load the default sortation schema or not </param>
+        public void SetupView(bool loadDefaults)
         {
+            if (loadDefaults)
+            {
+                LoadDefaults();
+            }
+
+            _mainView.SchemaTitle = _sortationSchema.SortationSchemaTitle;
             _mainView.OriginalLocation = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
             _mainView.DestinationLocation = @"D:\TestOutput";
+            _mainView.Visible = true;
+        }
+
+        /// <summary>
+        /// Load the default sortation schema
+        /// </summary>
+        public void LoadDefaults()
+        {
             _sortationSchema = new SortationSchema();
             _sortationSchema.SortationSchemaTitle = "Default Sort";
             _sortationSchema.KeepFilesAtOriginalLocation = false;
@@ -58,15 +100,12 @@ namespace ColdSort.Controllers
             };
         }
 
-        public void UpdateSchemaName()
-        {
-            if(_sortationSchema != null)
-            {
-                _mainView.SchemaTitle = _sortationSchema.SortationSchemaTitle;
-            }
-        }
-
-        public string SelectFolder(string originalPath)
+        /// <summary>
+        /// Prompts user with a window to change a folder path
+        /// </summary>
+        /// <param name="currentPath"> The current set folder path </param>
+        /// <returns>A folder path</returns>
+        public string SelectFolder(string currentPath)
         {
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             DialogResult folderResult = folderBrowserDialog.ShowDialog();
@@ -78,38 +117,53 @@ namespace ColdSort.Controllers
 
             _mainView.ErrorBox("Folder path is invalid. Path unchanged.");
 
-            return originalPath;
+            return currentPath;
         }
 
+        /// <summary>
+        /// Creates an empty sortation schema and send it to be edited
+        /// </summary>
         public void CreateSchema()
         {
             _sortationSchema = new SortationSchema();
             EditSchema(_sortationSchema);
         }
 
+        /// <summary>
+        /// Edits the current sortation schema in the controller
+        /// </summary>
         public void EditSchema()
         {
             EditSchema(_sortationSchema);
-            UpdateSchemaName();
+            SetupView(false);
         }
 
+        /// <summary>
+        /// Edits a sortation schema in the controller
+        /// </summary>
+        /// <param name="sortationSchema"> A sortation schema</param>
         public void EditSchema(ISortationSchema sortationSchema)
         {
-            using ( SortationSchemaView sortationSchemaView = new SortationSchemaView())
+            using (SortationSchemaView sortationSchemaView = new SortationSchemaView())
             {
-                ISortationSchemaController sortationSchemaController = new SortationSchemaController(sortationSchemaView);
-                sortationSchemaController.LoadSchemaData(_sortationSchema);
+                ISortationSchemaController sortationSchemaController = new SortationSchemaController(sortationSchemaView, _sortationSchema);
+                sortationSchemaController.SetupView();
                 _sortationSchema = sortationSchemaController.GetSortationSchema();
             } 
         }
 
+        /// <summary>
+        /// Sort  music without any diagnostic information
+        /// </summary>
         public void SortWithoutDiagnostics()
         {
             using (ProgressView progressView = new ProgressView())
             {
-                ISortationController sortationController = new SortationController(progressView);
-                sortationController.SortWithoutDiagnostics(_mainView.OriginalLocation, _mainView.DestinationLocation, _sortationSchema);
+                ISortationController sortationController = new SortationController(progressView, _sortationSchema);
+                sortationController.SortWithoutDiagnostics(_mainView.OriginalLocation, _mainView.DestinationLocation);
             }
         }
+
+        #endregion
     }
 }

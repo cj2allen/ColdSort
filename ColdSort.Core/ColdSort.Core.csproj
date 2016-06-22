@@ -51,7 +51,9 @@
   <ItemGroup>
     <Compile Include="Enums\SongProperty.cs" />
     <Compile Include="Enums\SortNodeResult.cs" />
-    <Compile Include="Interfaces\Controllers\IMainController.cs" />
+    <Compile Include="Interfaces\Controllers\IMainController.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Interfaces\Controllers\ISortationNodeController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationSchemaController.cs" />
     <Compile Include="Interfaces\Controllers\ISortationController.cs" />

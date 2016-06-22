@@ -81,7 +81,7 @@
             this.btnConfirmNode.TabIndex = 6;
             this.btnConfirmNode.Text = "OK";
             this.btnConfirmNode.UseVisualStyleBackColor = true;
-            this.btnConfirmNode.Click += new System.EventHandler(this.btnSaveNode_Click);
+            this.btnConfirmNode.Click += new System.EventHandler(this.BtnConfirmNode_Click);
             // 
             // btnCancel
             // 
@@ -91,7 +91,7 @@
             this.btnCancel.TabIndex = 7;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // SortationNodeView
             // 

@@ -87,7 +87,7 @@
             this.btnDeleteNode.TabIndex = 13;
             this.btnDeleteNode.Text = "Delete Node";
             this.btnDeleteNode.UseVisualStyleBackColor = true;
-            this.btnDeleteNode.Click += new System.EventHandler(this.btnDeleteNode_Click);
+            this.btnDeleteNode.Click += new System.EventHandler(this.BtnDeleteNode_Click);
             // 
             // btnEditNode
             // 
@@ -97,7 +97,7 @@
             this.btnEditNode.TabIndex = 12;
             this.btnEditNode.Text = "Edit Node";
             this.btnEditNode.UseVisualStyleBackColor = true;
-            this.btnEditNode.Click += new System.EventHandler(this.btnEditNode_Click);
+            this.btnEditNode.Click += new System.EventHandler(this.BtnEditNode_Click);
             // 
             // btnNewNode
             // 
@@ -107,7 +107,7 @@
             this.btnNewNode.TabIndex = 11;
             this.btnNewNode.Text = "New Node";
             this.btnNewNode.UseVisualStyleBackColor = true;
-            this.btnNewNode.Click += new System.EventHandler(this.btnNewNode_Click);
+            this.btnNewNode.Click += new System.EventHandler(this.BtnNewNode_Click);
             // 
             // btnLowerNode
             // 
@@ -117,7 +117,7 @@
             this.btnLowerNode.TabIndex = 10;
             this.btnLowerNode.Text = "Lower Node";
             this.btnLowerNode.UseVisualStyleBackColor = true;
-            this.btnLowerNode.Click += new System.EventHandler(this.btnLowerNode_Click);
+            this.btnLowerNode.Click += new System.EventHandler(this.BtnLowerNode_Click);
             // 
             // btnRaiseNode
             // 
@@ -127,7 +127,7 @@
             this.btnRaiseNode.TabIndex = 9;
             this.btnRaiseNode.Text = "Raise Node";
             this.btnRaiseNode.UseVisualStyleBackColor = true;
-            this.btnRaiseNode.Click += new System.EventHandler(this.btnRaiseNode_Click);
+            this.btnRaiseNode.Click += new System.EventHandler(this.BtnRaiseNode_Click);
             // 
             // lstSortationNodes
             // 
@@ -167,7 +167,7 @@
             this.rdoFailedDefaultLocation.TabIndex = 1;
             this.rdoFailedDefaultLocation.Text = "Move To New Folder:";
             this.rdoFailedDefaultLocation.UseVisualStyleBackColor = true;
-            this.rdoFailedDefaultLocation.CheckedChanged += rdoFailedDefaultLocation_CheckedChanged;
+            this.rdoFailedDefaultLocation.CheckedChanged += RdoFailedDefaultLocation_CheckedChanged;
             // 
             // rdoKeepLocation
             // 
@@ -180,7 +180,7 @@
             this.rdoKeepLocation.TabStop = true;
             this.rdoKeepLocation.Text = "Keep Files At Original Location";
             this.rdoKeepLocation.UseVisualStyleBackColor = true;
-            this.rdoKeepLocation.CheckedChanged += rdoKeepLocation_CheckedChanged;
+            this.rdoKeepLocation.CheckedChanged += RdoKeepLocation_CheckedChanged;
             // 
             // btnCancelSchema
             // 
@@ -190,7 +190,7 @@
             this.btnCancelSchema.TabIndex = 15;
             this.btnCancelSchema.Text = "Cancel";
             this.btnCancelSchema.UseVisualStyleBackColor = true;
-            this.btnCancelSchema.Click += new System.EventHandler(this.btnCancelSchema_Click);
+            this.btnCancelSchema.Click += new System.EventHandler(this.BtnCancelSchema_Click);
             // 
             // btnConfirmSchema
             // 
@@ -200,7 +200,7 @@
             this.btnConfirmSchema.TabIndex = 14;
             this.btnConfirmSchema.Text = "OK";
             this.btnConfirmSchema.UseVisualStyleBackColor = true;
-            this.btnConfirmSchema.Click += new System.EventHandler(this.btnConfirmSchema_Click);
+            this.btnConfirmSchema.Click += new System.EventHandler(this.BtnConfirmSchema_Click);
             // 
             // SortationSchemaView
             // 

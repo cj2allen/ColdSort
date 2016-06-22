@@ -1,117 +1,128 @@
-﻿using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Models;
-using ColdSort.Views;
-using ColdSort.Models;
+﻿//-----------------------------------------------------------------------
+// <copyright file="SortationController.cs" company="None">
+//     Copyright (c) 2016 Christopher James Allen
+// </copyright>
+// <author>Christopher James Allen</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Threading;
-using System.ComponentModel;
 using System.Windows.Forms;
+using ColdSort.Core.Enums;
 using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
+using ColdSort.Views;
 
 namespace ColdSort.Controllers
 {
+    /// <summary>
+    /// Manage sortation related functionality
+    /// </summary>
     public class SortationController : ISortationController
     {
+        #region Constants
+
+        /// <summary>
+        /// The MP3 file extension
+        /// </summary>
         public const string MP3_EXTENSION = "mp3";
+
+        /// <summary>
+        /// Invalid folder characters
+        /// </summary>
         public static readonly char[] INVALID_CHARACTERS = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
+
+        /// <summary>
+        /// Max path length in Windows
+        /// </summary>
         public static readonly int MAX_PATH_LENGTH = 260;
 
+        #endregion
+
+        #region Fields
+
+        /// <summary>
+        /// The source folder path of the music
+        /// </summary>
         private string _oldRootPath;
+
+        /// <summary>
+        /// The destination folder path of the music
+        /// </summary>
         private string _newRootPath;
+
+        /// <summary>
+        /// The sortation schema that will be used to sort the files
+        /// </summary>
         private ISortationSchema _sortationSchema;
+
+        /// <summary>
+        /// The progress view form
+        /// </summary>
         private ProgressView _progressView;
+
+        /// <summary>
+        /// Background sorting worker
+        /// </summary>
         private BackgroundWorker _backgroundWorker;
 
-        public SortationController(ProgressView progressView)
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SortationController"/> class
+        /// </summary>
+        /// <param name="progressView"> The progress view </param>
+        /// <param name="sortationSchema"> The sortation schema </param>
+        public SortationController(ProgressView progressView, ISortationSchema sortationSchema)
         {
+            _sortationSchema = sortationSchema;
             _progressView = progressView;
             _progressView.SetController(this);
         }
 
-        public void SortWithoutDiagnostics(string oldRootpath, string newRootPath, ISortationSchema sortationSchema)
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Sorts the music in the original folder path to the new folder path using the given sortation schema. No diagnostics are collected.
+        /// </summary>
+        /// <param name="oldRootpath"> The original folder path </param>
+        /// <param name="newRootPath"> The destination folder path </param>
+        public void SortWithoutDiagnostics(string oldRootpath, string newRootPath)
         {
             _oldRootPath = oldRootpath;
             _newRootPath = newRootPath;
-            _sortationSchema = sortationSchema;
-            
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.WorkerReportsProgress = true;
-            _backgroundWorker.DoWork += new DoWorkEventHandler(backgroundWorker_DoWork);
-            _backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
-            _backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(backgroundWorker_RunWorkerCompleted);
+            _backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker_DoWork);
+            _backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
+            _backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
             _backgroundWorker.RunWorkerAsync();
             _progressView.ShowDialog();
         }
 
-        private void backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            if (e.ProgressPercentage > 0)
-            {
-                _progressView.UpdateProgress(e.ProgressPercentage);
-            }
-        }
-
-        public string CombineExtensions()
-        {
-            return String.Format("*.{0}", MP3_EXTENSION);
-        }
-
-        private void backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            double currentFileCount = default(double);
-            double totalFileCount = default(double);
-
-            string[] files = Directory.GetFiles(_oldRootPath, CombineExtensions(), SearchOption.AllDirectories);
-            totalFileCount = files.Length;
-
-            foreach (string file in files)
-            {
-                currentFileCount++;
-
-                int percentage = (int) Math.Ceiling(currentFileCount / totalFileCount*100);
-                _backgroundWorker.ReportProgress(percentage);
-
-                ISongFile songFile = ConvertPathToISongFile(file);
-
-                if (songFile != null)
-                {
-                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(_sortationSchema, songFile, _newRootPath);
-                    MoveSongFile(songFile);                    
-                }
-            }
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled == true)
-            {
-                MessageBox.Show("Canceled!");
-            }
-            else if (e.Error != null)
-            {
-                MessageBox.Show("Error!");
-            }
-            else
-            {
-                MessageBox.Show("Done!");
-            }
-
-            _progressView.Close();
-        }
-
+        /// <summary>
+        /// Cancels the sortation
+        /// </summary>
         public void CancelSort()
         {
             _backgroundWorker.CancelAsync();
             _progressView.Close();
         }
 
-
-        #region Scanning For Music
-
-        private ISongFile ConvertPathToISongFile (string songFilePath)
+        /// <summary>
+        /// Take a path to a valid music file and converts it to an ISongFile
+        /// </summary>
+        /// <param name="songFilePath"> The path to a song file </param>
+        /// <returns> The music file information </returns>
+        private ISongFile ConvertPathToISongFile(string songFilePath)
         {
             string extension = songFilePath.Split('.').LastOrDefault().ToLower();
 
@@ -138,13 +149,27 @@ namespace ColdSort.Controllers
             return null;
         }
 
-        public List<ISongFile> GetSongFiles(string path)
+        /// <summary>
+        /// This method combines all valid music file types into one pattern
+        /// </summary>
+        /// <returns> A regex pattern of all valid music file types </returns>
+        private string CombineExtensions()
+        {
+            return string.Format("*.{0}", MP3_EXTENSION);
+        }
+
+        /// <summary>
+        /// Recursively finds all valid music files in a directory
+        /// </summary>
+        /// <param name="path"> Directory of music files </param>
+        /// <returns> A list of ISongFiles of music files recursively collected from the directory </returns>
+        private List<ISongFile> GetMusicFiles(string path)
         {
             List<ISongFile> songFiles = new List<ISongFile>();
 
             foreach (string subDirectory in Directory.GetDirectories(path))
             {
-                foreach(string file in Directory.GetFiles(subDirectory))
+                foreach (string file in Directory.GetFiles(subDirectory))
                 {
                     ISongFile songFile = ConvertPathToISongFile(file);
                     songFiles.Add(songFile);
@@ -154,17 +179,19 @@ namespace ColdSort.Controllers
             return songFiles;
         }
 
-        #endregion
-
-        #region Get Sortation Paths
-
-        private ISortationSchemaResult CreateSortationPath (ISortationSchema sortationSchema, ISongFile songFile, string newRootPath)
+        /// <summary>
+        /// Attempts to generate sort path for an ISongFile 
+        /// </summary>
+        /// <param name="songFile"> The music file to be sorted </param>
+        /// <param name="newRootPath"> The destination path to prefix to sort path </param>
+        /// <returns> The result of the sort </returns>
+        private ISortationSchemaResult CreateSortationPath(ISongFile songFile, string newRootPath)
         {
             SortNodeResult result = SortNodeResult.NotSorted;
             songFile.SortedPath = _newRootPath;
 
-            foreach (SortationNode sortationNode in sortationSchema.SortationNodes)
-            {   
+            foreach (SortationNode sortationNode in _sortationSchema.SortationNodes)
+            {
                 result = GenerateNodeValue(sortationNode, ref songFile);
 
                 if (result != SortNodeResult.NotSorted)
@@ -175,7 +202,7 @@ namespace ColdSort.Controllers
 
             if (result == SortNodeResult.Error)
             {
-                return (ISortationSchemaResult) new FailedSortation
+                return (ISortationSchemaResult)new FailedSortation
                 {
                     OriginalPath = songFile.OriginalPath,
                     ErrorMessage = result.ToString()
@@ -183,8 +210,8 @@ namespace ColdSort.Controllers
             }
             else
             {
-                songFile.SortedPath = String.Format(@"{0}\{1}", songFile.SortedPath, songFile.OriginalFilename);
-                return (ISortationSchemaResult) new SuccessfulSortation
+                songFile.SortedPath = string.Format(@"{0}\{1}", songFile.SortedPath, songFile.OriginalFilename);
+                return (ISortationSchemaResult)new SuccessfulSortation
                 {
                     OriginalPath = songFile.OriginalPath,
                     SortedPath = songFile.SortedPath
@@ -192,31 +219,25 @@ namespace ColdSort.Controllers
             }
         }
 
-        public List<ISortationSchemaResult> GenerateSortationPaths(ISortationSchema sortationSchema, List<ISongFile> songFiles, string newRootPath)
-        {
-            List<ISortationSchemaResult> sortationSchemaResults = new List<ISortationSchemaResult>();
-
-            foreach (ISongFile songFile in songFiles)
-            {
-                sortationSchemaResults.Add(CreateSortationPath(sortationSchema, songFile, newRootPath));
-            }
-
-            return sortationSchemaResults;
-        }
-
-        private SortNodeResult GenerateNodeValue (ISortationNode sortationNode, ref ISongFile songFile)
+        /// <summary>
+        /// Attempts to generate the next sorted path value for an ISongFile
+        /// </summary>
+        /// <param name="sortationNode"> A sortation node </param>
+        /// <param name="songFile"> The songFile that is having it's sorted path built </param>
+        /// <returns> The result of the attempted sort path generation </returns>
+        private SortNodeResult GenerateNodeValue(ISortationNode sortationNode, ref ISongFile songFile)
         {
             string newPathValue;
 
             switch (sortationNode.SongProperty)
             {
-                case (SongProperty.Album):
+                case SongProperty.Album:
                     newPathValue = songFile.Album;
                     break;
-                case (SongProperty.Artist):
+                case SongProperty.Artist:
                     newPathValue = songFile.Artist;
                     break;
-                case (SongProperty.Title):
+                case SongProperty.Title:
                     newPathValue = songFile.Title;
                     break;
                 default:
@@ -224,17 +245,17 @@ namespace ColdSort.Controllers
                     break;
             }
 
-            if (!String.IsNullOrEmpty(newPathValue)
+            if (!string.IsNullOrEmpty(newPathValue)
                 && (newPathValue.Trim().Length > 0)
                 && (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1)
                 && (Path.GetDirectoryName(songFile.SortedPath).Length <= MAX_PATH_LENGTH))
             {
                 if (sortationNode.UseAbbreviation)
                 {
-                    newPathValue = newPathValue.Substring(0, 1); 
+                    newPathValue = newPathValue.Substring(0, 1);
                 }
 
-               songFile.SortedPath = String.Format(@"{0}\{1}", songFile.SortedPath, newPathValue);
+                songFile.SortedPath = string.Format(@"{0}\{1}", songFile.SortedPath, newPathValue);
 
                 return SortNodeResult.NotSorted;
             }
@@ -243,15 +264,18 @@ namespace ColdSort.Controllers
                 return SortNodeResult.Sorted;
             }
 
-            songFile.SortedPath = String.Format(@"{0}\{1}\{2}", _newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+            songFile.SortedPath = string.Format(@"{0}\{1}\{2}", _newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
             return SortNodeResult.Error;
         }
 
-        #endregion
-
+        /// <summary>
+        /// Attempts to move a song file
+        /// </summary>
+        /// <param name="songFile"> The information of the song file being moved </param>        
+        /// <returns> The result of the attempted move </returns>
         private ISortationResult MoveSongFile(ISongFile songFile)
         {
-            string errorMessage = "";
+            string errorMessage = string.Empty;
             bool isSorted = false;
 
             try
@@ -261,7 +285,6 @@ namespace ColdSort.Controllers
                     File.Delete(songFile.SortedPath);
                 }
 
-                //System.Diagnostics.Debug.WriteLine(songFile.SortedPath);
                 Directory.CreateDirectory(Path.GetDirectoryName(songFile.SortedPath));
                 File.Move(songFile.OriginalPath, songFile.SortedPath);
                 isSorted = true;
@@ -272,7 +295,7 @@ namespace ColdSort.Controllers
             }
 
             return new SortationResult
-            { 
+            {
                 OriginalPath = songFile.OriginalPath,
                 SortedPath = songFile.SortedPath,
                 IsSorted = isSorted,
@@ -280,7 +303,11 @@ namespace ColdSort.Controllers
             };
         }
 
-        public void MoveSongFiles (List<ISongFile> songFiles)
+        /// <summary>
+        /// Attempts to move multiple song file
+        /// </summary>
+        /// <param name="songFiles"> The information of the song files that are being moved </param>
+        private void MoveSongFiles(List<ISongFile> songFiles)
         {
             List<ISortationResult> sortationResults = new List<ISortationResult>();
 
@@ -288,6 +315,96 @@ namespace ColdSort.Controllers
             {
                 sortationResults.Add(MoveSongFile(songFile));
             }
-        }     
+        }
+
+        /// <summary>
+        /// Attempts to generate sort path for a list of ISongFile 
+        /// </summary>
+        /// <param name="songFiles"> A list of music files to be sorted </param>
+        /// <param name="newRootPath"> The destination path to prefix to sort path </param>
+        /// <returns> A list of results of the sort </returns>
+        private List<ISortationSchemaResult> GenerateSortationPaths(List<ISongFile> songFiles, string newRootPath)
+        {
+            List<ISortationSchemaResult> sortationSchemaResults = new List<ISortationSchemaResult>();
+
+            foreach (ISongFile songFile in songFiles)
+            {
+                sortationSchemaResults.Add(CreateSortationPath(songFile, newRootPath));
+            }
+
+            return sortationSchemaResults;
+        }
+
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Updates the progress of the Background Worker
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event </param>
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage > 0)
+            {
+                _progressView.UpdateProgress(e.ProgressPercentage);
+            }
+        }
+
+        /// <summary>
+        /// Background Worker work loop
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event </param>
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            double currentFileCount = default(double);
+            double totalFileCount = default(double);
+
+            string[] files = Directory.GetFiles(_oldRootPath, CombineExtensions(), SearchOption.AllDirectories);
+            totalFileCount = files.Length;
+
+            foreach (string file in files)
+            {
+                currentFileCount++;
+
+                int percentage = (int)Math.Ceiling(currentFileCount / totalFileCount * 100);
+                _backgroundWorker.ReportProgress(percentage);
+
+                ISongFile songFile = ConvertPathToISongFile(file);
+
+                if (songFile != null)
+                {
+                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(songFile, _newRootPath);
+                    MoveSongFile(songFile);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Background Worker reports that it's work is done
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event </param>
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled == true)
+            {
+                MessageBox.Show("Canceled!");
+            }
+            else if (e.Error != null)
+            {
+                MessageBox.Show("Error!");
+            }
+            else
+            {
+                MessageBox.Show("Done!");
+            }
+
+            _progressView.Close();
+        }
+
+        #endregion
     }
 }

@@ -70,7 +70,7 @@
             this.btnDestinationLocationBrowse.TabIndex = 11;
             this.btnDestinationLocationBrowse.Text = "Browse...";
             this.btnDestinationLocationBrowse.UseVisualStyleBackColor = true;
-            this.btnDestinationLocationBrowse.Click += new System.EventHandler(this.btnDestinationLocationBrowse_Click);
+            this.btnDestinationLocationBrowse.Click += new System.EventHandler(this.BtnDestinationLocationBrowse_Click);
             // 
             // txtDestinationLocation
             // 
@@ -96,7 +96,7 @@
             this.btnSourceLocationBrowse.TabIndex = 8;
             this.btnSourceLocationBrowse.Text = "Browse...";
             this.btnSourceLocationBrowse.UseVisualStyleBackColor = true;
-            this.btnSourceLocationBrowse.Click += new System.EventHandler(this.btnOriginalLocationBrowse_Click);
+            this.btnSourceLocationBrowse.Click += new System.EventHandler(this.BtnOriginalLocationBrowse_Click);
             // 
             // txtOriginalLocation
             // 
@@ -136,7 +136,7 @@
             this.btnEditSchema.TabIndex = 9;
             this.btnEditSchema.Text = "Edit";
             this.btnEditSchema.UseVisualStyleBackColor = true;
-            this.btnEditSchema.Click += new System.EventHandler(this.btnEditSchema_Click);
+            this.btnEditSchema.Click += new System.EventHandler(this.BtnEditSchema_Click);
             // 
             // btnCreateSchema
             // 
@@ -146,7 +146,7 @@
             this.btnCreateSchema.TabIndex = 8;
             this.btnCreateSchema.Text = "Create";
             this.btnCreateSchema.UseVisualStyleBackColor = true;
-            this.btnCreateSchema.Click += new System.EventHandler(this.btnCreateSchema_Click);
+            this.btnCreateSchema.Click += new System.EventHandler(this.BtnCreateSchema_Click);
             // 
             // LoadSchema
             // 
@@ -186,7 +186,7 @@
             this.btnStartSort.TabIndex = 10;
             this.btnStartSort.Text = "Sort";
             this.btnStartSort.UseVisualStyleBackColor = true;
-            this.btnStartSort.Click += new System.EventHandler(this.btnStartSort_Click);
+            this.btnStartSort.Click += new System.EventHandler(this.BtnStartSort_Click);
             // 
             // lblSchemaTitle
             // 
@@ -207,7 +207,6 @@
             this.Controls.Add(this.grpSchema);
             this.Name = "MainView";
             this.Text = "MainView";
-            this.Load += new System.EventHandler(this.MainView_Load);
             this.grpLocations.ResumeLayout(false);
             this.grpLocations.PerformLayout();
             this.grpSchema.ResumeLayout(false);

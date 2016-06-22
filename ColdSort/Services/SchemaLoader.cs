@@ -1,15 +1,25 @@
-﻿using ColdSort.Models;
-using System;
-using System.Collections.Generic;
+﻿//----------------------------------
+// <copyright file="SchemaLoader.cs" company="None">
+//     Copyright (c) 2016 Christopher James Allen
+// </copyright>
+// <author>Christopher James Allen</author>
+//-----------------------------------------------------------------------
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ColdSort.Models;
 
 namespace ColdSort.Services
 {
+    /// <summary>
+    /// Loads and save sortation schemas
+    /// </summary>
+    /// <remarks> Not implemented yet </remarks>
     public static class SchemaLoader
     {
+        /// <summary>
+        /// Load schema information
+        /// </summary>
+        /// <param name="path"> The path to the schema file </param>
+        /// <returns> A sortation schema </returns>
         public static SortationSchema LoadSortationSchema(string path)
         {
             SortationSchema sortationSchema = new SortationSchema();
@@ -18,13 +28,13 @@ namespace ColdSort.Services
             {
                 using (StreamReader reader = new StreamReader(path))
                 {
+                    // TODO import data
                     string jsonInput = reader.ReadToEnd();
-                    //TODO import data
                 }
             }
             catch
             {
-                //TODO: Add exception info!
+                // TODO: Add exception info!
                 return null;
             }
 

@@ -1,18 +1,28 @@
-﻿using ColdSort.Controllers;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Views;
+﻿//-----------------------------------------------------------------------
+// <copyright file="Program.cs" company="None">
+//     Copyright (c) 2016 Christopher James Allen
+// </copyright>
+// <author>Christopher James Allen</author>
+//-----------------------------------------------------------------------
+
 using System;
 using System.Windows.Forms;
+using ColdSort.Controllers;
+using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Views;
 
 namespace ColdSort
 {
-    static class Program
+    /// <summary>
+    /// The program class
+    /// </summary>
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        public static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -21,7 +31,7 @@ namespace ColdSort
             {
                 mainView.Visible = false;
                 IMainController mainController = new MainController(mainView);
-                mainController.LoadView();
+                mainController.SetupView(true);
                 Application.Run();
             }
         }
