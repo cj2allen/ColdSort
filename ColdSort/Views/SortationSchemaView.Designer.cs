@@ -43,6 +43,7 @@
             this.rdoKeepLocation = new System.Windows.Forms.RadioButton();
             this.btnCancelSchema = new System.Windows.Forms.Button();
             this.btnConfirmSchema = new System.Windows.Forms.Button();
+            this.cbCopyFiles = new System.Windows.Forms.CheckBox();
             this.grpNodeOptions.SuspendLayout();
             this.grpUnsortableOptions.SuspendLayout();
             this.SuspendLayout();
@@ -74,14 +75,14 @@
             this.grpNodeOptions.Controls.Add(this.lstSortationNodes);
             this.grpNodeOptions.Location = new System.Drawing.Point(215, 12);
             this.grpNodeOptions.Name = "grpNodeOptions";
-            this.grpNodeOptions.Size = new System.Drawing.Size(262, 134);
+            this.grpNodeOptions.Size = new System.Drawing.Size(262, 154);
             this.grpNodeOptions.TabIndex = 8;
             this.grpNodeOptions.TabStop = false;
             this.grpNodeOptions.Text = "Node Options";
             // 
             // btnDeleteNode
             // 
-            this.btnDeleteNode.Location = new System.Drawing.Point(174, 94);
+            this.btnDeleteNode.Location = new System.Drawing.Point(174, 108);
             this.btnDeleteNode.Name = "btnDeleteNode";
             this.btnDeleteNode.Size = new System.Drawing.Size(78, 31);
             this.btnDeleteNode.TabIndex = 13;
@@ -91,7 +92,7 @@
             // 
             // btnEditNode
             // 
-            this.btnEditNode.Location = new System.Drawing.Point(90, 94);
+            this.btnEditNode.Location = new System.Drawing.Point(90, 108);
             this.btnEditNode.Name = "btnEditNode";
             this.btnEditNode.Size = new System.Drawing.Size(78, 31);
             this.btnEditNode.TabIndex = 12;
@@ -101,7 +102,7 @@
             // 
             // btnNewNode
             // 
-            this.btnNewNode.Location = new System.Drawing.Point(6, 94);
+            this.btnNewNode.Location = new System.Drawing.Point(6, 108);
             this.btnNewNode.Name = "btnNewNode";
             this.btnNewNode.Size = new System.Drawing.Size(78, 31);
             this.btnNewNode.TabIndex = 11;
@@ -111,7 +112,7 @@
             // 
             // btnLowerNode
             // 
-            this.btnLowerNode.Location = new System.Drawing.Point(6, 56);
+            this.btnLowerNode.Location = new System.Drawing.Point(6, 63);
             this.btnLowerNode.Name = "btnLowerNode";
             this.btnLowerNode.Size = new System.Drawing.Size(78, 31);
             this.btnLowerNode.TabIndex = 10;
@@ -139,12 +140,13 @@
             // 
             // grpUnsortableOptions
             // 
+            this.grpUnsortableOptions.Controls.Add(this.cbCopyFiles);
             this.grpUnsortableOptions.Controls.Add(this.txtFailedDefaultLocation);
             this.grpUnsortableOptions.Controls.Add(this.rdoFailedDefaultLocation);
             this.grpUnsortableOptions.Controls.Add(this.rdoKeepLocation);
             this.grpUnsortableOptions.Location = new System.Drawing.Point(12, 51);
             this.grpUnsortableOptions.Name = "grpUnsortableOptions";
-            this.grpUnsortableOptions.Size = new System.Drawing.Size(197, 95);
+            this.grpUnsortableOptions.Size = new System.Drawing.Size(197, 115);
             this.grpUnsortableOptions.TabIndex = 9;
             this.grpUnsortableOptions.TabStop = false;
             this.grpUnsortableOptions.Text = "Where To Put Unsortable Songs";
@@ -167,7 +169,6 @@
             this.rdoFailedDefaultLocation.TabIndex = 1;
             this.rdoFailedDefaultLocation.Text = "Move To New Folder:";
             this.rdoFailedDefaultLocation.UseVisualStyleBackColor = true;
-            this.rdoFailedDefaultLocation.CheckedChanged += RdoFailedDefaultLocation_CheckedChanged;
             // 
             // rdoKeepLocation
             // 
@@ -180,11 +181,10 @@
             this.rdoKeepLocation.TabStop = true;
             this.rdoKeepLocation.Text = "Keep Files At Original Location";
             this.rdoKeepLocation.UseVisualStyleBackColor = true;
-            this.rdoKeepLocation.CheckedChanged += RdoKeepLocation_CheckedChanged;
             // 
             // btnCancelSchema
             // 
-            this.btnCancelSchema.Location = new System.Drawing.Point(389, 152);
+            this.btnCancelSchema.Location = new System.Drawing.Point(389, 169);
             this.btnCancelSchema.Name = "btnCancelSchema";
             this.btnCancelSchema.Size = new System.Drawing.Size(78, 31);
             this.btnCancelSchema.TabIndex = 15;
@@ -194,7 +194,7 @@
             // 
             // btnConfirmSchema
             // 
-            this.btnConfirmSchema.Location = new System.Drawing.Point(305, 152);
+            this.btnConfirmSchema.Location = new System.Drawing.Point(305, 169);
             this.btnConfirmSchema.Name = "btnConfirmSchema";
             this.btnConfirmSchema.Size = new System.Drawing.Size(78, 31);
             this.btnConfirmSchema.TabIndex = 14;
@@ -202,11 +202,21 @@
             this.btnConfirmSchema.UseVisualStyleBackColor = true;
             this.btnConfirmSchema.Click += new System.EventHandler(this.BtnConfirmSchema_Click);
             // 
+            // cbCopyFiles
+            // 
+            this.cbCopyFiles.AutoSize = true;
+            this.cbCopyFiles.Location = new System.Drawing.Point(6, 91);
+            this.cbCopyFiles.Name = "cbCopyFiles";
+            this.cbCopyFiles.Size = new System.Drawing.Size(188, 17);
+            this.cbCopyFiles.TabIndex = 3;
+            this.cbCopyFiles.Text = "Copy Files Instead of Moving them";
+            this.cbCopyFiles.UseVisualStyleBackColor = true;
+            // 
             // SortationSchemaView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(489, 187);
+            this.ClientSize = new System.Drawing.Size(489, 204);
             this.Controls.Add(this.btnCancelSchema);
             this.Controls.Add(this.grpUnsortableOptions);
             this.Controls.Add(this.btnConfirmSchema);
@@ -243,5 +253,6 @@
         private System.Windows.Forms.RadioButton rdoKeepLocation;
         private System.Windows.Forms.Button btnCancelSchema;
         private System.Windows.Forms.Button btnConfirmSchema;
+        private System.Windows.Forms.CheckBox cbCopyFiles;
     }
 }

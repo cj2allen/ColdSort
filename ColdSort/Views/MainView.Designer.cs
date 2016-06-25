@@ -36,13 +36,13 @@
             this.txtOriginalLocation = new System.Windows.Forms.TextBox();
             this.lblSourceLocation = new System.Windows.Forms.Label();
             this.grpSchema = new System.Windows.Forms.GroupBox();
+            this.lblSchemaTitle = new System.Windows.Forms.Label();
             this.btnEditSchema = new System.Windows.Forms.Button();
             this.btnCreateSchema = new System.Windows.Forms.Button();
             this.LoadSchema = new System.Windows.Forms.Button();
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnCancelSort = new System.Windows.Forms.Button();
             this.btnStartSort = new System.Windows.Forms.Button();
-            this.lblSchemaTitle = new System.Windows.Forms.Label();
             this.grpLocations.SuspendLayout();
             this.grpSchema.SuspendLayout();
             this.SuspendLayout();
@@ -128,6 +128,14 @@
             this.grpSchema.TabStop = false;
             this.grpSchema.Text = "Sortation Schema";
             // 
+            // lblSchemaTitle
+            // 
+            this.lblSchemaTitle.AutoSize = true;
+            this.lblSchemaTitle.Location = new System.Drawing.Point(41, 28);
+            this.lblSchemaTitle.Name = "lblSchemaTitle";
+            this.lblSchemaTitle.Size = new System.Drawing.Size(0, 13);
+            this.lblSchemaTitle.TabIndex = 10;
+            // 
             // btnEditSchema
             // 
             this.btnEditSchema.Location = new System.Drawing.Point(145, 57);
@@ -188,14 +196,6 @@
             this.btnStartSort.UseVisualStyleBackColor = true;
             this.btnStartSort.Click += new System.EventHandler(this.BtnStartSort_Click);
             // 
-            // lblSchemaTitle
-            // 
-            this.lblSchemaTitle.AutoSize = true;
-            this.lblSchemaTitle.Location = new System.Drawing.Point(41, 28);
-            this.lblSchemaTitle.Name = "lblSchemaTitle";
-            this.lblSchemaTitle.Size = new System.Drawing.Size(0, 13);
-            this.lblSchemaTitle.TabIndex = 10;
-            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -207,6 +207,7 @@
             this.Controls.Add(this.grpSchema);
             this.Name = "MainView";
             this.Text = "MainView";
+            this.FormClosing += MainView_FormClosing;
             this.grpLocations.ResumeLayout(false);
             this.grpLocations.PerformLayout();
             this.grpSchema.ResumeLayout(false);

@@ -286,7 +286,15 @@ namespace ColdSort.Controllers
                 }
 
                 Directory.CreateDirectory(Path.GetDirectoryName(songFile.SortedPath));
-                File.Move(songFile.OriginalPath, songFile.SortedPath);
+
+                if (!_sortationSchema.CopySongs)
+                {
+                    File.Move(songFile.OriginalPath, songFile.SortedPath);
+                }
+                else
+                {
+                    File.Copy(songFile.OriginalPath, songFile.SortedPath);
+                }
                 isSorted = true;
             }
             catch (Exception e)

@@ -61,6 +61,7 @@ namespace ColdSort.Controllers
             _sortationSchemaView.KeepFilesAtOriginalLocation = _sortationSchema.KeepFilesAtOriginalLocation;
             _sortationSchemaView.UseFailedDefaultLocation = !_sortationSchema.KeepFilesAtOriginalLocation;
             _sortationSchemaView.SortationNodes = _sortationSchema.SortationNodes;
+            _sortationSchemaView.CopyFilesInsteadOfMoving = _sortationSchema.CopySongs;
             _sortationSchemaView.ShowDialog();
         }
 
@@ -153,6 +154,7 @@ namespace ColdSort.Controllers
                 _sortationSchema.SortationSchemaTitle = _sortationSchemaView.SchemaName;
                 _sortationSchema.KeepFilesAtOriginalLocation = _sortationSchemaView.KeepFilesAtOriginalLocation;
                 _sortationSchema.SortationNodes = _sortationSchemaView.SortationNodes;
+                _sortationSchema.CopySongs = _sortationSchemaView.CopyFilesInsteadOfMoving;
 
                 if (_sortationSchemaView.UseFailedDefaultLocation)
                 {

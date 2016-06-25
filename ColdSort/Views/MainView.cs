@@ -175,6 +175,15 @@ namespace ColdSort.Views
             MessageBox.Show("Feature not implemented");
         }
 
+        /// <summary>
+        /// The close action
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
+        private void MainView_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
         #endregion
     }
 }

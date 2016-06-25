@@ -106,6 +106,22 @@ namespace ColdSort.Views
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to copy song files instead of moving them
+        /// </summary>
+        public bool CopyFilesInsteadOfMoving
+        {
+            get
+            {
+                return cbCopyFiles.Checked;
+            }
+
+            set
+            {
+                cbCopyFiles.Checked = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the list sortation nodes in the form
         /// </summary>
         public List<ISortationNode> SortationNodes

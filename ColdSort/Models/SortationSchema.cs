@@ -50,7 +50,12 @@ namespace ColdSort.Models
         /// Gets or sets a value indicating whether to keep files in the original location or to move them to the default folder
         /// </summary>
         public bool KeepFilesAtOriginalLocation { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the files will be copied or moved to the new destination
+        /// </summary>
+        public bool CopySongs { get; set; }
+
         #endregion
     }
 }

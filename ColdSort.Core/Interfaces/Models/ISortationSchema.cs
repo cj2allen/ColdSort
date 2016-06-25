@@ -33,5 +33,10 @@ namespace ColdSort.Core.Interfaces.Models
         /// Gets or sets a value indicating whether to keep files in the original location or to move them to the default folder
         /// </summary>
         bool KeepFilesAtOriginalLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the files will be copied or moved to the new destination
+        /// </summary>
+        bool CopySongs { get; set; }
     }
 }
