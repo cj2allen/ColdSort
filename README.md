@@ -1,5 +1,5 @@
-ColdSort 1.0
-============
+ColdSort
+========
 A music sortation application by Christopher James Allen
 
 Description
@@ -39,7 +39,6 @@ Future Updates (In No Particular Order)
 *Integrate progess bar into main window (get's rid of window spam).
 *Multi-threading sortation support (this program is begging to be multi-threaded!)
 *Better streamlined Sortation Schema creation.
-*Unit testing
 *Have an option to remove empty folders (empty of music) from source directory (cleaning up after itself).
 *Allow a stage-by-stage sort. Users can verify and sign off on proposed sortation paths before the files are sorted. Users can also edit the sortation path before letting sortation happen.
 *Continuous bug fixes.
