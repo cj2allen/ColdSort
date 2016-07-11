@@ -159,8 +159,8 @@ namespace ColdSort.Controllers
         {
             using (ProgressView progressView = new ProgressView())
             {
-                ISortationController sortationController = new SortationController(progressView, _sortationSchema);
-                sortationController.SortWithoutDiagnostics(_mainView.OriginalLocation, _mainView.DestinationLocation);
+                ISortationController sortationController = new SortationController(progressView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
+                sortationController.SortWithoutDiagnostics();
             }
         }
 

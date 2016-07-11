@@ -79,9 +79,11 @@ namespace ColdSort.Controllers
         /// </summary>
         /// <param name="progressView"> The progress view </param>
         /// <param name="sortationSchema"> The sortation schema </param>
-        public SortationController(ProgressView progressView, ISortationSchema sortationSchema)
+        public SortationController(ProgressView progressView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
         {
             _sortationSchema = sortationSchema;
+            _oldRootPath = oldRootPath;
+            _newRootPath = newRootPath;
             _progressView = progressView;
             _progressView.SetController(this);
         }
@@ -95,10 +97,8 @@ namespace ColdSort.Controllers
         /// </summary>
         /// <param name="oldRootpath"> The original folder path </param>
         /// <param name="newRootPath"> The destination folder path </param>
-        public void SortWithoutDiagnostics(string oldRootpath, string newRootPath)
+        public void SortWithoutDiagnostics()
         {
-            _oldRootPath = oldRootpath;
-            _newRootPath = newRootPath;
             _backgroundWorker = new BackgroundWorker();
             _backgroundWorker.WorkerReportsProgress = true;
             _backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker_DoWork);
@@ -122,7 +122,7 @@ namespace ColdSort.Controllers
         /// </summary>
         /// <param name="songFilePath"> The path to a song file </param>
         /// <returns> The music file information </returns>
-        private ISongFile ConvertPathToISongFile(string songFilePath)
+        public ISongFile ConvertPathToISongFile(string songFilePath)
         {
             string extension = songFilePath.Split('.').LastOrDefault().ToLower();
 
@@ -160,14 +160,13 @@ namespace ColdSort.Controllers
 
         /// <summary>
         /// Recursively finds all valid music files in a directory
-        /// </summary>
-        /// <param name="path"> Directory of music files </param>
+        /// </summary>        
         /// <returns> A list of ISongFiles of music files recursively collected from the directory </returns>
-        private List<ISongFile> GetMusicFiles(string path)
+        private List<ISongFile> GetMusicFiles()
         {
             List<ISongFile> songFiles = new List<ISongFile>();
 
-            foreach (string subDirectory in Directory.GetDirectories(path))
+            foreach (string subDirectory in Directory.GetDirectories(_oldRootPath))
             {
                 foreach (string file in Directory.GetFiles(subDirectory))
                 {
@@ -185,7 +184,7 @@ namespace ColdSort.Controllers
         /// <param name="songFile"> The music file to be sorted </param>
         /// <param name="newRootPath"> The destination path to prefix to sort path </param>
         /// <returns> The result of the sort </returns>
-        private ISortationSchemaResult CreateSortationPath(ISongFile songFile, string newRootPath)
+        private ISortationSchemaResult CreateSortationPath(ISongFile songFile)
         {
             SortNodeResult result = SortNodeResult.NotSorted;
             songFile.SortedPath = _newRootPath;
@@ -202,16 +201,17 @@ namespace ColdSort.Controllers
 
             if (result == SortNodeResult.Error)
             {
-                return (ISortationSchemaResult)new FailedSortation
+                return new FailedSortation
                 {
                     OriginalPath = songFile.OriginalPath,
+                    SortedPath = songFile.SortedPath,
                     ErrorMessage = result.ToString()
                 };
             }
             else
             {
-                songFile.SortedPath = string.Format(@"{0}\{1}", songFile.SortedPath, songFile.OriginalFilename);
-                return (ISortationSchemaResult)new SuccessfulSortation
+                songFile.SortedPath = Path.Combine(songFile.SortedPath, songFile.OriginalFilename);
+                return new SuccessfulSortation
                 {
                     OriginalPath = songFile.OriginalPath,
                     SortedPath = songFile.SortedPath
@@ -248,14 +248,14 @@ namespace ColdSort.Controllers
             if (!string.IsNullOrEmpty(newPathValue)
                 && (newPathValue.Trim().Length > 0)
                 && (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1)
-                && (Path.GetDirectoryName(songFile.SortedPath).Length <= MAX_PATH_LENGTH))
+                && (songFile.SortedPath.Length <= MAX_PATH_LENGTH))
             {
                 if (sortationNode.UseAbbreviation)
                 {
                     newPathValue = newPathValue.Substring(0, 1);
                 }
 
-                songFile.SortedPath = string.Format(@"{0}\{1}", songFile.SortedPath, newPathValue);
+                songFile.SortedPath = Path.Combine(songFile.SortedPath, newPathValue);
 
                 return SortNodeResult.NotSorted;
             }
@@ -264,7 +264,7 @@ namespace ColdSort.Controllers
                 return SortNodeResult.Sorted;
             }
 
-            songFile.SortedPath = string.Format(@"{0}\{1}\{2}", _newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+            songFile.SortedPath = Path.Combine(_newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
             return SortNodeResult.Error;
         }
 
@@ -326,18 +326,17 @@ namespace ColdSort.Controllers
         }
 
         /// <summary>
-        /// Attempts to generate sort path for a list of ISongFile 
+        /// <see cref="ISortationController.GenerateSortationPaths(List{ISongFile})"/>
         /// </summary>
         /// <param name="songFiles"> A list of music files to be sorted </param>
-        /// <param name="newRootPath"> The destination path to prefix to sort path </param>
         /// <returns> A list of results of the sort </returns>
-        private List<ISortationSchemaResult> GenerateSortationPaths(List<ISongFile> songFiles, string newRootPath)
+        public List<ISortationSchemaResult> GenerateSortationPaths(List<ISongFile> songFiles)
         {
             List<ISortationSchemaResult> sortationSchemaResults = new List<ISortationSchemaResult>();
 
             foreach (ISongFile songFile in songFiles)
             {
-                sortationSchemaResults.Add(CreateSortationPath(songFile, newRootPath));
+                sortationSchemaResults.Add(CreateSortationPath(songFile));
             }
 
             return sortationSchemaResults;
@@ -384,7 +383,7 @@ namespace ColdSort.Controllers
 
                 if (songFile != null)
                 {
-                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(songFile, _newRootPath);
+                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(songFile);
                     MoveSongFile(songFile);
                 }
             }

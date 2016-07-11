@@ -17,9 +17,14 @@ namespace ColdSort.Models
         #region Fields
 
         /// <summary>
-        /// Gets or sets the original location of the song file
+        /// <see cref="ISortationSchemaResult.OriginalPath"/>
         /// </summary>
         public string OriginalPath { get; set; }
+
+        /// <summary>
+        /// <see cref="ISortationSchemaResult.SortedPath"/>
+        /// </summary>
+        public string SortedPath { get; set; }
 
         /// <summary>
         /// Gets or sets the reason the song file could not be sorted

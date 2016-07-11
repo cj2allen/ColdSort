@@ -53,7 +53,7 @@ namespace ColdSort.Models
         #region Properties
 
         /// <summary>
-        /// Gets a value of the title
+        /// <see cref="ISongFile.Title" />
         /// </summary>
         public string Title
         {
@@ -61,10 +61,15 @@ namespace ColdSort.Models
             {
                 return _title;
             }
+
+            set
+            {
+                _title = value;
+            }
         }
 
         /// <summary>
-        /// Gets a value of the artist
+        /// <see cref="ISongFile.Artist" />
         /// </summary>
         public string Artist
         {
@@ -72,10 +77,15 @@ namespace ColdSort.Models
             {
                 return _artist;
             }
+
+            set
+            {
+                _artist = value;
+            }
         }
 
         /// <summary>
-        /// Gets a value of the album
+        /// <see cref="ISongFile.Album" />
         /// </summary>
         public string Album
         {
@@ -83,10 +93,15 @@ namespace ColdSort.Models
             {
                 return _album;
             }
+
+            set
+            {
+                _album = value;
+            }
         }
 
         /// <summary>
-        /// Gets a value of the year
+        /// <see cref="ISongFile.Year" />
         /// </summary>
         public string Year
         {
@@ -94,10 +109,15 @@ namespace ColdSort.Models
             {
                 return _year;
             }
+
+            set
+            {
+                _year = value;
+            }
         }
 
         /// <summary>
-        /// Gets a value of the original path of the MP3 file
+        /// <see cref="ISongFile.OriginalPath" />
         /// </summary>
         public string OriginalPath
         {
@@ -105,10 +125,15 @@ namespace ColdSort.Models
             {
                 return _originalPath;
             }
+
+            set
+            {
+                _originalPath = value;
+            }
         }
 
         /// <summary>
-        /// Gets or sets the value of the sorted path of the MP3 file
+        /// <see cref="ISongFile.SortedPath" />
         /// </summary>
         public string SortedPath
         {
@@ -124,7 +149,7 @@ namespace ColdSort.Models
         }
 
         /// <summary>
-        /// Gets a value of the original filename of the MP3 file
+        /// <see cref="ISongFile.OriginalFilename" />
         /// </summary>
         public string OriginalFilename
         {
@@ -140,9 +165,8 @@ namespace ColdSort.Models
         }
 
         /// <summary>
-        /// Gets value of the sorted filename of the MP3 file
+        /// <see cref="ISongFile.SortedFilename" />
         /// </summary>
-        /// <remarks>Not implemented fully yet </remarks>
         public string SortedFilename
         {
             get
@@ -161,7 +185,7 @@ namespace ColdSort.Models
         #region Methods
 
         /// <summary>
-        /// Loads the song information from the MP3 file
+        /// <see cref="ISongFile.LoadSongInformation(string)" />
         /// </summary>
         /// <param name="path"> Path to the MP3 file </param>
         /// <returns> If it was successful in loading song information</returns>

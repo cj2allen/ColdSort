@@ -15,12 +15,12 @@ namespace ColdSort.Models
     public class SuccessfulSortation : ISortationSchemaResult
     {
         /// <summary>
-        /// Gets or sets the original path
+        /// <see cref="ISortationSchemaResult.OriginalPath"/>
         /// </summary>
         public string OriginalPath { get; set; }
 
         /// <summary>
-        /// Gets or sets the sorted path
+        /// <see cref="ISortationSchemaResult.SortedPath"/>
         /// </summary>
         public string SortedPath { get; set; }
     }

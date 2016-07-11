@@ -12,5 +12,14 @@ namespace ColdSort.Core.Interfaces.Models
     /// </summary>
     public interface ISortationSchemaResult
     {
+        /// <summary>
+        /// Gets or sets the original location of the song file
+        /// </summary>
+        string OriginalPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the original location of the song file
+        /// </summary>
+        string SortedPath { get; set; }
     }
 }

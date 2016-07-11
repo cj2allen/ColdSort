@@ -13,29 +13,29 @@ namespace ColdSort.Core.Interfaces.Models
     public interface ISongFile
     {
         /// <summary>
-        /// Gets a value of the title
+        /// Gets or sets a value of the title
         /// </summary>
-        string Title { get; }
+        string Title { get; set; }
 
         /// <summary>
-        /// Gets a value of the artist
+        /// Gets or sets a value of the artist
         /// </summary>
-        string Artist { get; }
+        string Artist { get; set; }
 
         /// <summary>
-        /// Gets a value of the album
+        /// Gets or sets a value of the album
         /// </summary>
-        string Album { get; }
+        string Album { get; set; }
 
         /// <summary>
-        /// Gets a value of the year
+        /// Gets or sets a value of the year
         /// </summary>
-        string Year { get; }
+        string Year { get; set; }
 
         /// <summary>
-        /// Gets a value of the original path of the song file
+        /// Gets or sets a value of the original path of the song file
         /// </summary>
-        string OriginalPath { get; }
+        string OriginalPath { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the sorted path of the song file
