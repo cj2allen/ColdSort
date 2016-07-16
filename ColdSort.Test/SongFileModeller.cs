@@ -439,5 +439,42 @@ namespace ColdSort.Test
                 }
             };
         }
+
+        public static List<ISongFile> InvalidCharacterTestData()
+        {
+            return new List<ISongFile>
+            {
+                new MP3File
+                {
+                    Title = "DOTA [Club Mix]",
+                    Artist = "BassHunter",
+                    Album = "LOL <(^^,)>",
+                    Year = "2008",
+                    OriginalPath = @"C:\Users\Chris\Music\Dota - Basshunter.mp3"
+                }
+            };
+        }
+
+        public static List<ISortationSchemaResult> InvalidCharacterGoldResults()
+        {
+            return new List<ISortationSchemaResult>
+            {
+               new FailedSortation {
+                    OriginalPath = @"C:\Users\Chris\Music\Dota - Basshunter.mp3",
+                    SortedPath = @"C:\Users\Chris\New Music\!Unsorted\Dota - Basshunter.mp3"
+               }
+            };
+        }
+
+        public static List<ISortationSchemaResult> KeepAtLocationGoldResults()
+        {
+            return new List<ISortationSchemaResult>
+            {
+               new FailedSortation {
+                    OriginalPath = @"C:\Users\Chris\Music\Dota - Basshunter.mp3",
+                    SortedPath = @"C:\Users\Chris\Music\Dota - Basshunter.mp3"
+               }
+            };
+        }
     }
 }

@@ -482,5 +482,36 @@ namespace ColdSort.Test
 
             return sortationSchema;
         }
+
+        public static SortationSchema KeepAtLocationSortSchema()
+        {
+            SortationSchema sortationSchema = new SortationSchema();
+            sortationSchema.SortationSchemaTitle = "Perfect Sort";
+            sortationSchema.KeepFilesAtOriginalLocation = true;
+            sortationSchema.FailedSortationDefault = "!Unsorted";
+            sortationSchema.SortationNodes = new List<ISortationNode>
+            {
+                new SortationNode
+                {
+                    SongProperty = SongProperty.Artist,
+                    AllowSortEnd = false,
+                    UseAbbreviation = true
+                },
+                new SortationNode
+                {
+                    SongProperty = SongProperty.Artist,
+                    AllowSortEnd = false,
+                    UseAbbreviation = false
+                },
+                new SortationNode
+                {
+                    SongProperty = SongProperty.Album,
+                    AllowSortEnd = false,
+                    UseAbbreviation = false
+                }
+            };
+
+            return sortationSchema;
+        }
     }
 }

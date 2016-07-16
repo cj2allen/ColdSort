@@ -300,6 +300,38 @@ namespace ColdSort.Test
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
 
+        [TestMethod]
+        public void InvalidCharacterTest()
+        {
+            ProgressView progressView = new ProgressView();
+            SortationSchema sortationSchema = SortationSchemaModeller.MustPerfectlySortSchema();
+            List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
+            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            Assert.IsTrue(results.Count == 1);
+            var goldResults = SongFileModeller.InvalidCharacterGoldResults();
+
+            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
+            Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
+        }
+
+        [TestMethod]
+        public void KeepAtLocationTest()
+        {
+            ProgressView progressView = new ProgressView();
+            SortationSchema sortationSchema = SortationSchemaModeller.KeepAtLocationSortSchema();
+            List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
+            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            Assert.IsTrue(results.Count == 1);
+            var goldResults = SongFileModeller.KeepAtLocationGoldResults();
+
+            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
+            Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
+        }
+
         #endregion
     }
 }

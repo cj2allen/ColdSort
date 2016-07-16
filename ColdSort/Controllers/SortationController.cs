@@ -264,7 +264,15 @@ namespace ColdSort.Controllers
                 return SortNodeResult.Sorted;
             }
 
-            songFile.SortedPath = Path.Combine(_newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+            if (_sortationSchema.KeepFilesAtOriginalLocation)
+            {
+                songFile.SortedPath = songFile.OriginalPath;
+            }
+            else
+            {
+                songFile.SortedPath = Path.Combine(_newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+            }
+
             return SortNodeResult.Error;
         }
 
