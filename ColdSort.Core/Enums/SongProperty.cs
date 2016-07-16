@@ -30,6 +30,21 @@ namespace ColdSort.Core.Enums
         /// <summary>
         /// Song year
         /// </summary>
-        Year = 3
+        Year = 3,
+
+        /// <summary>
+        /// Song genre
+        /// </summary>
+        Genre = 4,
+
+        /// <summary>
+        /// Song disc number
+        /// </summary>
+        Disc = 5,
+
+        /// <summary>
+        /// Song bitrate
+        /// </summary>
+        Bitrate = 6
     }
 }

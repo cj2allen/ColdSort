@@ -34,7 +34,7 @@ namespace ColdSort.Models
         /// <summary>
         /// Gets the sortation node name
         /// </summary>
-        public string Name
+        public string SortationNodeName
         {
             get
             {

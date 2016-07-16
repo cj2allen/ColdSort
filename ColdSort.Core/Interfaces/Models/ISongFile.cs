@@ -33,6 +33,21 @@ namespace ColdSort.Core.Interfaces.Models
         string Year { get; set; }
 
         /// <summary>
+        /// Gets or sets a value of the genre
+        /// </summary>
+        string Genre { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value of the disc number
+        /// </summary>
+        string Disc { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value of the bitrate
+        /// </summary>
+        string Bitrate { get; set; }
+
+        /// <summary>
         /// Gets or sets a value of the original path of the song file
         /// </summary>
         string OriginalPath { get; set; }

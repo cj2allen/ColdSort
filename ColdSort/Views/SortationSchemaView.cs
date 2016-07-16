@@ -142,6 +142,7 @@ namespace ColdSort.Views
             {
                 lstSortationNodes.DataSource = null;
                 lstSortationNodes.DataSource = value;
+                lstSortationNodes.DisplayMember = "SortationNodeName";
             }
         }
 

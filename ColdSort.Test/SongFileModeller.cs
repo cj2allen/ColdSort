@@ -10,7 +10,7 @@ namespace ColdSort.Test
         {
             return new List<ISongFile>
             {
-                new MP3File
+                new SongFile
                 {
                     Title = "Traffic",
                     Artist = "Tiësto",
@@ -18,7 +18,7 @@ namespace ColdSort.Test
                     Year = "2004",
                     OriginalPath = @"C:\Users\Chris\Music\Traffic - Tiësto.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Receiving End of It All",
                     Artist = "Streetlight Manifesto",
@@ -26,7 +26,7 @@ namespace ColdSort.Test
                     Year = "2007",
                     OriginalPath = @"C:\Users\Chris\Music\Receiving_End_Of_It_All-Streetlight_Manifesto.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Rebound",
                     Artist = "Arty & Mat Zo",
@@ -34,7 +34,7 @@ namespace ColdSort.Test
                     Year = "2011",
                     OriginalPath = @"C:\Users\Chris\Music\Rebound_-_Arty_And_MatZo.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Sick, Sick, Sick",
                     Artist = "Queens of the Stoneage",
@@ -42,7 +42,7 @@ namespace ColdSort.Test
                     Year = "2007",
                     OriginalPath = @"C:\Users\Chris\Music\Sick, Sick, Sick.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Viking (Original Mix)",
                     Artist = "Orjan Nilsen",
@@ -50,7 +50,7 @@ namespace ColdSort.Test
                     Year = "2011",
                     OriginalPath = @"C:\Users\Chris\Music\Viking - Orjan Nilsen.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Everything Went Numb",
                     Artist = "Streetlight Manifesto",
@@ -173,7 +173,7 @@ namespace ColdSort.Test
         {
             return new List<ISongFile>
             {
-                new MP3File
+                new SongFile
                 {
                     Title = "Traffic",
                     Artist = "Tiësto",
@@ -181,7 +181,7 @@ namespace ColdSort.Test
                     Year = "2004",
                     OriginalPath = @"C:\Users\Chris\Music\Traffic - Tiësto.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Receiving End of It All",
                     Artist = "",
@@ -189,7 +189,7 @@ namespace ColdSort.Test
                     Year = "2007",
                     OriginalPath = @"C:\Users\Chris\Music\Receiving_End_Of_It_All-Streetlight_Manifesto.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Rebound",
                     Artist = "Arty & Mat Zo",
@@ -197,7 +197,7 @@ namespace ColdSort.Test
                     Year = "",
                     OriginalPath = @"C:\Users\Chris\Music\Rebound_-_Arty_And_MatZo.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "",
                     Artist = "Queens of the Stoneage",
@@ -205,7 +205,7 @@ namespace ColdSort.Test
                     Year = "2007",
                     OriginalPath = @"C:\Users\Chris\Music\Sick, Sick, Sick.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "",
                     Artist = "",
@@ -213,7 +213,7 @@ namespace ColdSort.Test
                     Year = "",
                     OriginalPath = @"C:\Users\Chris\Music\Viking - Orjan Nilsen.mp3"
                 },
-                new MP3File
+                new SongFile
                 {
                     Title = "Everything Went Numb",
                     Artist = "Streetlight Manifesto",
@@ -444,7 +444,7 @@ namespace ColdSort.Test
         {
             return new List<ISongFile>
             {
-                new MP3File
+                new SongFile
                 {
                     Title = "DOTA [Club Mix]",
                     Artist = "BassHunter",

@@ -16,6 +16,7 @@ using ColdSort.Core.Interfaces.Controllers;
 using ColdSort.Core.Interfaces.Models;
 using ColdSort.Models;
 using ColdSort.Views;
+using System.Text.RegularExpressions;
 
 namespace ColdSort.Controllers
 {
@@ -27,9 +28,9 @@ namespace ColdSort.Controllers
         #region Constants
 
         /// <summary>
-        /// The MP3 file extension
+        /// All valid music extensions
         /// </summary>
-        public const string MP3_EXTENSION = "mp3";
+        public static readonly string[] VALID_EXTENSIONS = { ".mp3", ".acc", ".m4a", ".flac", ".mid", ".midi", ".ape", ".ogg", ".wav" };
 
         /// <summary>
         /// Invalid folder characters
@@ -128,34 +129,14 @@ namespace ColdSort.Controllers
 
             if (extension != null)
             {
-                ISongFile songFile;
-
-                switch (extension)
-                {
-                    case MP3_EXTENSION:
-                        songFile = new MP3File();
-                        break;
-                    default:
-                        songFile = null;
-                        break;
-                }
-
-                if (songFile != null && songFile.LoadSongInformation(songFilePath))
+                SongFile songFile = new SongFile();
+                if (songFile.LoadSongInformation(songFilePath))
                 {
                     return songFile;
                 }
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// This method combines all valid music file types into one pattern
-        /// </summary>
-        /// <returns> A regex pattern of all valid music file types </returns>
-        private string CombineExtensions()
-        {
-            return string.Format("*.{0}", MP3_EXTENSION);
         }
 
         /// <summary>
@@ -240,8 +221,17 @@ namespace ColdSort.Controllers
                 case SongProperty.Title:
                     newPathValue = songFile.Title;
                     break;
-                default:
+                case SongProperty.Year:
                     newPathValue = songFile.Year;
+                    break;
+                case SongProperty.Genre:
+                    newPathValue = songFile.Genre;
+                    break;
+                case SongProperty.Disc:
+                    newPathValue = songFile.Disc;
+                    break;
+                default:
+                    newPathValue = songFile.Bitrate;
                     break;
             }
 
@@ -377,7 +367,8 @@ namespace ColdSort.Controllers
             double currentFileCount = default(double);
             double totalFileCount = default(double);
 
-            string[] files = Directory.GetFiles(_oldRootPath, CombineExtensions(), SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(_oldRootPath, "*.*", SearchOption.AllDirectories)
+                    .Where(x => VALID_EXTENSIONS.Contains(Path.GetExtension(x).ToLower())).ToArray();
             totalFileCount = files.Length;
 
             foreach (string file in files)

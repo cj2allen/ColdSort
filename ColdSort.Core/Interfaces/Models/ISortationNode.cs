@@ -17,7 +17,7 @@ namespace ColdSort.Core.Interfaces.Models
         /// <summary>
         /// Gets the sortation node name
         /// </summary>
-        string Name { get; }
+        string SortationNodeName { get; }
 
         /// <summary>
         /// Gets or sets the sortation node song's property
