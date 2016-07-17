@@ -1,6 +1,6 @@
 ColdSort
 ========
-A music sortation application by Christopher James Allen
+A music sortation application by Christopher James Allen. This is a for fun project and will be updated as long as I feel like.
 
 Description
 -----------
@@ -34,8 +34,6 @@ Future Updates (In No Particular Order)
 ---------------------------------------
 * Saving and loading of Sortation Schema in json format.
 * Add diagnostic and logging information on sortation run. Allow for better tracking of files being sorted.
-* Have other popular song formats supported.
-* Have an option to copy music to new destination instead of only moving them (keeps source folder pure).
 * Integrate progess bar into main window (get's rid of window spam).
 * Multi-threading sortation support (this program is begging to be multi-threaded!)
 * Better streamlined Sortation Schema creation.
