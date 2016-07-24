@@ -34,6 +34,10 @@
             this.chkAbbreviateProperty = new System.Windows.Forms.CheckBox();
             this.btnConfirmNode = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.grpAbbreviateOptions = new System.Windows.Forms.GroupBox();
+            this.chkCaptitalizeAbbreviation = new System.Windows.Forms.CheckBox();
+            this.chkCondenseNumbers = new System.Windows.Forms.CheckBox();
+            this.grpAbbreviateOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // cbxSelectProperty
@@ -72,10 +76,11 @@
             this.chkAbbreviateProperty.TabIndex = 5;
             this.chkAbbreviateProperty.Text = "Abbreviate Property Value";
             this.chkAbbreviateProperty.UseVisualStyleBackColor = true;
+            this.chkAbbreviateProperty.CheckedChanged += new System.EventHandler(this.chkAbbreviateProperty_CheckedChanged);
             // 
             // btnConfirmNode
             // 
-            this.btnConfirmNode.Location = new System.Drawing.Point(15, 96);
+            this.btnConfirmNode.Location = new System.Drawing.Point(15, 167);
             this.btnConfirmNode.Name = "btnConfirmNode";
             this.btnConfirmNode.Size = new System.Drawing.Size(78, 27);
             this.btnConfirmNode.TabIndex = 6;
@@ -85,7 +90,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(101, 96);
+            this.btnCancel.Location = new System.Drawing.Point(101, 167);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(78, 27);
             this.btnCancel.TabIndex = 7;
@@ -93,11 +98,45 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
+            // grpAbbreviateOptions
+            // 
+            this.grpAbbreviateOptions.Controls.Add(this.chkCaptitalizeAbbreviation);
+            this.grpAbbreviateOptions.Controls.Add(this.chkCondenseNumbers);
+            this.grpAbbreviateOptions.Location = new System.Drawing.Point(15, 94);
+            this.grpAbbreviateOptions.Name = "grpAbbreviateOptions";
+            this.grpAbbreviateOptions.Size = new System.Drawing.Size(159, 64);
+            this.grpAbbreviateOptions.TabIndex = 9;
+            this.grpAbbreviateOptions.TabStop = false;
+            this.grpAbbreviateOptions.Text = "Abbreviate Options";
+            // 
+            // chkCaptitalizeAbbreviation
+            // 
+            this.chkCaptitalizeAbbreviation.AutoSize = true;
+            this.chkCaptitalizeAbbreviation.Enabled = false;
+            this.chkCaptitalizeAbbreviation.Location = new System.Drawing.Point(4, 42);
+            this.chkCaptitalizeAbbreviation.Name = "chkCaptitalizeAbbreviation";
+            this.chkCaptitalizeAbbreviation.Size = new System.Drawing.Size(138, 17);
+            this.chkCaptitalizeAbbreviation.TabIndex = 10;
+            this.chkCaptitalizeAbbreviation.Text = "Capitalize Abbreviations";
+            this.chkCaptitalizeAbbreviation.UseVisualStyleBackColor = true;
+            // 
+            // chkCondenseNumbers
+            // 
+            this.chkCondenseNumbers.AutoSize = true;
+            this.chkCondenseNumbers.Enabled = false;
+            this.chkCondenseNumbers.Location = new System.Drawing.Point(4, 18);
+            this.chkCondenseNumbers.Name = "chkCondenseNumbers";
+            this.chkCondenseNumbers.Size = new System.Drawing.Size(151, 17);
+            this.chkCondenseNumbers.TabIndex = 9;
+            this.chkCondenseNumbers.Text = "Condense Numbers to \"#\"";
+            this.chkCondenseNumbers.UseVisualStyleBackColor = true;
+            // 
             // SortationNodeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(194, 132);
+            this.ClientSize = new System.Drawing.Size(194, 205);
+            this.Controls.Add(this.grpAbbreviateOptions);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirmNode);
             this.Controls.Add(this.chkAbbreviateProperty);
@@ -110,6 +149,8 @@
             this.Name = "SortationNodeView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Edit Sortation Node";
+            this.grpAbbreviateOptions.ResumeLayout(false);
+            this.grpAbbreviateOptions.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,5 +163,8 @@
         private System.Windows.Forms.CheckBox chkAbbreviateProperty;
         private System.Windows.Forms.Button btnConfirmNode;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.GroupBox grpAbbreviateOptions;
+        private System.Windows.Forms.CheckBox chkCondenseNumbers;
+        private System.Windows.Forms.CheckBox chkCaptitalizeAbbreviation;
     }
 }

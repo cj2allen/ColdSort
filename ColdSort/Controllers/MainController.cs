@@ -77,25 +77,32 @@ namespace ColdSort.Controllers
             _sortationSchema.SortationSchemaTitle = "Default Sort";
             _sortationSchema.KeepFilesAtOriginalLocation = false;
             _sortationSchema.FailedSortationDefault = "!Unsorted";
+            _sortationSchema.CopySongs = true;
             _sortationSchema.SortationNodes = new List<ISortationNode>
             {
                 new SortationNode
                 {
                     SongProperty = SongProperty.Artist,
                     AllowSortEnd = false,
-                    UseAbbreviation = true
+                    UseAbbreviation = true,
+                    CondenseNumbersToSymbol = true,
+                    CapitalizeAbbreviation = true
                 },
                 new SortationNode
                 {
                     SongProperty = SongProperty.Artist,
                     AllowSortEnd = false,
-                    UseAbbreviation = false
+                    UseAbbreviation = false,
+                    CondenseNumbersToSymbol = false,
+                    CapitalizeAbbreviation = false
                 },
                 new SortationNode
                 {
                     SongProperty = SongProperty.Album,
                     AllowSortEnd = true,
-                    UseAbbreviation = false
+                    UseAbbreviation = false,
+                    CondenseNumbersToSymbol = false,
+                    CapitalizeAbbreviation = false
                 }
             };
         }

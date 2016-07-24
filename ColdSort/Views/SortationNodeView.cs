@@ -89,6 +89,38 @@ namespace ColdSort.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to condense all number abbreviations into the folder #
+        /// </summary>
+        public bool CondenseNumbersToSymbol
+        {
+            get
+            {
+                return chkCondenseNumbers.Checked;
+            }
+
+            set
+            {
+                chkCondenseNumbers.Checked = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to capitalize all abbreviations
+        /// </summary>
+        public bool CapitalizeAbbreviation
+        {
+            get
+            {
+                return chkCaptitalizeAbbreviation.Checked;
+            }
+
+            set
+            {
+                chkCaptitalizeAbbreviation.Checked = value;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -122,14 +154,22 @@ namespace ColdSort.Views
             _sortationNodeController.Cancel();
         }
 
-        /// <summary>
-        /// The close action
-        /// </summary>
-        /// <param name="sender"> The sender </param>
-        /// <param name="e"> The event arguments </param>
+        
         private void SortationNodeView_FormClosing(object sender, FormClosingEventArgs e)
         {
             _sortationNodeController.Cancel();
+        }
+        
+        /// <summary>
+        /// Enable or disable abbreviation options
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
+        private void chkAbbreviateProperty_CheckedChanged(object sender, EventArgs e)
+        {
+            bool enable = chkAbbreviateProperty.Checked;
+            chkCondenseNumbers.Enabled = enable;
+            chkCaptitalizeAbbreviation.Enabled = enable;
         }
 
         #endregion

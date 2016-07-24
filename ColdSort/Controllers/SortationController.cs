@@ -42,6 +42,11 @@ namespace ColdSort.Controllers
         /// </summary>
         public static readonly int MAX_PATH_LENGTH = 260;
 
+        /// <summary>
+        /// Symbol for numbers that are being condensed
+        /// </summary>
+        public static readonly string CONDENSE_SYMBOL = "#";
+
         #endregion
 
         #region Fields
@@ -242,7 +247,22 @@ namespace ColdSort.Controllers
             {
                 if (sortationNode.UseAbbreviation)
                 {
-                    newPathValue = newPathValue.Substring(0, 1);
+                    string abbreviation = newPathValue.Substring(0, 1);
+                    int num;
+
+                    if (sortationNode.CondenseNumbersToSymbol && int.TryParse(abbreviation, out num))
+                    {
+                        newPathValue = CONDENSE_SYMBOL;
+                    }
+                    else
+                    {
+                        if (sortationNode.CapitalizeAbbreviation && abbreviation.All(Char.IsLetter))
+                        {
+                            abbreviation = abbreviation.ToUpper();
+                        }
+
+                        newPathValue = abbreviation;
+                    }
                 }
 
                 songFile.SortedPath = Path.Combine(songFile.SortedPath, newPathValue);

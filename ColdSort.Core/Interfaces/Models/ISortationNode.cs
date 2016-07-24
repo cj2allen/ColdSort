@@ -35,6 +35,16 @@ namespace ColdSort.Core.Interfaces.Models
         bool UseAbbreviation { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to condense all number abbreviations into the folder #
+        /// </summary>
+        bool CondenseNumbersToSymbol { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to condense all number abbreviations into the folder #
+        /// </summary>
+        bool CapitalizeAbbreviation { get; set; }
+
+        /// <summary>
         /// Returns the sortation node's property as a string
         /// </summary>
         /// <returns> The song's sortation property as a string </returns>

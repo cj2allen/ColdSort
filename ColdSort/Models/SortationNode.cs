@@ -32,7 +32,7 @@ namespace ColdSort.Models
         #region Properties
 
         /// <summary>
-        /// Gets the sortation node name
+        /// <see cref="ISortationNode.SortationNodeName"/>
         /// </summary>
         public string SortationNodeName
         {
@@ -45,19 +45,29 @@ namespace ColdSort.Models
         }
 
         /// <summary>
-        /// Gets or sets the sortation node song's property
+        /// <see cref="ISortationNode.SongProperty"/>
         /// </summary>
         public SongProperty SongProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the sort of a song can end at this node
+        /// <see cref="ISortationNode.AllowSortEnd"/>
         /// </summary>
         public bool AllowSortEnd { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the folder created with this node uses an abbreviation
+        /// <see cref="ISortationNode.UseAbbreviation"/>
         /// </summary>
         public bool UseAbbreviation { get; set; }
+
+        /// <summary>
+        /// <see cref="ISortationNode.CondenseNumbersToSymbol"/>
+        /// </summary>
+        public bool CondenseNumbersToSymbol { get; set; }
+
+        /// <summary>
+        /// <see cref="ISortationNode.CapitalizeAbbreviation"/>
+        /// </summary>
+        public bool CapitalizeAbbreviation { get; set; }
 
         #endregion
 

@@ -57,6 +57,8 @@ namespace ColdSort.Controllers
             _sortationNodeView.SongProperties = (int)_sortationNode.SongProperty;
             _sortationNodeView.AllowSortEnd = _sortationNode.AllowSortEnd;
             _sortationNodeView.UseAbbreviation = _sortationNode.UseAbbreviation;
+            _sortationNodeView.CondenseNumbersToSymbol = _sortationNode.CondenseNumbersToSymbol;
+            _sortationNodeView.CapitalizeAbbreviation = _sortationNode.CapitalizeAbbreviation;
         }
 
         /// <summary>
