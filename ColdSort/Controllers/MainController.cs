@@ -120,14 +120,13 @@ namespace ColdSort.Controllers
             FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
             DialogResult folderResult = folderBrowserDialog.ShowDialog();
 
-            if (folderResult == DialogResult.OK)
+            if (folderResult != DialogResult.OK)
             {
-                return folderResult.ToString();
+                _mainView.ErrorBox("Folder path is invalid. Path unchanged.");
+                return currentPath;
             }
-
-            _mainView.ErrorBox("Folder path is invalid. Path unchanged.");
-
-            return currentPath;
+            
+            return folderBrowserDialog.SelectedPath;
         }
 
         /// <summary>
