@@ -121,6 +121,22 @@ namespace ColdSort.Views
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to capitalize all abbreviations
+        /// </summary>
+        public bool CondenseAccents
+        {
+            get
+            {
+                return chkCondenseAccents.Checked;
+            }
+
+            set
+            {
+                chkCondenseAccents.Checked = value;
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -170,6 +186,7 @@ namespace ColdSort.Views
             bool enable = chkAbbreviateProperty.Checked;
             chkCondenseNumbers.Enabled = enable;
             chkCaptitalizeAbbreviation.Enabled = enable;
+            chkCondenseAccents.Enabled = enable;
         }
 
         #endregion

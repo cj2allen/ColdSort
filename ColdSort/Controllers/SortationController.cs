@@ -256,6 +256,34 @@ namespace ColdSort.Controllers
                     }
                     else
                     {
+                        if(sortationNode.CondenseAccents)
+                        {
+                            //Accented character conversion provided by Julien Roncaglia
+                            //See original stack overflow post: http://stackoverflow.com/questions/5459641/replacing-characters-in-c-sharp-ascii
+                            abbreviation = Regex.Replace(abbreviation, "[éèëêð]", "e");
+                            abbreviation = Regex.Replace(abbreviation, "[ÉÈËÊ]", "E");
+                            abbreviation = Regex.Replace(abbreviation, "[àâä]", "a");
+                            abbreviation = Regex.Replace(abbreviation, "[ÀÁÂÃÄÅ]", "A");
+                            abbreviation = Regex.Replace(abbreviation, "[àáâãäå]", "a");
+                            abbreviation = Regex.Replace(abbreviation, "[ÙÚÛÜ]", "U");
+                            abbreviation = Regex.Replace(abbreviation, "[ùúûüµ]", "u");
+                            abbreviation = Regex.Replace(abbreviation, "[òóôõöø]", "o");
+                            abbreviation = Regex.Replace(abbreviation, "[ÒÓÔÕÖØ]", "O");
+                            abbreviation = Regex.Replace(abbreviation, "[ìíîï]", "i");
+                            abbreviation = Regex.Replace(abbreviation, "[ÌÍÎÏ]", "I");
+                            abbreviation = Regex.Replace(abbreviation, "[š]", "s");
+                            abbreviation = Regex.Replace(abbreviation, "[Š]", "S");
+                            abbreviation = Regex.Replace(abbreviation, "[ñ]", "n");
+                            abbreviation = Regex.Replace(abbreviation, "[Ñ]", "N");
+                            abbreviation = Regex.Replace(abbreviation, "[ç]", "c");
+                            abbreviation = Regex.Replace(abbreviation, "[Ç]", "C");
+                            abbreviation = Regex.Replace(abbreviation, "[ÿ]", "y");
+                            abbreviation = Regex.Replace(abbreviation, "[Ÿ]", "Y");
+                            abbreviation = Regex.Replace(abbreviation, "[ž]", "z");
+                            abbreviation = Regex.Replace(abbreviation, "[Ž]", "Z");
+                            abbreviation = Regex.Replace(abbreviation, "[Ð]", "D");
+                        }
+
                         if (sortationNode.CapitalizeAbbreviation && abbreviation.All(Char.IsLetter))
                         {
                             abbreviation = abbreviation.ToUpper();

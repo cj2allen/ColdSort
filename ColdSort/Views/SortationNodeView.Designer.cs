@@ -37,6 +37,7 @@
             this.grpAbbreviateOptions = new System.Windows.Forms.GroupBox();
             this.chkCaptitalizeAbbreviation = new System.Windows.Forms.CheckBox();
             this.chkCondenseNumbers = new System.Windows.Forms.CheckBox();
+            this.chkCondenseAccents = new System.Windows.Forms.CheckBox();
             this.grpAbbreviateOptions.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             // 
             // btnConfirmNode
             // 
-            this.btnConfirmNode.Location = new System.Drawing.Point(15, 167);
+            this.btnConfirmNode.Location = new System.Drawing.Point(15, 192);
             this.btnConfirmNode.Name = "btnConfirmNode";
             this.btnConfirmNode.Size = new System.Drawing.Size(78, 27);
             this.btnConfirmNode.TabIndex = 6;
@@ -90,7 +91,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(101, 167);
+            this.btnCancel.Location = new System.Drawing.Point(101, 192);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(78, 27);
             this.btnCancel.TabIndex = 7;
@@ -100,11 +101,12 @@
             // 
             // grpAbbreviateOptions
             // 
+            this.grpAbbreviateOptions.Controls.Add(this.chkCondenseAccents);
             this.grpAbbreviateOptions.Controls.Add(this.chkCaptitalizeAbbreviation);
             this.grpAbbreviateOptions.Controls.Add(this.chkCondenseNumbers);
             this.grpAbbreviateOptions.Location = new System.Drawing.Point(15, 94);
             this.grpAbbreviateOptions.Name = "grpAbbreviateOptions";
-            this.grpAbbreviateOptions.Size = new System.Drawing.Size(159, 64);
+            this.grpAbbreviateOptions.Size = new System.Drawing.Size(159, 92);
             this.grpAbbreviateOptions.TabIndex = 9;
             this.grpAbbreviateOptions.TabStop = false;
             this.grpAbbreviateOptions.Text = "Abbreviate Options";
@@ -131,11 +133,22 @@
             this.chkCondenseNumbers.Text = "Condense Numbers to \"#\"";
             this.chkCondenseNumbers.UseVisualStyleBackColor = true;
             // 
+            // chkCondenseAccents
+            // 
+            this.chkCondenseAccents.AutoSize = true;
+            this.chkCondenseAccents.Enabled = false;
+            this.chkCondenseAccents.Location = new System.Drawing.Point(4, 66);
+            this.chkCondenseAccents.Name = "chkCondenseAccents";
+            this.chkCondenseAccents.Size = new System.Drawing.Size(116, 17);
+            this.chkCondenseAccents.TabIndex = 12;
+            this.chkCondenseAccents.Text = "Condense Accents";
+            this.chkCondenseAccents.UseVisualStyleBackColor = true;
+            // 
             // SortationNodeView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(194, 205);
+            this.ClientSize = new System.Drawing.Size(194, 228);
             this.Controls.Add(this.grpAbbreviateOptions);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnConfirmNode);
@@ -166,5 +179,6 @@
         private System.Windows.Forms.GroupBox grpAbbreviateOptions;
         private System.Windows.Forms.CheckBox chkCondenseNumbers;
         private System.Windows.Forms.CheckBox chkCaptitalizeAbbreviation;
+        private System.Windows.Forms.CheckBox chkCondenseAccents;
     }
 }

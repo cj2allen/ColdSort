@@ -69,6 +69,11 @@ namespace ColdSort.Models
         /// </summary>
         public bool CapitalizeAbbreviation { get; set; }
 
+        /// <summary>
+        /// <see cref="ISortationNode.CondenseAccent"/>
+        /// </summary>
+        public bool CondenseAccents { get; set; }
+
         #endregion
 
         #region Methods

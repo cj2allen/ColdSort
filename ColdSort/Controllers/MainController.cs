@@ -86,7 +86,8 @@ namespace ColdSort.Controllers
                     AllowSortEnd = false,
                     UseAbbreviation = true,
                     CondenseNumbersToSymbol = true,
-                    CapitalizeAbbreviation = true
+                    CapitalizeAbbreviation = true,
+                    CondenseAccents = true
                 },
                 new SortationNode
                 {
@@ -94,7 +95,8 @@ namespace ColdSort.Controllers
                     AllowSortEnd = false,
                     UseAbbreviation = false,
                     CondenseNumbersToSymbol = false,
-                    CapitalizeAbbreviation = false
+                    CapitalizeAbbreviation = false,
+                    CondenseAccents = false
                 },
                 new SortationNode
                 {
@@ -102,7 +104,8 @@ namespace ColdSort.Controllers
                     AllowSortEnd = true,
                     UseAbbreviation = false,
                     CondenseNumbersToSymbol = false,
-                    CapitalizeAbbreviation = false
+                    CapitalizeAbbreviation = false,
+                    CondenseAccents = false
                 }
             };
         }

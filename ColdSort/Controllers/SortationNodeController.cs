@@ -59,6 +59,7 @@ namespace ColdSort.Controllers
             _sortationNodeView.UseAbbreviation = _sortationNode.UseAbbreviation;
             _sortationNodeView.CondenseNumbersToSymbol = _sortationNode.CondenseNumbersToSymbol;
             _sortationNodeView.CapitalizeAbbreviation = _sortationNode.CapitalizeAbbreviation;
+            _sortationNodeView.CondenseAccents = _sortationNode.CondenseAccents;
         }
 
         /// <summary>

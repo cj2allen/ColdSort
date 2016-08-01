@@ -49,5 +49,10 @@ namespace ColdSort.Core.Interfaces.Models
         /// </summary>
         /// <returns> The song's sortation property as a string </returns>
         string GetSortationNodeProperty();
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to condense accented characters to 26 character ascii
+        /// </summary>
+        bool CondenseAccents { get; set; }
     }
 }
