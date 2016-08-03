@@ -49,6 +49,22 @@ namespace ColdSort.Controllers
 
         #endregion
 
+        #region Delegates
+
+        /// <summary>
+        /// Delegate for setting the progress bar
+        /// </summary>
+        /// <param name="percentage"> Current percentage </param>
+        private delegate void SetProgressCountInvoke(int percentage);
+
+        /// <summary>
+        /// Delegate for setting the progress percentage
+        /// </summary>
+        /// <param name="percentage"> Current file count </param>
+        private delegate void SetFileCountInvoke(int percentage);
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -166,11 +182,8 @@ namespace ColdSort.Controllers
         /// </summary>
         public void SortWithoutDiagnostics()
         {
-            using (ProgressView progressView = new ProgressView())
-            {
-                ISortationController sortationController = new SortationController(progressView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
-                sortationController.SortWithoutDiagnostics();
-            }
+            ISortationController sortationController = new SortationController(_mainView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
+            sortationController.SortWithoutDiagnostics();         
         }
 
         #endregion

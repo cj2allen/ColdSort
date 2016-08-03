@@ -72,12 +72,6 @@
     <Compile Include="Views\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\ProgressView.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ProgressView.Designer.cs">
-      <DependentUpon>ProgressView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Views\SortationNodeView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,9 +96,6 @@
     </Compile>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Views\ProgressView.resx">
-      <DependentUpon>ProgressView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\SortationNodeView.resx">
       <DependentUpon>SortationNodeView.cs</DependentUpon>

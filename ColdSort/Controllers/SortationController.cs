@@ -49,7 +49,7 @@ namespace ColdSort.Controllers
 
         #endregion
 
-        #region Fields
+        #region Members
 
         /// <summary>
         /// The source folder path of the music
@@ -69,7 +69,7 @@ namespace ColdSort.Controllers
         /// <summary>
         /// The progress view form
         /// </summary>
-        private ProgressView _progressView;
+        private MainView _mainView;
 
         /// <summary>
         /// Background sorting worker
@@ -83,15 +83,15 @@ namespace ColdSort.Controllers
         /// <summary>
         /// Initializes a new instance of the <see cref="SortationController"/> class
         /// </summary>
-        /// <param name="progressView"> The progress view </param>
+        /// <param name="mainView"> The progress view </param>
         /// <param name="sortationSchema"> The sortation schema </param>
-        public SortationController(ProgressView progressView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
+        public SortationController(MainView mainView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
         {
             _sortationSchema = sortationSchema;
             _oldRootPath = oldRootPath;
             _newRootPath = newRootPath;
-            _progressView = progressView;
-            _progressView.SetController(this);
+            _mainView = mainView;
+            _mainView.SetController(this);
         }
 
         #endregion
@@ -111,7 +111,6 @@ namespace ColdSort.Controllers
             _backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
             _backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
             _backgroundWorker.RunWorkerAsync();
-            _progressView.ShowDialog();
         }
 
         /// <summary>
@@ -120,7 +119,7 @@ namespace ColdSort.Controllers
         public void CancelSort()
         {
             _backgroundWorker.CancelAsync();
-            _progressView.Close();
+            _mainView.Close();
         }
 
         /// <summary>
@@ -401,7 +400,7 @@ namespace ColdSort.Controllers
         {
             if (e.ProgressPercentage > 0)
             {
-                _progressView.UpdateProgress(e.ProgressPercentage);
+                _mainView.UpdateProgress(e.ProgressPercentage);
             }
         }
 
@@ -456,7 +455,7 @@ namespace ColdSort.Controllers
                 MessageBox.Show("Done!");
             }
 
-            _progressView.Close();
+            _mainView.Close();
         }
 
         #endregion

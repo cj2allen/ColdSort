@@ -8,6 +8,7 @@
 using System;
 using System.Windows.Forms;
 using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Controllers;
 
 namespace ColdSort.Views
 {
@@ -16,12 +17,33 @@ namespace ColdSort.Views
     /// </summary>
     public partial class MainView : Form
     {
-        #region Fields
+        #region Members
 
         /// <summary>
         /// The main controller
         /// </summary>
         private IMainController _mainController;
+
+        /// <summary>
+        /// The main controller
+        /// </summary>
+        private ISortationController _sortationController;
+
+        #endregion
+
+        #region Delegates
+
+        /// <summary>
+        /// Delegate for setting the progress bar
+        /// </summary>
+        /// <param name="percentage"> Current percentage </param>
+        private delegate void SetProgressCountInvoke(int percentage);
+
+        /// <summary>
+        /// Delegate for setting the progress percentage
+        /// </summary>
+        /// <param name="percentage"> Current file count </param>
+        private delegate void SetFileCountInvoke(int percentage);
 
         #endregion
 
@@ -100,6 +122,78 @@ namespace ColdSort.Views
             _mainController = mainController;
         }
 
+        #region Methods
+
+        /// <summary>
+        /// Set the sortation controller for the view
+        /// </summary>
+        /// <param name="sortationController"> The sortation controller </param>
+        public void SetController(SortationController sortationController)
+        {
+            _sortationController = sortationController;
+        }
+
+        /// <summary>
+        /// Updates the progress bar and percentage text
+        /// </summary>
+        /// <param name="percentage"> The sortation controller </param>
+        public void UpdateProgress(int percentage)
+        {
+            SetProgressBar(percentage);
+            SetFileCount(percentage);
+        }
+
+        /// <summary>
+        /// Button to cancel the sort
+        /// </summary>
+        /// <param name="sender"> The sender </param>
+        /// <param name="e"> The event arguments </param>
+        private void BtnCancel_Click(object sender, EventArgs e)
+        {
+            _sortationController.CancelSort();
+        }
+
+        /// <summary>
+        /// Updates the progress bar
+        /// </summary>
+        /// <param name="percentage"> The sortation controller </param>
+        private void SetProgressBar(int percentage)
+        {
+            if (percentage > 0)
+            {
+                if (this.pbSortProgress.InvokeRequired)
+                {
+                    SetProgressCountInvoke inv = new SetProgressCountInvoke(SetProgressBar);
+                    this.BeginInvoke(inv, new object[] { percentage });
+                }
+                else
+                {
+                    pbSortProgress.Value = percentage;
+                    this.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates the percentage text
+        /// </summary>
+        /// <param name="percentage"> The sortation controller </param>
+        private void SetFileCount(int percentage)
+        {
+            if (this.pbSortProgress.InvokeRequired)
+            {
+                SetFileCountInvoke inv = new SetFileCountInvoke(SetFileCount);
+                this.BeginInvoke(inv, new object[] { percentage });
+            }
+            else
+            {
+                lblAction.Text = string.Format("{0}%", percentage);
+                this.Refresh();
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// Displays an error message box
         /// </summary>
@@ -162,7 +256,10 @@ namespace ColdSort.Views
         /// <param name="e"> The event arguments </param>
         private void BtnStartSort_Click(object sender, EventArgs e)
         {
+            lblAction.Text = "Loading...";
+            btnCancel.Enabled = true;
             _mainController.SortWithoutDiagnostics();
+            btnCancel.Enabled = false;
         }
 
         /// <summary>

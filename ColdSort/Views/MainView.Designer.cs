@@ -1,4 +1,6 @@
-﻿namespace ColdSort.Views
+﻿using System.Drawing;
+
+namespace ColdSort.Views
 {
     partial class MainView
     {
@@ -43,6 +45,9 @@
             this.lblTitle = new System.Windows.Forms.Label();
             this.btnCancelSort = new System.Windows.Forms.Button();
             this.btnStartSort = new System.Windows.Forms.Button();
+            this.pbSortProgress = new System.Windows.Forms.ProgressBar();
+            this.lblAction = new System.Windows.Forms.Label();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.grpLocations.SuspendLayout();
             this.grpSchema.SuspendLayout();
             this.SuspendLayout();
@@ -179,7 +184,7 @@
             // btnCancelSort
             // 
             this.btnCancelSort.Enabled = false;
-            this.btnCancelSort.Location = new System.Drawing.Point(251, 234);
+            this.btnCancelSort.Location = new System.Drawing.Point(170, 263);
             this.btnCancelSort.Name = "btnCancelSort";
             this.btnCancelSort.Size = new System.Drawing.Size(111, 23);
             this.btnCancelSort.TabIndex = 11;
@@ -188,7 +193,7 @@
             // 
             // btnStartSort
             // 
-            this.btnStartSort.Location = new System.Drawing.Point(183, 234);
+            this.btnStartSort.Location = new System.Drawing.Point(102, 263);
             this.btnStartSort.Name = "btnStartSort";
             this.btnStartSort.Size = new System.Drawing.Size(62, 23);
             this.btnStartSort.TabIndex = 10;
@@ -196,18 +201,49 @@
             this.btnStartSort.UseVisualStyleBackColor = true;
             this.btnStartSort.Click += new System.EventHandler(this.BtnStartSort_Click);
             // 
+            // pbSortProgress
+            // 
+            this.pbSortProgress.Location = new System.Drawing.Point(12, 234);
+            this.pbSortProgress.Name = "pbSortProgress";
+            this.pbSortProgress.Size = new System.Drawing.Size(273, 23);
+            this.pbSortProgress.Step = 1;
+            this.pbSortProgress.TabIndex = 12;
+            // 
+            // lblAction
+            // 
+            this.lblAction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAction.AutoEllipsis = true;
+            this.lblAction.Location = new System.Drawing.Point(291, 234);
+            this.lblAction.Name = "lblAction";
+            this.lblAction.Size = new System.Drawing.Size(71, 23);
+            this.lblAction.TabIndex = 13;
+            this.lblAction.Text = "Waiting...";
+            this.lblAction.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Enabled = false;
+            this.btnCancel.Location = new System.Drawing.Point(287, 263);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(374, 264);
+            this.ClientSize = new System.Drawing.Size(374, 294);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.lblAction);
+            this.Controls.Add(this.pbSortProgress);
             this.Controls.Add(this.btnCancelSort);
             this.Controls.Add(this.btnStartSort);
             this.Controls.Add(this.grpLocations);
             this.Controls.Add(this.grpSchema);
             this.Name = "MainView";
-            this.Text = "MainView";
-            this.FormClosing += MainView_FormClosing;
+            this.Text = "Cold Sort";
             this.grpLocations.ResumeLayout(false);
             this.grpLocations.PerformLayout();
             this.grpSchema.ResumeLayout(false);
@@ -232,5 +268,8 @@
         private System.Windows.Forms.Button btnCancelSort;
         private System.Windows.Forms.Button btnStartSort;
         private System.Windows.Forms.Label lblSchemaTitle;
+        private System.Windows.Forms.ProgressBar pbSortProgress;
+        private System.Windows.Forms.Label lblAction;
+        private System.Windows.Forms.Button btnCancel;
     }
 }
