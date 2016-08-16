@@ -18,11 +18,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void SimpleSortationTest1()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.DefaultSortationSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);            
             var goldResults = SongFileModeller.SimpleSortationTest1GoldResults();
             for (int i = 0; i < 6; i++)
@@ -37,11 +37,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void SimpleSortationTest2()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.EraSortationSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.SimpleSortationTest2GoldResults();
             for (int i = 0; i < 6; i++)
@@ -56,11 +56,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void SimpleSortationTest3()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.RandomSortationSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.SimpleSortationTest3GoldResults();
             for (int i = 0; i < 6; i++)
@@ -79,11 +79,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void MetadataTest1()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.DefaultSortationSchema();
             List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest1GoldResults();
 
@@ -115,11 +115,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void MetadataTest2()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MustPerfectlySortSchema();
             List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest2GoldResults();
 
@@ -151,11 +151,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void MetadataTest3()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MixOfSortingEndsSortSchema();
             List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest3GoldResults();
 
@@ -191,11 +191,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void AbbriviationTest()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.AbbreviateEVERYTHINGSortSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.AbbriviationGoldResults();
 
@@ -231,11 +231,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void NoNodesTest()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.NoNodesSortSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.NoNodesGoldResults();
 
@@ -267,11 +267,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void PathTooLongTest()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.PathTooLongSortSchema();
             List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.PathTooLongGoldResults();
 
@@ -303,11 +303,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void InvalidCharacterTest()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MustPerfectlySortSchema();
             List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 1);
             var goldResults = SongFileModeller.InvalidCharacterGoldResults();
 
@@ -319,11 +319,11 @@ namespace ColdSort.Test
         [TestMethod]
         public void KeepAtLocationTest()
         {
-            ProgressView progressView = new ProgressView();
+            MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.KeepAtLocationSortSchema();
             List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
-            SortationController sortationController = new SortationController(progressView, sortationSchema, OLD_PATH, NEW_PATH);
-            List<ISortationSchemaResult> results = sortationController.GenerateSortationPaths(songFiles);
+            SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
+            List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 1);
             var goldResults = SongFileModeller.KeepAtLocationGoldResults();
 

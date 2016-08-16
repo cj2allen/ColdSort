@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="SortationController.cs" company="None">
+// <copyright file="SortationService.cs" company="None">
 //     Copyright (c) 2016 Christopher James Allen
 // </copyright>
 // <author>Christopher James Allen</author>
@@ -23,14 +23,14 @@ namespace ColdSort.Controllers
     /// <summary>
     /// Manage sortation related functionality
     /// </summary>
-    public class SortationController : ISortationController
+    public class SortationService : ISortationService
     {
         #region Constants
 
         /// <summary>
         /// All valid music extensions
         /// </summary>
-        public static readonly string[] VALID_EXTENSIONS = { ".mp3", ".acc", ".m4a", ".flac", ".mid", ".midi", ".ape", ".ogg", ".wav" };
+        public static readonly string[] VALID_EXTENSIONS = { ".mp3", ".acc", ".m4a", ".flac", ".mid", ".midi", ".ape", ".ogg", ".wav", "wma" };
 
         /// <summary>
         /// Invalid folder characters
@@ -45,7 +45,89 @@ namespace ColdSort.Controllers
         /// <summary>
         /// Symbol for numbers that are being condensed
         /// </summary>
-        public static readonly string CONDENSE_SYMBOL = "#";
+        public static readonly string CONDENSE_NUMBER_SYMBOL = "#";
+
+        /// <summary>
+        /// Symbol for symbols that are being condensed
+        /// </summary>
+        public static readonly string CONDENSE_SYMBOLS_SYMBOL = "!Symbols";
+
+        /// <summary>
+        /// Accented characters
+        /// </summary>
+        public static readonly string ACCENTED_CHARACTERS = "éèëêÉÈËÊàâäáãåÀÁÂÃÄÅÙÚÛÜùúûüµðòóôõöøÒÓÔÕÖØìíîïÌÍÎÏšŠñÑçÇÿŸžŽÐ";
+
+        /// <summary>
+        /// Accented Character Swap
+        /// </summary>
+        /// <remarks>
+        /// Accented character conversion provided by Julien Roncaglia
+        /// See original stack overflow post: http://stackoverflow.com/questions/5459641/replacing-characters-in-c-sharp-ascii
+        /// </remarks>
+        public static readonly Dictionary<char, char> ACCENTED_CHARACTERS_DICTIONARY = new Dictionary<char, char>()
+        {
+            {'é', 'e'},
+            {'è', 'e'},
+            {'ë', 'e'},
+            {'ê', 'e'},
+            {'É', 'E'},
+            {'È', 'E'},
+            {'Ë', 'E'},
+            {'Ê', 'E'},
+            {'à', 'a'},
+            {'â', 'a'},
+            {'ä', 'a'},
+            {'á', 'a'},            
+            {'ã', 'a'},
+            {'å', 'a'},
+            {'À', 'A'},
+            {'Á', 'A'},
+            {'Â', 'A'},
+            {'Ã', 'A'},
+            {'Ä', 'A'},
+            {'Å', 'A'},
+            {'Ù', 'U'},
+            {'Ú', 'U'},
+            {'Û', 'U'},
+            {'Ü', 'U'},
+            {'ù', 'u'},
+            {'ú', 'u'},
+            {'û', 'u'},
+            {'ü', 'u'},
+            {'µ', 'u'},
+            {'ð', 'o'},
+            {'ò', 'o'},
+            {'ó', 'o'},
+            {'ô', 'o'},
+            {'õ', 'o'},
+            {'ö', 'o'},
+            {'ø', 'o'},
+            {'Ò', 'O'},
+            {'Ó', 'O'},
+            {'Ô', 'O'},
+            {'Õ', 'O'},
+            {'Ö', 'O'},
+            {'Ø', 'O'},
+            {'ì', 'i'},
+            {'í', 'i'},
+            {'î', 'i'},
+            {'ï', 'i'},
+            {'Ì', 'I'},
+            {'Í', 'I'},
+            {'Î', 'I'},
+            {'Ï', 'I'},
+            {'š', 's'},
+            {'Š', 'S'},
+            {'ñ', 'n'},
+            {'Ñ', 'N'},
+            {'ç', 'c'},
+            {'Ç', 'C'},
+            {'ÿ', 'y'},
+            {'Ÿ', 'Y'},
+            {'ž', 'z'},
+            {'Ž', 'Z'},
+            {'Ð', 'D'}
+        };
 
         #endregion
 
@@ -75,17 +157,17 @@ namespace ColdSort.Controllers
         /// Background sorting worker
         /// </summary>
         private BackgroundWorker _backgroundWorker;
-
+        
         #endregion
 
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SortationController"/> class
+        /// Initializes a new instance of the <see cref="SortationService"/> class
         /// </summary>
         /// <param name="mainView"> The progress view </param>
         /// <param name="sortationSchema"> The sortation schema </param>
-        public SortationController(MainView mainView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
+        public SortationService(MainView mainView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
         {
             _sortationSchema = sortationSchema;
             _oldRootPath = oldRootPath;
@@ -212,7 +294,7 @@ namespace ColdSort.Controllers
         /// <returns> The result of the attempted sort path generation </returns>
         private SortNodeResult GenerateNodeValue(ISortationNode sortationNode, ref ISongFile songFile)
         {
-            string newPathValue;
+            string newPathValue = "";
 
             switch (sortationNode.SongProperty)
             {
@@ -220,7 +302,39 @@ namespace ColdSort.Controllers
                     newPathValue = songFile.Album;
                     break;
                 case SongProperty.Artist:
-                    newPathValue = songFile.Artist;
+                    if (!sortationNode.UseAbbreviation)
+                    {
+                        var artists = songFile.Artist.Split('/');
+
+                        for (int i = 0; i < artists.Length; i++)
+                        {
+                            if (i == 0)
+                            {
+                                newPathValue = artists[i];
+                            }
+                            else if (i == 1)
+                            {
+                                newPathValue += $" (Feat. {artists[i]}";
+                            }
+                            else if (i != artists.Length -1)
+                            {
+                                newPathValue += $", {artists[i]}";
+                            }
+                            else
+                            {
+                                newPathValue += $", and {artists[i]}";
+                            }
+   
+                            if (i != 0 && i == artists.Length -1)
+                            {
+                                newPathValue += $")";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        newPathValue = songFile.Artist.Split('/').First();
+                    }
                     break;
                 case SongProperty.Title:
                     newPathValue = songFile.Title;
@@ -246,49 +360,29 @@ namespace ColdSort.Controllers
             {
                 if (sortationNode.UseAbbreviation)
                 {
-                    string abbreviation = newPathValue.Substring(0, 1);
-                    int num;
+                    char abbreviation = newPathValue[0];
 
-                    if (sortationNode.CondenseNumbersToSymbol && int.TryParse(abbreviation, out num))
+                    if (sortationNode.CondenseNumbersToSymbol && (abbreviation >= '0' && abbreviation <= '9'))
                     {
-                        newPathValue = CONDENSE_SYMBOL;
+                        newPathValue = CONDENSE_NUMBER_SYMBOL;
                     }
-                    else
+                    else if((sortationNode.CondenseAccents) && (ACCENTED_CHARACTERS.Contains(abbreviation)))
                     {
-                        if(sortationNode.CondenseAccents)
-                        {
-                            //Accented character conversion provided by Julien Roncaglia
-                            //See original stack overflow post: http://stackoverflow.com/questions/5459641/replacing-characters-in-c-sharp-ascii
-                            abbreviation = Regex.Replace(abbreviation, "[éèëêð]", "e");
-                            abbreviation = Regex.Replace(abbreviation, "[ÉÈËÊ]", "E");
-                            abbreviation = Regex.Replace(abbreviation, "[àâä]", "a");
-                            abbreviation = Regex.Replace(abbreviation, "[ÀÁÂÃÄÅ]", "A");
-                            abbreviation = Regex.Replace(abbreviation, "[àáâãäå]", "a");
-                            abbreviation = Regex.Replace(abbreviation, "[ÙÚÛÜ]", "U");
-                            abbreviation = Regex.Replace(abbreviation, "[ùúûüµ]", "u");
-                            abbreviation = Regex.Replace(abbreviation, "[òóôõöø]", "o");
-                            abbreviation = Regex.Replace(abbreviation, "[ÒÓÔÕÖØ]", "O");
-                            abbreviation = Regex.Replace(abbreviation, "[ìíîï]", "i");
-                            abbreviation = Regex.Replace(abbreviation, "[ÌÍÎÏ]", "I");
-                            abbreviation = Regex.Replace(abbreviation, "[š]", "s");
-                            abbreviation = Regex.Replace(abbreviation, "[Š]", "S");
-                            abbreviation = Regex.Replace(abbreviation, "[ñ]", "n");
-                            abbreviation = Regex.Replace(abbreviation, "[Ñ]", "N");
-                            abbreviation = Regex.Replace(abbreviation, "[ç]", "c");
-                            abbreviation = Regex.Replace(abbreviation, "[Ç]", "C");
-                            abbreviation = Regex.Replace(abbreviation, "[ÿ]", "y");
-                            abbreviation = Regex.Replace(abbreviation, "[Ÿ]", "Y");
-                            abbreviation = Regex.Replace(abbreviation, "[ž]", "z");
-                            abbreviation = Regex.Replace(abbreviation, "[Ž]", "Z");
-                            abbreviation = Regex.Replace(abbreviation, "[Ð]", "D");
-                        }
+                        newPathValue = ACCENTED_CHARACTERS_DICTIONARY[abbreviation].ToString();
+                    }
+                    else if(sortationNode.CondenseSymbols && 
+                        !(abbreviation >= 'a' && abbreviation <= 'z') && 
+                        !(abbreviation >= 'A' && abbreviation <= 'Z') && 
+                        !(abbreviation >= '0' && abbreviation <='9'))
+                    {
+                        newPathValue = CONDENSE_SYMBOLS_SYMBOL;
+                    }
 
-                        if (sortationNode.CapitalizeAbbreviation && abbreviation.All(Char.IsLetter))
-                        {
-                            abbreviation = abbreviation.ToUpper();
-                        }
-
-                        newPathValue = abbreviation;
+                    if (sortationNode.CapitalizeAbbreviation &&
+                        ((abbreviation >= 'a' && abbreviation <= 'z') ||
+                        (abbreviation >= 'A' && abbreviation <= 'Z')))
+                    {
+                        newPathValue = abbreviation.ToString().ToUpper();
                     }
                 }
 
@@ -332,6 +426,10 @@ namespace ColdSort.Controllers
 
                 Directory.CreateDirectory(Path.GetDirectoryName(songFile.SortedPath));
 
+                while (File.Exists(songFile.SortedPath))
+                {
+                    songFile.SortedPath += "_Copy";
+                }
                 if (!_sortationSchema.CopySongs)
                 {
                     File.Move(songFile.OriginalPath, songFile.SortedPath);
@@ -371,7 +469,7 @@ namespace ColdSort.Controllers
         }
 
         /// <summary>
-        /// <see cref="ISortationController.GenerateSortationPaths(List{ISongFile})"/>
+        /// <see cref="ISortationService.GenerateSortationPaths(List{ISongFile})"/>
         /// </summary>
         /// <param name="songFiles"> A list of music files to be sorted </param>
         /// <returns> A list of results of the sort </returns>
@@ -454,8 +552,6 @@ namespace ColdSort.Controllers
             {
                 MessageBox.Show("Done!");
             }
-
-            _mainView.Close();
         }
 
         #endregion

@@ -27,7 +27,7 @@ namespace ColdSort.Views
         /// <summary>
         /// The main controller
         /// </summary>
-        private ISortationController _sortationController;
+        private ISortationService _SortationService;
 
         #endregion
 
@@ -127,10 +127,10 @@ namespace ColdSort.Views
         /// <summary>
         /// Set the sortation controller for the view
         /// </summary>
-        /// <param name="sortationController"> The sortation controller </param>
-        public void SetController(SortationController sortationController)
+        /// <param name="SortationService"> The sortation controller </param>
+        public void SetController(SortationService SortationService)
         {
-            _sortationController = sortationController;
+            _SortationService = SortationService;
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace ColdSort.Views
         /// <param name="e"> The event arguments </param>
         private void BtnCancel_Click(object sender, EventArgs e)
         {
-            _sortationController.CancelSort();
+            _SortationService.CancelSort();
         }
 
         /// <summary>

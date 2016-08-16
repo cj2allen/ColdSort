@@ -54,5 +54,10 @@ namespace ColdSort.Core.Interfaces.Models
         /// Gets or sets a value indicating whether to condense accented characters to 26 character ascii
         /// </summary>
         bool CondenseAccents { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to condense abbreviation symbols into one folder
+        /// </summary>
+        bool CondenseSymbols { get; set; }
     }
 }

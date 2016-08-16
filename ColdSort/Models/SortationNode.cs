@@ -74,6 +74,11 @@ namespace ColdSort.Models
         /// </summary>
         public bool CondenseAccents { get; set; }
 
+        /// <summary>
+        /// <see cref="ISortationNode.CondenseSymbols"/>
+        /// </summary>
+        public bool CondenseSymbols { get; set; }
+
         #endregion
 
         #region Methods

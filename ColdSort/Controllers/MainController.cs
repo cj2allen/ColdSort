@@ -103,7 +103,8 @@ namespace ColdSort.Controllers
                     UseAbbreviation = true,
                     CondenseNumbersToSymbol = true,
                     CapitalizeAbbreviation = true,
-                    CondenseAccents = true
+                    CondenseAccents = true,
+                    CondenseSymbols = true
                 },
                 new SortationNode
                 {
@@ -112,7 +113,8 @@ namespace ColdSort.Controllers
                     UseAbbreviation = false,
                     CondenseNumbersToSymbol = false,
                     CapitalizeAbbreviation = false,
-                    CondenseAccents = false
+                    CondenseAccents = false,
+                    CondenseSymbols = false
                 },
                 new SortationNode
                 {
@@ -121,7 +123,8 @@ namespace ColdSort.Controllers
                     UseAbbreviation = false,
                     CondenseNumbersToSymbol = false,
                     CapitalizeAbbreviation = false,
-                    CondenseAccents = false
+                    CondenseAccents = false,
+                    CondenseSymbols = false
                 }
             };
         }
@@ -182,8 +185,8 @@ namespace ColdSort.Controllers
         /// </summary>
         public void SortWithoutDiagnostics()
         {
-            ISortationController sortationController = new SortationController(_mainView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
-            sortationController.SortWithoutDiagnostics();         
+            ISortationService SortationService = new SortationService(_mainView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
+            SortationService.SortWithoutDiagnostics();         
         }
 
         #endregion
