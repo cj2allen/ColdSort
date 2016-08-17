@@ -8,7 +8,7 @@
 using System;
 using System.Windows.Forms;
 using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Controllers;
+using ColdSort.Services;
 
 namespace ColdSort.Views
 {

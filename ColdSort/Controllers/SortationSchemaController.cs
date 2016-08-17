@@ -12,7 +12,7 @@ using ColdSort.Core.Interfaces.Models;
 using ColdSort.Models;
 using ColdSort.Views;
 
-namespace ColdSort.Controllers
+namespace ColdSort.Services
 {
     /// <summary>
     /// Manage sortation schema view functionality
@@ -62,6 +62,7 @@ namespace ColdSort.Controllers
             _sortationSchemaView.UseFailedDefaultLocation = !_sortationSchema.KeepFilesAtOriginalLocation;
             _sortationSchemaView.SortationNodes = _sortationSchema.SortationNodes;
             _sortationSchemaView.CopyFilesInsteadOfMoving = _sortationSchema.CopySongs;
+            _sortationSchemaView.FixIllegalCharacters = _sortationSchema.FixIllegalCharacters;
             _sortationSchemaView.ShowDialog();
         }
 

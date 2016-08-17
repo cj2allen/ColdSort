@@ -16,9 +16,8 @@ using ColdSort.Core.Interfaces.Controllers;
 using ColdSort.Core.Interfaces.Models;
 using ColdSort.Models;
 using ColdSort.Views;
-using System.Text.RegularExpressions;
 
-namespace ColdSort.Controllers
+namespace ColdSort.Services
 {
     /// <summary>
     /// Manage sortation related functionality
@@ -30,7 +29,7 @@ namespace ColdSort.Controllers
         /// <summary>
         /// All valid music extensions
         /// </summary>
-        public static readonly string[] VALID_EXTENSIONS = { ".mp3", ".acc", ".m4a", ".flac", ".mid", ".midi", ".ape", ".ogg", ".wav", "wma" };
+        public static readonly string[] VALID_EXTENSIONS = { ".mp3", ".acc", ".m4a", ".flac", ".mid", ".midi", ".ape", ".ogg", ".wav", ".wma" };
 
         /// <summary>
         /// Invalid folder characters
@@ -294,6 +293,50 @@ namespace ColdSort.Controllers
         /// <returns> The result of the attempted sort path generation </returns>
         private SortNodeResult GenerateNodeValue(ISortationNode sortationNode, ref ISongFile songFile)
         {
+            string newPathValue = GetSongProperty(sortationNode, songFile);
+
+            if (_sortationSchema.FixIllegalCharacters)
+            {
+                foreach (char illegal in INVALID_CHARACTERS)
+                {
+                    newPathValue = newPathValue.Replace(illegal.ToString(), "");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(newPathValue)
+                && (newPathValue.Trim().Length > 0)
+                && (!_sortationSchema.FixIllegalCharacters || 
+                    (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1))
+                && (songFile.SortedPath.Length <= MAX_PATH_LENGTH))
+            {
+                if (sortationNode.UseAbbreviation)
+                {
+                    newPathValue = AbbreviationCreation(sortationNode, newPathValue);
+                }
+                
+                songFile.SortedPath = Path.Combine(songFile.SortedPath, newPathValue);
+
+                return SortNodeResult.NotSorted;
+            }
+            else if (sortationNode.AllowSortEnd)
+            {
+                return SortNodeResult.Sorted;
+            }
+
+            if (_sortationSchema.KeepFilesAtOriginalLocation)
+            {
+                songFile.SortedPath = songFile.OriginalPath;
+            }
+            else
+            {
+                songFile.SortedPath = Path.Combine(_newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+            }
+
+            return SortNodeResult.Error;
+        }
+
+        private string GetSongProperty(ISortationNode sortationNode, ISongFile songFile)
+        {
             string newPathValue = "";
 
             switch (sortationNode.SongProperty)
@@ -302,9 +345,12 @@ namespace ColdSort.Controllers
                     newPathValue = songFile.Album;
                     break;
                 case SongProperty.Artist:
+                    newPathValue = songFile.Artist;
+                    break;
+                case SongProperty.Artists:
                     if (!sortationNode.UseAbbreviation)
                     {
-                        var artists = songFile.Artist.Split('/');
+                        var artists = songFile.Artists.Split('/');
 
                         for (int i = 0; i < artists.Length; i++)
                         {
@@ -316,7 +362,7 @@ namespace ColdSort.Controllers
                             {
                                 newPathValue += $" (Feat. {artists[i]}";
                             }
-                            else if (i != artists.Length -1)
+                            else if (i != artists.Length - 1)
                             {
                                 newPathValue += $", {artists[i]}";
                             }
@@ -324,8 +370,8 @@ namespace ColdSort.Controllers
                             {
                                 newPathValue += $", and {artists[i]}";
                             }
-   
-                            if (i != 0 && i == artists.Length -1)
+
+                            if (i != 0 && i == artists.Length - 1)
                             {
                                 newPathValue += $")";
                             }
@@ -353,58 +399,36 @@ namespace ColdSort.Controllers
                     break;
             }
 
-            if (!string.IsNullOrEmpty(newPathValue)
-                && (newPathValue.Trim().Length > 0)
-                && (newPathValue.IndexOfAny(INVALID_CHARACTERS) == -1)
-                && (songFile.SortedPath.Length <= MAX_PATH_LENGTH))
+            return newPathValue;
+        }
+
+        private string AbbreviationCreation(ISortationNode sortationNode, string newPathValue)
+        {
+            char abbreviation = newPathValue[0];
+
+            if (sortationNode.CondenseNumbersToSymbol && (abbreviation >= '0' && abbreviation <= '9'))
             {
-                if (sortationNode.UseAbbreviation)
-                {
-                    char abbreviation = newPathValue[0];
-
-                    if (sortationNode.CondenseNumbersToSymbol && (abbreviation >= '0' && abbreviation <= '9'))
-                    {
-                        newPathValue = CONDENSE_NUMBER_SYMBOL;
-                    }
-                    else if((sortationNode.CondenseAccents) && (ACCENTED_CHARACTERS.Contains(abbreviation)))
-                    {
-                        newPathValue = ACCENTED_CHARACTERS_DICTIONARY[abbreviation].ToString();
-                    }
-                    else if(sortationNode.CondenseSymbols && 
-                        !(abbreviation >= 'a' && abbreviation <= 'z') && 
-                        !(abbreviation >= 'A' && abbreviation <= 'Z') && 
-                        !(abbreviation >= '0' && abbreviation <='9'))
-                    {
-                        newPathValue = CONDENSE_SYMBOLS_SYMBOL;
-                    }
-
-                    if (sortationNode.CapitalizeAbbreviation &&
-                        ((abbreviation >= 'a' && abbreviation <= 'z') ||
-                        (abbreviation >= 'A' && abbreviation <= 'Z')))
-                    {
-                        newPathValue = abbreviation.ToString().ToUpper();
-                    }
-                }
-
-                songFile.SortedPath = Path.Combine(songFile.SortedPath, newPathValue);
-
-                return SortNodeResult.NotSorted;
+                return CONDENSE_NUMBER_SYMBOL;
             }
-            else if (sortationNode.AllowSortEnd)
+            else if ((sortationNode.CondenseAccents) && (ACCENTED_CHARACTERS.Contains(abbreviation)))
             {
-                return SortNodeResult.Sorted;
+                return ACCENTED_CHARACTERS_DICTIONARY[abbreviation].ToString();
+            }
+            else if (sortationNode.CondenseSymbols &&
+                !(abbreviation >= 'a' && abbreviation <= 'z') &&
+                !(abbreviation >= 'A' && abbreviation <= 'Z') &&
+                !(abbreviation >= '0' && abbreviation <= '9'))
+            {
+                return CONDENSE_SYMBOLS_SYMBOL;
             }
 
-            if (_sortationSchema.KeepFilesAtOriginalLocation)
+            if (sortationNode.CapitalizeAbbreviation &&
+                (abbreviation >= 'a' && abbreviation <= 'z'))
             {
-                songFile.SortedPath = songFile.OriginalPath;
-            }
-            else
-            {
-                songFile.SortedPath = Path.Combine(_newRootPath, _sortationSchema.FailedSortationDefault, songFile.OriginalFilename);
+                return abbreviation.ToString().ToUpper();
             }
 
-            return SortNodeResult.Error;
+            return abbreviation.ToString();
         }
 
         /// <summary>
@@ -428,6 +452,7 @@ namespace ColdSort.Controllers
 
                 while (File.Exists(songFile.SortedPath))
                 {
+                    //This needs to be fixed
                     songFile.SortedPath += "_Copy";
                 }
                 if (!_sortationSchema.CopySongs)

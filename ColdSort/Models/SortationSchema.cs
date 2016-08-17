@@ -56,6 +56,11 @@ namespace ColdSort.Models
         /// </summary>
         public bool CopySongs { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to fix illegal characters in a path
+        /// </summary>
+        public bool FixIllegalCharacters { get; set; }
+
         #endregion
     }
 }

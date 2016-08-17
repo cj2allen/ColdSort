@@ -28,7 +28,12 @@ namespace ColdSort.Models
         /// <see cref="ISongFile.Artist" />
         /// </summary>
         public string Artist { get; set; }
-        
+
+        /// <summary>
+        /// <see cref="ISongFile.Artists" />
+        /// </summary>
+        public string Artists { get; set; }
+
         /// <summary>
         /// <see cref="ISongFile.Album" />
         /// </summary>
@@ -113,7 +118,8 @@ namespace ColdSort.Models
             {
                 Track track = new Track(path);
                 Title = track.Title;
-                Artist = track.Artist;
+                Artist = track.Artist.Split('/')[0];
+                Artists = track.Artist.ToString();
                 Album = track.Album;
                 Year = track.Year.ToString();
                 Genre = track.Genre;

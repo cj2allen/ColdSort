@@ -10,7 +10,7 @@ using ColdSort.Core.Interfaces.Controllers;
 using ColdSort.Core.Interfaces.Models;
 using ColdSort.Views;
 
-namespace ColdSort.Controllers
+namespace ColdSort.Services
 {
     /// <summary>
     /// Manages sortation node view functionality 

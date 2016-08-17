@@ -18,9 +18,14 @@ namespace ColdSort.Core.Interfaces.Models
         string Title { get; set; }
 
         /// <summary>
-        /// Gets or sets a value of the artist
+        /// Gets or sets a value of the primary artist
         /// </summary>
         string Artist { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value of all the artists (if possible)
+        /// </summary>
+        string Artists { get; set; }
 
         /// <summary>
         /// Gets or sets a value of the album

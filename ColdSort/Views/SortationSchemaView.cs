@@ -122,6 +122,22 @@ namespace ColdSort.Views
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to fix illegal characters in a path
+        /// </summary>
+        public bool FixIllegalCharacters
+        {
+            get
+            {
+                return chkFixIllegalCharacters.Checked;
+            }
+
+            set
+            {
+                chkFixIllegalCharacters.Checked = value;
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the list sortation nodes in the form
         /// </summary>
         public List<ISortationNode> SortationNodes

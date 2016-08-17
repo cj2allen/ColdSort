@@ -18,33 +18,38 @@ namespace ColdSort.Core.Enums
         Title = 0,
 
         /// <summary>
-        /// Song artist
+        /// Song's primary artist
         /// </summary>
         Artist = 1,
 
         /// <summary>
+        /// All contributing artists
+        /// </summary>
+        Artists = 2,
+
+        /// <summary>
         /// Song album
         /// </summary>
-        Album = 2,
+        Album = 3,
 
         /// <summary>
         /// Song year
         /// </summary>
-        Year = 3,
+        Year = 4,
 
         /// <summary>
         /// Song genre
         /// </summary>
-        Genre = 4,
+        Genre = 5,
 
         /// <summary>
         /// Song disc number
         /// </summary>
-        Disc = 5,
+        Disc = 6,
 
         /// <summary>
         /// Song bitrate
         /// </summary>
-        Bitrate = 6
+        Bitrate = 7
     }
 }

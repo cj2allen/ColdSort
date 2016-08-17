@@ -38,9 +38,43 @@ namespace ColdSort.Models
         {
             get
             {
-                string abbrivation = UseAbbreviation ? ", Use Abbr." : string.Empty;
-                string end = AllowSortEnd ? ", Can End" : string.Empty;
-                return string.Format("{0}{1}{2}", SongProperty.ToString(), abbrivation, end);
+                string abbrivations = "";
+
+                if (UseAbbreviation)
+                {
+                    abbrivations = ", Abrv";
+
+                    if (CondenseNumbersToSymbol || CondenseAccents || CondenseSymbols || CapitalizeAbbreviation)
+                    {
+                        abbrivations += "(";
+
+                        if (CondenseNumbersToSymbol)
+                        {
+                            abbrivations += "#, ";
+                        }
+
+                        if (CondenseAccents)
+                        {
+                            abbrivations += "ÉE, ";
+                        }
+
+                        if (CondenseSymbols)
+                        {
+                            abbrivations += "Ω, ";
+                        }
+
+                        if (CapitalizeAbbreviation)
+                        {
+                            abbrivations += "aA, ";
+                        }
+
+                        abbrivations = abbrivations.Remove(abbrivations.Length - 2);
+
+                        abbrivations += ")";
+                    }
+                }
+
+                return $"{SongProperty.ToString()}{abbrivations}{(AllowSortEnd ? ", Can End" : string.Empty)}";
             }
         }
 

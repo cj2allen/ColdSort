@@ -14,7 +14,7 @@ using ColdSort.Core.Interfaces.Models;
 using ColdSort.Models;
 using ColdSort.Views;
 
-namespace ColdSort.Controllers
+namespace ColdSort.Services
 {
     /// <summary>
     /// Manage main view functionality
@@ -94,6 +94,7 @@ namespace ColdSort.Controllers
             _sortationSchema.KeepFilesAtOriginalLocation = false;
             _sortationSchema.FailedSortationDefault = "!Unsorted";
             _sortationSchema.CopySongs = true;
+            _sortationSchema.FixIllegalCharacters = true;
             _sortationSchema.SortationNodes = new List<ISortationNode>
             {
                 new SortationNode

@@ -15,28 +15,33 @@ namespace ColdSort.Core.Interfaces.Models
     public interface ISortationSchema
     {
         /// <summary>
-        /// Gets or sets the sortation schema title
+        /// <see cref="ISortationSchema.SortationSchemaTitle"/>
         /// </summary>
         string SortationSchemaTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets the sortation schema sortation path for file that fail sortation
+        /// <see cref="ISortationSchema.FailedSortationDefault"/>
         /// </summary>
         string FailedSortationDefault { get; set; }
 
         /// <summary>
-        /// Gets or sets the sortation nodes
+        /// <see cref="ISortationSchema.SortationNodes"/>
         /// </summary>
         List<ISortationNode> SortationNodes { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to keep files in the original location or to move them to the default folder
+        /// <see cref="ISortationSchema.KeepFilesAtOriginalLocation"/>
         /// </summary>
         bool KeepFilesAtOriginalLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether the files will be copied or moved to the new destination
+        /// <see cref="ISortationSchema.CopySongs"/>
         /// </summary>
         bool CopySongs { get; set; }
+
+        /// <summary>
+        /// <see cref="ISortationSchema.FixIllegalCharacters"/>
+        /// </summary>
+        bool FixIllegalCharacters { get; set; }
     }
 }
