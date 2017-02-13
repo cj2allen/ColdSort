@@ -5,7 +5,7 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-namespace ColdSort.Core.Enums
+namespace ColdSort.Enums
 {
     /// <summary>
     /// All valid song properties to sort

@@ -5,10 +5,10 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
+using ColdSort.Enums;
+using ColdSort.Services;
 using System;
 using System.Windows.Forms;
-using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Controllers;
 
 namespace ColdSort.Views
 {
@@ -22,7 +22,7 @@ namespace ColdSort.Views
         /// <summary>
         /// The sortation node controller
         /// </summary>
-        private ISortationNodeController _sortationNodeController;
+        private SortationNodeController _sortationNodeController;
 
         #endregion
 
@@ -161,7 +161,7 @@ namespace ColdSort.Views
         /// Set the sortation node controller for the view
         /// </summary>
         /// <param name="sortationNodeController"> The main controller </param>
-        public void SetController(ISortationNodeController sortationNodeController)
+        public void SetController(SortationNodeController sortationNodeController)
         {
             _sortationNodeController = sortationNodeController;
         }

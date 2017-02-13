@@ -5,15 +5,14 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Enums;
 
 namespace ColdSort.Models
 {
     /// <summary>
     /// The sortation node
     /// </summary>
-    public class SortationNode : ISortationNode
+    public class SortationNode
     {
         #region Constructor
 
@@ -32,7 +31,7 @@ namespace ColdSort.Models
         #region Properties
 
         /// <summary>
-        /// <see cref="ISortationNode.SortationNodeName"/>
+        /// <see cref="SortationNode.SortationNodeName"/>
         /// </summary>
         public string SortationNodeName
         {
@@ -79,37 +78,37 @@ namespace ColdSort.Models
         }
 
         /// <summary>
-        /// <see cref="ISortationNode.SongProperty"/>
+        /// <see cref="SortationNode.SongProperty"/>
         /// </summary>
         public SongProperty SongProperty { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.AllowSortEnd"/>
+        /// <see cref="SortationNode.AllowSortEnd"/>
         /// </summary>
         public bool AllowSortEnd { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.UseAbbreviation"/>
+        /// <see cref="SortationNode.UseAbbreviation"/>
         /// </summary>
         public bool UseAbbreviation { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.CondenseNumbersToSymbol"/>
+        /// <see cref="SortationNode.CondenseNumbersToSymbol"/>
         /// </summary>
         public bool CondenseNumbersToSymbol { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.CapitalizeAbbreviation"/>
+        /// <see cref="SortationNode.CapitalizeAbbreviation"/>
         /// </summary>
         public bool CapitalizeAbbreviation { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.CondenseAccent"/>
+        /// <see cref="SortationNode.CondenseAccent"/>
         /// </summary>
         public bool CondenseAccents { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationNode.CondenseSymbols"/>
+        /// <see cref="SortationNode.CondenseSymbols"/>
         /// </summary>
         public bool CondenseSymbols { get; set; }
 

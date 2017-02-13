@@ -5,7 +5,7 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
 
 namespace ColdSort.Interfaces.Controllers
 {
@@ -41,7 +41,7 @@ namespace ColdSort.Interfaces.Controllers
         /// Edits a sortation schema in the controller
         /// </summary>
         /// <param name="sortationSchema"> A sortation schema</param>
-        void EditSchema(ISortationSchema sortationSchema);
+        void EditSchema(SortationSchema sortationSchema);
 
         /// <summary>
         /// Edits the current sortation schema in the controller

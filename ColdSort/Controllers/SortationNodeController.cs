@@ -5,9 +5,9 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Enums;
+using ColdSort.Interfaces.Controllers;
+using ColdSort.Models;
 using ColdSort.Views;
 
 namespace ColdSort.Services
@@ -27,7 +27,7 @@ namespace ColdSort.Services
         /// <summary>
         /// The current sortation node being used
         /// </summary>
-        private ISortationNode _sortationNode;
+        private SortationNode _sortationNode;
 
         #endregion
 
@@ -38,7 +38,7 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="sortationNodeView"> The sortation node view form </param>
         /// <param name="sortationNode"> The current sortation node </param>
-        public SortationNodeController(SortationNodeView sortationNodeView, ISortationNode sortationNode)
+        public SortationNodeController(SortationNodeView sortationNodeView, SortationNode sortationNode)
         {
             _sortationNodeView = sortationNodeView;
             _sortationNodeView.SetController(this);
@@ -86,7 +86,7 @@ namespace ColdSort.Services
         /// Returns the current sortation node
         /// </summary>
         /// <returns> The sortation node </returns>
-        public ISortationNode GetSortationNode()
+        public SortationNode GetSortationNode()
         {
             return _sortationNode;
         }

@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using ColdSort.Core.Interfaces.Models;
 
 namespace ColdSort.Models
 {
     /// <summary>
     /// The sortation schema
     /// </summary>
-    public class SortationSchema : ISortationSchema
+    public class SortationSchema
     {
         #region Constructor
 
@@ -23,7 +22,7 @@ namespace ColdSort.Models
         /// </summary>
         public SortationSchema()
         {
-            SortationNodes = new List<ISortationNode>();
+            SortationNodes = new List<SortationNode>();
             FailedSortationDefault = "!Unsorted";
         }
 
@@ -44,7 +43,7 @@ namespace ColdSort.Models
         /// <summary>
         /// Gets or sets the sortation nodes
         /// </summary>
-        public List<ISortationNode> SortationNodes { get; set; }
+        public List<SortationNode> SortationNodes { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to keep files in the original location or to move them to the default folder

@@ -5,14 +5,12 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Interfaces.Models;
-
 namespace ColdSort.Models
 {
     /// <summary>
     /// Information related to a sortation result of a song file
     /// </summary>
-    public class SortationResult : ISortationResult
+    public class SortationResult
     {
         #region Fields
 
@@ -24,7 +22,13 @@ namespace ColdSort.Models
         /// <summary>
         /// Gets or sets a value indicating whether the song file was sorted
         /// </summary>
-        public bool IsSorted { get; set; }
+        public bool Successful
+        {
+            get
+            {
+                return string.IsNullOrEmpty(ErrorMessage);
+            }
+        }
 
         /// <summary>
         /// Gets or sets the original song file location

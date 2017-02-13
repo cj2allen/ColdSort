@@ -1,11 +1,17 @@
-﻿//-----------------------------------------------------------------------
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+//-----------------------------------------------------------------------
 // <copyright file="SortNodeResult.cs" company="None">
 //     Copyright (c) 2016 Christopher James Allen
 // </copyright>
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-namespace ColdSort.Core.Enums
+namespace ColdSort.Enums
 {
     /// <summary>
     /// Possible results for sortation node outcome

@@ -8,8 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
+using ColdSort.Services;
 
 namespace ColdSort.Views
 {
@@ -23,7 +23,7 @@ namespace ColdSort.Views
         /// <summary>
         /// The sortation schema controller
         /// </summary>
-        private ISortationSchemaController _sortationSchemaController;
+        private SortationSchemaController _sortationSchemaController;
 
         #endregion
 
@@ -140,15 +140,15 @@ namespace ColdSort.Views
         /// <summary>
         /// Gets or sets the list sortation nodes in the form
         /// </summary>
-        public List<ISortationNode> SortationNodes
+        public List<SortationNode> SortationNodes
         {
             get
             {
-                List<ISortationNode> sortationNodes = new List<ISortationNode>();
+                List<SortationNode> sortationNodes = new List<SortationNode>();
 
                 foreach (object sortationNode in lstSortationNodes.Items)
                 {
-                    sortationNodes.Add((ISortationNode)sortationNode);
+                    sortationNodes.Add((SortationNode)sortationNode);
                 }
 
                 return sortationNodes;
@@ -170,7 +170,7 @@ namespace ColdSort.Views
         /// Set the sortation schema controller for the view
         /// </summary>
         /// <param name="sortationSchemaController"> The sortation schema controller </param>
-        public void SetController(ISortationSchemaController sortationSchemaController)
+        public void SetController(SortationSchemaController sortationSchemaController)
         {
             _sortationSchemaController = sortationSchemaController;
         }
@@ -195,7 +195,7 @@ namespace ColdSort.Views
 
             if (index > 0)
             {
-                List<ISortationNode> sortationNodes = _sortationSchemaController.RaiseNode(index);
+                List<SortationNode> sortationNodes = _sortationSchemaController.RaiseNode(index);
                 SortationNodes = sortationNodes;
                 lstSortationNodes.SelectedIndex = index - 1;
             }
@@ -216,7 +216,7 @@ namespace ColdSort.Views
 
             if (index < (lstSortationNodes.Items.Count - 1))
             {
-                List<ISortationNode> sortationNodes = _sortationSchemaController.LowerNode(index);
+                List<SortationNode> sortationNodes = _sortationSchemaController.LowerNode(index);
                 SortationNodes = sortationNodes;
                 lstSortationNodes.SelectedIndex = index + 1;
             }
@@ -237,7 +237,7 @@ namespace ColdSort.Views
 
             if (index > 0)
             {
-                List<ISortationNode> sortationNodes = _sortationSchemaController.LowerNode(index);
+                List<SortationNode> sortationNodes = _sortationSchemaController.LowerNode(index);
                 SortationNodes = sortationNodes;
             }
             else
@@ -253,7 +253,7 @@ namespace ColdSort.Views
         /// <param name="e"> The event arguments </param>
         private void BtnNewNode_Click(object sender, EventArgs e)
         {
-            List<ISortationNode> sortationNodes = _sortationSchemaController.CreateSortationNode();
+            List<SortationNode> sortationNodes = _sortationSchemaController.CreateSortationNode();
             SortationNodes = sortationNodes;
         }
 
@@ -268,7 +268,7 @@ namespace ColdSort.Views
 
             if ((index >= 0) && index < SortationNodes.Count)
             {
-                List<ISortationNode> sortationNodes = _sortationSchemaController.EditSortationNode(index);
+                List<SortationNode> sortationNodes = _sortationSchemaController.EditSortationNode(index);
                 SortationNodes = sortationNodes;
             }
             else

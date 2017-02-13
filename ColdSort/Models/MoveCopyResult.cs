@@ -5,24 +5,22 @@
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Interfaces.Models;
-
 namespace ColdSort.Models
 {
     /// <summary>
     /// Information related to a failed sortation
     /// </summary>
-    public class FailedSortation : ISortationSchemaResult
+    public class MoveCopyResult
     {
         #region Fields
 
         /// <summary>
-        /// <see cref="ISortationSchemaResult.OriginalPath"/>
+        /// <see cref="SortationPathingResult.OriginalPath"/>
         /// </summary>
         public string OriginalPath { get; set; }
 
         /// <summary>
-        /// <see cref="ISortationSchemaResult.SortedPath"/>
+        /// <see cref="SortationPathingResult.SortedPath"/>
         /// </summary>
         public string SortedPath { get; set; }
 
@@ -30,6 +28,14 @@ namespace ColdSort.Models
         /// Gets or sets the reason the song file could not be sorted
         /// </summary>
         public string ErrorMessage { get; set; }
+
+        public bool Successful
+        {
+            get
+            {
+                return string.IsNullOrEmpty(ErrorMessage);
+            }
+        }
 
         #endregion
     }

@@ -11,18 +11,17 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Models;
 using ColdSort.Models;
 using ColdSort.Views;
+using ColdSort.Enums;
+using ColdSort.Factories;
 
 namespace ColdSort.Services
 {
     /// <summary>
     /// Manage sortation related functionality
     /// </summary>
-    public class SortationService : ISortationService
+    public class SortationService
     {
         #region Constants
 
@@ -65,67 +64,12 @@ namespace ColdSort.Services
         /// </remarks>
         public static readonly Dictionary<char, char> ACCENTED_CHARACTERS_DICTIONARY = new Dictionary<char, char>()
         {
-            {'é', 'e'},
-            {'è', 'e'},
-            {'ë', 'e'},
-            {'ê', 'e'},
-            {'É', 'E'},
-            {'È', 'E'},
-            {'Ë', 'E'},
-            {'Ê', 'E'},
-            {'à', 'a'},
-            {'â', 'a'},
-            {'ä', 'a'},
-            {'á', 'a'},            
-            {'ã', 'a'},
-            {'å', 'a'},
-            {'À', 'A'},
-            {'Á', 'A'},
-            {'Â', 'A'},
-            {'Ã', 'A'},
-            {'Ä', 'A'},
-            {'Å', 'A'},
-            {'Ù', 'U'},
-            {'Ú', 'U'},
-            {'Û', 'U'},
-            {'Ü', 'U'},
-            {'ù', 'u'},
-            {'ú', 'u'},
-            {'û', 'u'},
-            {'ü', 'u'},
-            {'µ', 'u'},
-            {'ð', 'o'},
-            {'ò', 'o'},
-            {'ó', 'o'},
-            {'ô', 'o'},
-            {'õ', 'o'},
-            {'ö', 'o'},
-            {'ø', 'o'},
-            {'Ò', 'O'},
-            {'Ó', 'O'},
-            {'Ô', 'O'},
-            {'Õ', 'O'},
-            {'Ö', 'O'},
-            {'Ø', 'O'},
-            {'ì', 'i'},
-            {'í', 'i'},
-            {'î', 'i'},
-            {'ï', 'i'},
-            {'Ì', 'I'},
-            {'Í', 'I'},
-            {'Î', 'I'},
-            {'Ï', 'I'},
-            {'š', 's'},
-            {'Š', 'S'},
-            {'ñ', 'n'},
-            {'Ñ', 'N'},
-            {'ç', 'c'},
-            {'Ç', 'C'},
-            {'ÿ', 'y'},
-            {'Ÿ', 'Y'},
-            {'ž', 'z'},
-            {'Ž', 'Z'},
-            {'Ð', 'D'}
+            {'é', 'e'}, {'è', 'e'}, {'ë', 'e'}, {'ê', 'e'}, {'É', 'E'}, {'È', 'E'}, {'Ë', 'E'}, {'Ê', 'E'}, {'à', 'a'}, {'â', 'a'},
+            {'ä', 'a'}, {'á', 'a'}, {'ã', 'a'}, {'å', 'a'}, {'À', 'A'}, {'Á', 'A'}, {'Â', 'A'}, {'Ã', 'A'}, {'Ä', 'A'}, {'Å', 'A'},
+            {'Ù', 'U'}, {'Ú', 'U'}, {'Û', 'U'}, {'Ü', 'U'}, {'ù', 'u'}, {'ú', 'u'}, {'û', 'u'}, {'ü', 'u'}, {'µ', 'u'}, {'ð', 'o'},
+            {'ò', 'o'}, {'ó', 'o'}, {'ô', 'o'}, {'õ', 'o'}, {'ö', 'o'}, {'ø', 'o'}, {'Ò', 'O'}, {'Ó', 'O'}, {'Ô', 'O'}, {'Õ', 'O'},
+            {'Ö', 'O'}, {'Ø', 'O'}, {'ì', 'i'}, {'í', 'i'}, {'î', 'i'}, {'ï', 'i'}, {'Ì', 'I'}, {'Í', 'I'}, {'Î', 'I'}, {'Ï', 'I'},
+            {'š', 's'}, {'Š', 'S'}, {'ñ', 'n'}, {'Ñ', 'N'}, {'ç', 'c'}, {'Ç', 'C'}, {'ÿ', 'y'}, {'Ÿ', 'Y'}, {'ž', 'z'}, {'Ž', 'Z'}, {'Ð', 'D'}
         };
 
         #endregion
@@ -145,7 +89,7 @@ namespace ColdSort.Services
         /// <summary>
         /// The sortation schema that will be used to sort the files
         /// </summary>
-        private ISortationSchema _sortationSchema;
+        private SortationSchema _sortationSchema;
 
         /// <summary>
         /// The progress view form
@@ -166,7 +110,7 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="mainView"> The progress view </param>
         /// <param name="sortationSchema"> The sortation schema </param>
-        public SortationService(MainView mainView, ISortationSchema sortationSchema, string oldRootPath, string newRootPath)
+        public SortationService(MainView mainView, SortationSchema sortationSchema, string oldRootPath, string newRootPath)
         {
             _sortationSchema = sortationSchema;
             _oldRootPath = oldRootPath;
@@ -204,53 +148,29 @@ namespace ColdSort.Services
         }
 
         /// <summary>
-        /// Take a path to a valid music file and converts it to an ISongFile
+        /// Take a path to a valid music file and converts it to an SongFile
         /// </summary>
         /// <param name="songFilePath"> The path to a song file </param>
         /// <returns> The music file information </returns>
-        public ISongFile ConvertPathToISongFile(string songFilePath)
+        public SongFile ConvertPathToSongFile(string songFilePath)
         {
             string extension = songFilePath.Split('.').LastOrDefault().ToLower();
 
             if (extension != null)
             {
-                SongFile songFile = new SongFile();
-                if (songFile.LoadSongInformation(songFilePath))
-                {
-                    return songFile;
-                }
+                return SongFileFactory.Create(songFilePath);
             }
 
             return null;
         }
 
         /// <summary>
-        /// Recursively finds all valid music files in a directory
-        /// </summary>        
-        /// <returns> A list of ISongFiles of music files recursively collected from the directory </returns>
-        private List<ISongFile> GetMusicFiles()
-        {
-            List<ISongFile> songFiles = new List<ISongFile>();
-
-            foreach (string subDirectory in Directory.GetDirectories(_oldRootPath))
-            {
-                foreach (string file in Directory.GetFiles(subDirectory))
-                {
-                    ISongFile songFile = ConvertPathToISongFile(file);
-                    songFiles.Add(songFile);
-                }
-            }
-
-            return songFiles;
-        }
-
-        /// <summary>
-        /// Attempts to generate sort path for an ISongFile 
+        /// Attempts to generate sort path for an SongFile 
         /// </summary>
         /// <param name="songFile"> The music file to be sorted </param>
         /// <param name="newRootPath"> The destination path to prefix to sort path </param>
         /// <returns> The result of the sort </returns>
-        private ISortationSchemaResult CreateSortationPath(ISongFile songFile)
+        private SortationResult CreateSortationPath(SongFile songFile)
         {
             SortNodeResult result = SortNodeResult.NotSorted;
             songFile.SortedPath = _newRootPath;
@@ -267,7 +187,7 @@ namespace ColdSort.Services
 
             if (result == SortNodeResult.Error)
             {
-                return new FailedSortation
+                return new SortationResult
                 {
                     OriginalPath = songFile.OriginalPath,
                     SortedPath = songFile.SortedPath,
@@ -277,7 +197,7 @@ namespace ColdSort.Services
             else
             {
                 songFile.SortedPath = Path.Combine(songFile.SortedPath, songFile.OriginalFilename);
-                return new SuccessfulSortation
+                return new SortationResult
                 {
                     OriginalPath = songFile.OriginalPath,
                     SortedPath = songFile.SortedPath
@@ -286,12 +206,12 @@ namespace ColdSort.Services
         }
 
         /// <summary>
-        /// Attempts to generate the next sorted path value for an ISongFile
+        /// Attempts to generate the next sorted path value for an SongFile
         /// </summary>
         /// <param name="sortationNode"> A sortation node </param>
         /// <param name="songFile"> The songFile that is having it's sorted path built </param>
         /// <returns> The result of the attempted sort path generation </returns>
-        private SortNodeResult GenerateNodeValue(ISortationNode sortationNode, ref ISongFile songFile)
+        private SortNodeResult GenerateNodeValue(SortationNode sortationNode, ref SongFile songFile)
         {
             string newPathValue = GetSongProperty(sortationNode, songFile);
 
@@ -335,7 +255,7 @@ namespace ColdSort.Services
             return SortNodeResult.Error;
         }
 
-        private string GetSongProperty(ISortationNode sortationNode, ISongFile songFile)
+        private string GetSongProperty(SortationNode sortationNode, SongFile songFile)
         {
             string newPathValue = "";
 
@@ -402,7 +322,7 @@ namespace ColdSort.Services
             return newPathValue;
         }
 
-        private string AbbreviationCreation(ISortationNode sortationNode, string newPathValue)
+        private string AbbreviationCreation(SortationNode sortationNode, string newPathValue)
         {
             char abbreviation = newPathValue[0];
 
@@ -431,78 +351,18 @@ namespace ColdSort.Services
             return abbreviation.ToString();
         }
 
-        /// <summary>
-        /// Attempts to move a song file
-        /// </summary>
-        /// <param name="songFile"> The information of the song file being moved </param>        
-        /// <returns> The result of the attempted move </returns>
-        private ISortationResult MoveSongFile(ISongFile songFile)
-        {
-            string errorMessage = string.Empty;
-            bool isSorted = false;
-
-            try
-            {
-                if (File.Exists(songFile.SortedPath))
-                {
-                    File.Delete(songFile.SortedPath);
-                }
-
-                Directory.CreateDirectory(Path.GetDirectoryName(songFile.SortedPath));
-
-                while (File.Exists(songFile.SortedPath))
-                {
-                    //This needs to be fixed
-                    songFile.SortedPath += "_Copy";
-                }
-                if (!_sortationSchema.CopySongs)
-                {
-                    File.Move(songFile.OriginalPath, songFile.SortedPath);
-                }
-                else
-                {
-                    File.Copy(songFile.OriginalPath, songFile.SortedPath);
-                }
-                isSorted = true;
-            }
-            catch (Exception e)
-            {
-                errorMessage = e.ToString();
-            }
-
-            return new SortationResult
-            {
-                OriginalPath = songFile.OriginalPath,
-                SortedPath = songFile.SortedPath,
-                IsSorted = isSorted,
-                ErrorMessage = errorMessage
-            };
-        }
+        
 
         /// <summary>
-        /// Attempts to move multiple song file
-        /// </summary>
-        /// <param name="songFiles"> The information of the song files that are being moved </param>
-        private void MoveSongFiles(List<ISongFile> songFiles)
-        {
-            List<ISortationResult> sortationResults = new List<ISortationResult>();
-
-            foreach (ISongFile songFile in songFiles)
-            {
-                sortationResults.Add(MoveSongFile(songFile));
-            }
-        }
-
-        /// <summary>
-        /// <see cref="ISortationService.GenerateSortationPaths(List{ISongFile})"/>
+        /// <see cref="ISortationService.GenerateSortationPaths(List{SongFile})"/>
         /// </summary>
         /// <param name="songFiles"> A list of music files to be sorted </param>
         /// <returns> A list of results of the sort </returns>
-        public List<ISortationSchemaResult> GenerateSortationPaths(List<ISongFile> songFiles)
+        public List<SortationResult> GenerateSortationPaths(List<SongFile> songFiles)
         {
-            List<ISortationSchemaResult> sortationSchemaResults = new List<ISortationSchemaResult>();
+            List<SortationResult> sortationSchemaResults = new List<SortationResult>();
 
-            foreach (ISongFile songFile in songFiles)
+            foreach (SongFile songFile in songFiles)
             {
                 sortationSchemaResults.Add(CreateSortationPath(songFile));
             }
@@ -548,12 +408,12 @@ namespace ColdSort.Services
                 int percentage = (int)Math.Ceiling(currentFileCount / totalFileCount * 100);
                 _backgroundWorker.ReportProgress(percentage);
 
-                ISongFile songFile = ConvertPathToISongFile(file);
+                SongFile songFile = ConvertPathToSongFile(file);
 
                 if (songFile != null)
                 {
-                    ISortationSchemaResult sortationSchemaResult = CreateSortationPath(songFile);
-                    MoveSongFile(songFile);
+                    SortationResult sortationSchemaResult = CreateSortationPath(songFile);
+                    MoveCopyResult moveCopyResult = FilePathingService.MoveSongFile(songFile, _sortationSchema.CopySongs);
                 }
             }
         }

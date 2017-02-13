@@ -56,15 +56,22 @@
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\SortationNodeController.cs" />
     <Compile Include="Controllers\SortationSchemaController.cs" />
-    <Compile Include="Models\FailedSortation.cs" />
+    <Compile Include="Enums\SongProperty.cs" />
+    <Compile Include="Enums\SortNodeResult.cs" />
+    <Compile Include="Factories\SongFileFactory.cs" />
+    <Compile Include="Interfaces\Controllers\IMainController.cs" />
+    <Compile Include="Interfaces\Controllers\ISortationNodeController.cs" />
+    <Compile Include="Interfaces\Controllers\ISortationSchemaController.cs" />
+    <Compile Include="Models\MoveCopyResult.cs" />
+    <Compile Include="Models\Results.cs" />
     <Compile Include="Models\SongFile.cs" />
     <Compile Include="Models\SortationNode.cs" />
     <Compile Include="Models\SortationResult.cs" />
     <Compile Include="Models\SortationSchema.cs" />
-    <Compile Include="Models\SuccessfulSortation.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SchemaLoader.cs" />
+    <Compile Include="Services\FilePathingService.cs" />
     <Compile Include="Services\SortationService.cs" />
     <Compile Include="Views\MainView.cs">
       <SubType>Form</SubType>
@@ -115,12 +122,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ColdSort.Core\ColdSort.Core.csproj">
-      <Project>{8a3da389-5676-488f-979f-38240ae2dcb5}</Project>
-      <Name>ColdSort.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Models\ThirdPartyLibraries\ATL.dll" />

@@ -7,7 +7,7 @@
 
 using System;
 using System.Windows.Forms;
-using ColdSort.Core.Interfaces.Controllers;
+using ColdSort.Interfaces.Controllers;
 using ColdSort.Services;
 
 namespace ColdSort.Views
@@ -27,7 +27,7 @@ namespace ColdSort.Views
         /// <summary>
         /// The main controller
         /// </summary>
-        private ISortationService _SortationService;
+        private SortationService _SortationService;
 
         #endregion
 

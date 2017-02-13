@@ -20,15 +20,15 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.DefaultSortationSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);            
             var goldResults = SongFileModeller.SimpleSortationTest1GoldResults();
             for (int i = 0; i < 6; i++)
             {
-                var result = (SuccessfulSortation)results[i];
-                var goldResult = (SuccessfulSortation) goldResults[i];
+                var result = (SortationPathResult)results[i];
+                var goldResult = (SortationPathResult) goldResults[i];
                 Assert.IsTrue(result.OriginalPath == goldResult.OriginalPath);
                 Assert.IsTrue(result.SortedPath == goldResult.SortedPath);
             }
@@ -39,15 +39,15 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.EraSortationSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.SimpleSortationTest2GoldResults();
             for (int i = 0; i < 6; i++)
             {
-                var result = (SuccessfulSortation)results[i];
-                var goldResult = (SuccessfulSortation)goldResults[i];
+                var result = (SortationPathResult)results[i];
+                var goldResult = (SortationPathResult)goldResults[i];
                 Assert.IsTrue(result.OriginalPath == goldResult.OriginalPath);
                 Assert.IsTrue(result.SortedPath == goldResult.SortedPath);
             }
@@ -58,15 +58,15 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.RandomSortationSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.SimpleSortationTest3GoldResults();
             for (int i = 0; i < 6; i++)
             {
-                var result = (SuccessfulSortation)results[i];
-                var goldResult = (SuccessfulSortation)goldResults[i];
+                var result = (SortationPathResult)results[i];
+                var goldResult = (SortationPathResult)goldResults[i];
                 Assert.IsTrue(result.OriginalPath == goldResult.OriginalPath);
                 Assert.IsTrue(result.SortedPath == goldResult.SortedPath);
             }
@@ -81,33 +81,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.DefaultSortationSchema();
-            List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
+            List<SongFile> songFiles = SongFileModeller.MetadataTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest1GoldResults();
 
-            Assert.IsTrue(results[0] is SuccessfulSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is FailedSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is SuccessfulSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is SuccessfulSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is FailedSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is SuccessfulSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -117,33 +117,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MustPerfectlySortSchema();
-            List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
+            List<SongFile> songFiles = SongFileModeller.MetadataTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest2GoldResults();
 
-            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is FailedSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is SuccessfulSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is SuccessfulSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is FailedSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is SuccessfulSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -153,33 +153,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MixOfSortingEndsSortSchema();
-            List<ISongFile> songFiles = SongFileModeller.MetadataTestData();
+            List<SongFile> songFiles = SongFileModeller.MetadataTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.MetadataTest3GoldResults();
 
-            Assert.IsTrue(results[0] is SuccessfulSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is FailedSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is SuccessfulSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is SuccessfulSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is SuccessfulSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is SuccessfulSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -193,33 +193,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.AbbreviateEVERYTHINGSortSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.AbbriviationGoldResults();
 
-            Assert.IsTrue(results[0] is SuccessfulSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is SuccessfulSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is SuccessfulSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is SuccessfulSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is SuccessfulSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is SuccessfulSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -233,33 +233,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.NoNodesSortSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.NoNodesGoldResults();
 
-            Assert.IsTrue(results[0] is SuccessfulSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is SuccessfulSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is SuccessfulSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is SuccessfulSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is SuccessfulSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is SuccessfulSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -269,33 +269,33 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.PathTooLongSortSchema();
-            List<ISongFile> songFiles = SongFileModeller.SimpleSortationTestData();
+            List<SongFile> songFiles = SongFileModeller.SimpleSortationTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 6);
             var goldResults = SongFileModeller.PathTooLongGoldResults();
 
-            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
 
-            Assert.IsTrue(results[1] is FailedSortation);
+            Assert.IsTrue(results[1] is SortationPathResult);
             Assert.IsTrue(results[1].OriginalPath == goldResults[1].OriginalPath);
             Assert.IsTrue(results[1].SortedPath == goldResults[1].SortedPath);
 
-            Assert.IsTrue(results[2] is FailedSortation);
+            Assert.IsTrue(results[2] is SortationPathResult);
             Assert.IsTrue(results[2].OriginalPath == goldResults[2].OriginalPath);
             Assert.IsTrue(results[2].SortedPath == goldResults[2].SortedPath);
 
-            Assert.IsTrue(results[3] is FailedSortation);
+            Assert.IsTrue(results[3] is SortationPathResult);
             Assert.IsTrue(results[3].OriginalPath == goldResults[3].OriginalPath);
             Assert.IsTrue(results[3].SortedPath == goldResults[3].SortedPath);
 
-            Assert.IsTrue(results[4] is FailedSortation);
+            Assert.IsTrue(results[4] is SortationPathResult);
             Assert.IsTrue(results[4].OriginalPath == goldResults[4].OriginalPath);
             Assert.IsTrue(results[4].SortedPath == goldResults[4].SortedPath);
 
-            Assert.IsTrue(results[5] is FailedSortation);
+            Assert.IsTrue(results[5] is SortationPathResult);
             Assert.IsTrue(results[5].OriginalPath == goldResults[5].OriginalPath);
             Assert.IsTrue(results[5].SortedPath == goldResults[5].SortedPath);
         }
@@ -305,13 +305,13 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.MustPerfectlySortSchema();
-            List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
+            List<SongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 1);
             var goldResults = SongFileModeller.InvalidCharacterGoldResults();
 
-            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
         }
@@ -321,13 +321,13 @@ namespace ColdSort.Test
         {
             MainView mainView = new MainView();
             SortationSchema sortationSchema = SortationSchemaModeller.KeepAtLocationSortSchema();
-            List<ISongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
+            List<SongFile> songFiles = SongFileModeller.InvalidCharacterTestData();
             SortationService SortationService = new SortationService(mainView, sortationSchema, OLD_PATH, NEW_PATH);
             List<ISortationSchemaResult> results = SortationService.GenerateSortationPaths(songFiles);
             Assert.IsTrue(results.Count == 1);
             var goldResults = SongFileModeller.KeepAtLocationGoldResults();
 
-            Assert.IsTrue(results[0] is FailedSortation);
+            Assert.IsTrue(results[0] is SortationPathResult);
             Assert.IsTrue(results[0].OriginalPath == goldResults[0].OriginalPath);
             Assert.IsTrue(results[0].SortedPath == goldResults[0].SortedPath);
         }

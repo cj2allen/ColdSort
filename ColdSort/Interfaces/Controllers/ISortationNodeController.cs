@@ -1,11 +1,11 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ISortationNodeController.cs" company="None">
+// <copyright file="SortationNodeController.cs" company="None">
 //     Copyright (c) 2016 Christopher James Allen
 // </copyright>
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
 
 namespace ColdSort.Interfaces.Controllers
 {
@@ -33,7 +33,7 @@ namespace ColdSort.Interfaces.Controllers
         /// Returns the current sortation node
         /// </summary>
         /// <returns> The sortation node </returns>
-        ISortationNode GetSortationNode();
+        SortationNode GetSortationNode();
 
         /// <summary>
         /// Cleans up view

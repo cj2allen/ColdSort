@@ -8,11 +8,10 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
-using ColdSort.Core.Enums;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Interfaces.Controllers;
 using ColdSort.Models;
 using ColdSort.Views;
+using ColdSort.Enums;
 
 namespace ColdSort.Services
 {
@@ -31,7 +30,7 @@ namespace ColdSort.Services
         /// <summary>
         /// The current sortation schema being used
         /// </summary>
-        private ISortationSchema _sortationSchema;
+        private SortationSchema _sortationSchema;
 
         #endregion
 
@@ -95,7 +94,7 @@ namespace ColdSort.Services
             _sortationSchema.FailedSortationDefault = "!Unsorted";
             _sortationSchema.CopySongs = true;
             _sortationSchema.FixIllegalCharacters = true;
-            _sortationSchema.SortationNodes = new List<ISortationNode>
+            _sortationSchema.SortationNodes = new List<SortationNode>
             {
                 new SortationNode
                 {
@@ -171,11 +170,11 @@ namespace ColdSort.Services
         /// Edits a sortation schema in the controller
         /// </summary>
         /// <param name="sortationSchema"> A sortation schema</param>
-        public void EditSchema(ISortationSchema sortationSchema)
+        public void EditSchema(SortationSchema sortationSchema)
         {
             using (SortationSchemaView sortationSchemaView = new SortationSchemaView())
             {
-                ISortationSchemaController sortationSchemaController = new SortationSchemaController(sortationSchemaView, _sortationSchema);
+                SortationSchemaController sortationSchemaController = new SortationSchemaController(sortationSchemaView, _sortationSchema);
                 sortationSchemaController.SetupView();
                 _sortationSchema = sortationSchemaController.GetSortationSchema();
             } 
@@ -186,7 +185,7 @@ namespace ColdSort.Services
         /// </summary>
         public void SortWithoutDiagnostics()
         {
-            ISortationService SortationService = new SortationService(_mainView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
+            SortationService SortationService = new SortationService(_mainView, _sortationSchema, _mainView.OriginalLocation, _mainView.DestinationLocation);
             SortationService.SortWithoutDiagnostics();         
         }
 

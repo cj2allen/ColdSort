@@ -7,8 +7,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using ColdSort.Core.Interfaces.Controllers;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Interfaces.Controllers;
 using ColdSort.Models;
 using ColdSort.Views;
 
@@ -29,7 +28,7 @@ namespace ColdSort.Services
         /// <summary>
         /// The current sortation schema
         /// </summary>
-        private ISortationSchema _sortationSchema;
+        private SortationSchema _sortationSchema;
 
         #endregion
 
@@ -40,7 +39,7 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="sortationSchemaView"> The sortation schema view form </param>
         /// <param name="sortationSchema"> The current sortation schema </param>
-        public SortationSchemaController(SortationSchemaView sortationSchemaView, ISortationSchema sortationSchema)
+        public SortationSchemaController(SortationSchemaView sortationSchemaView, SortationSchema sortationSchema)
         {
             _sortationSchema = sortationSchema;
             _sortationSchemaView = sortationSchemaView;
@@ -71,9 +70,9 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="index"> The current position of the element that is to be raised </param>
         /// <returns> A list of the updated position of sortation nodes</returns>
-        public List<ISortationNode> RaiseNode(int index)
+        public List<SortationNode> RaiseNode(int index)
         {
-            ISortationNode node = _sortationSchema.SortationNodes[index];
+            SortationNode node = _sortationSchema.SortationNodes[index];
             _sortationSchema.SortationNodes.RemoveAt(index);
             _sortationSchema.SortationNodes.Insert(index - 1, node);
             return _sortationSchema.SortationNodes;
@@ -84,9 +83,9 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="index"> The current position of the element that is to be lowered </param>
         /// <returns> A list of the updated position of sortation nodes</returns>
-        public List<ISortationNode> LowerNode(int index)
+        public List<SortationNode> LowerNode(int index)
         {
-            ISortationNode node = _sortationSchema.SortationNodes[index];
+            SortationNode node = _sortationSchema.SortationNodes[index];
             _sortationSchema.SortationNodes.RemoveAt(index);
             _sortationSchema.SortationNodes.Insert(index + 1, node);
             return _sortationSchema.SortationNodes;
@@ -97,7 +96,7 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="index"> The current position of the element that is to be removed </param>
         /// <returns> An updated list of sortation nodes</returns>
-        public List<ISortationNode> RemoveNode(int index)
+        public List<SortationNode> RemoveNode(int index)
         {
             _sortationSchema.SortationNodes.RemoveAt(index);
             return _sortationSchema.SortationNodes;
@@ -107,7 +106,7 @@ namespace ColdSort.Services
         /// Adds a sortation node to a sortation schema
         /// </summary>        
         /// <returns> An updated list of sortation nodes</returns>
-        public List<ISortationNode> CreateSortationNode()
+        public List<SortationNode> CreateSortationNode()
         {
             _sortationSchema.SortationNodes.Add(new SortationNode());
             return EditSortationNode(_sortationSchema.SortationNodes.Count() - 1);
@@ -118,15 +117,15 @@ namespace ColdSort.Services
         /// </summary>
         /// <param name="index"> The current position of the element that is to be edited </param>
         /// <returns> An updated list of sortation nodes</returns>
-        public List<ISortationNode> EditSortationNode(int index)
+        public List<SortationNode> EditSortationNode(int index)
         {
             using (SortationNodeView sortationNodeView = new SortationNodeView())
             {
-                ISortationNodeController sortationNodeController = new SortationNodeController(sortationNodeView, _sortationSchema.SortationNodes[index]);
+                SortationNodeController sortationNodeController = new SortationNodeController(sortationNodeView, _sortationSchema.SortationNodes[index]);
                 sortationNodeView.Visible = false;
                 sortationNodeController.SetupView();
                 sortationNodeView.ShowDialog();
-                ISortationNode node = sortationNodeController.GetSortationNode();
+                SortationNode node = sortationNodeController.GetSortationNode();
                 _sortationSchema.SortationNodes[index] = node;
             }
 
@@ -178,7 +177,7 @@ namespace ColdSort.Services
         /// Returns the current sortation schema
         /// </summary>
         /// <returns> The sortation node </returns>
-        public ISortationSchema GetSortationSchema()
+        public SortationSchema GetSortationSchema()
         {
             return _sortationSchema;
         }

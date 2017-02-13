@@ -1,12 +1,12 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ISortationSchemaController.cs" company="None">
+// <copyright file="SortationSchemaController.cs" company="None">
 //     Copyright (c) 2016 Christopher James Allen
 // </copyright>
 // <author>Christopher James Allen</author>
 //-----------------------------------------------------------------------
 
 using System.Collections.Generic;
-using ColdSort.Core.Interfaces.Models;
+using ColdSort.Models;
 
 namespace ColdSort.Interfaces.Controllers
 {
@@ -25,40 +25,40 @@ namespace ColdSort.Interfaces.Controllers
         /// </summary>
         /// <param name="index"> The current position of the element that is to be raised </param>
         /// <returns> A list of the updated position of sortation nodes</returns>
-        List<ISortationNode> RaiseNode(int index);
+        List<SortationNode> RaiseNode(int index);
 
         /// <summary>
         /// Lower the node sortation at the selected index down an element
         /// </summary>
         /// <param name="index"> The current position of the element that is to be lowered </param>
         /// <returns> A list of the updated position of sortation nodes</returns>
-        List<ISortationNode> LowerNode(int index);
+        List<SortationNode> LowerNode(int index);
 
         /// <summary>
         /// Removes the sortation node at the selected index
         /// </summary>
         /// <param name="index"> The current position of the element that is to be removed </param>
         /// <returns> An updated list of sortation nodes</returns>
-        List<ISortationNode> RemoveNode(int index);
+        List<SortationNode> RemoveNode(int index);
 
         /// <summary>
         /// Adds a sortation node to a sortation schema
         /// </summary>        
         /// <returns> An updated list of sortation nodes</returns>
-        List<ISortationNode> CreateSortationNode();
+        List<SortationNode> CreateSortationNode();
 
         /// <summary>
         /// Edits the sortation node at the selected index
         /// </summary>
         /// <param name="index"> The current position of the element that is to be edited </param>
         /// <returns> An updated list of sortation nodes</returns>
-        List<ISortationNode> EditSortationNode(int index);
+        List<SortationNode> EditSortationNode(int index);
 
         /// <summary>
         /// Returns the current sortation schema
         /// </summary>
         /// <returns> The sortation node </returns>
-        ISortationSchema GetSortationSchema();
+        SortationSchema GetSortationSchema();
 
         /// <summary>
         /// Updates the sortation schema with the current data

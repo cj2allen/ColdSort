@@ -8,7 +8,7 @@
 using ColdSort.Core.Interfaces.Models;
 using System.Collections.Generic;
 
-namespace ColdSort.Core.Interfaces.Controllers
+namespace ColdSort.Interfaces.Controllers
 {
     /// <summary>
     /// Sortation controller interface
@@ -26,17 +26,17 @@ namespace ColdSort.Core.Interfaces.Controllers
         void CancelSort();
 
         /// <summary>
-        /// Take a path to a valid music file and converts it to an ISongFile
+        /// Take a path to a valid music file and converts it to an SongFile
         /// </summary>
         /// <param name="songFilePath"> The path to a song file </param>
         /// <returns> The music file information </returns>
-        ISongFile ConvertPathToISongFile(string songFilePath);
+        SongFile ConvertPathToSongFile(string songFilePath);
 
         /// <summary>
-        /// Attempts to generate sort path for a list of ISongFile 
+        /// Attempts to generate sort path for a list of SongFile 
         /// </summary>
         /// <param name="songFiles"> A list of music files to be sorted </param>
         /// <returns> A list of results of the sort </returns>
-        List<ISortationSchemaResult> GenerateSortationPaths(List<ISongFile> songFiles);
+        List<SortPathingResult> GenerateSortationPaths(List<SongFile> songFiles);
     }
 }
